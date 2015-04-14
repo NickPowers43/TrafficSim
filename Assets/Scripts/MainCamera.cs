@@ -1,17 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 enum ActiveTool
 {
     Select,
     BuildRoad
-}
-
-public struct RoadNode
-{
-    public GameObject go;
-
 }
 
 public class MainCamera : MonoBehaviour {
@@ -21,20 +16,27 @@ public class MainCamera : MonoBehaviour {
     public float roadNodeSelectRange = 0.01f;
     public float uiTopBoundary;
     public GameObject buildToolCursorPrefab;
+    public GameObject roadNodePrefab;
 
     private Vector3 prevMousePos = new Vector3(0.0f, 0.0f, 0.0f);
     private ActiveTool activeTool = ActiveTool.Select;
     private GameObject buildToolCursor;
     private Camera self;
-
     private LinkedList<RoadNode> roadNodes;
     //build tool
     LinkedListNode<RoadNode> currentSelectedRoadNode;
 
-
+    public static void printHello()
+    {
+        print("Hello");
+    }
 
 	// Use this for initialization
 	void Start () {
+
+        Thread t = new Thread(new ThreadStart(printHello));
+        t.Start();
+
         //Cursor.visible = false;
         self = GetComponent<Camera>();
         buildToolCursor = GameObject.Instantiate(buildToolCursorPrefab);
@@ -82,7 +84,16 @@ public class MainCamera : MonoBehaviour {
 
     private void OnBuildRoadMouseDown()
     {
+        Vector3 screenPoint = self.ScreenToWorldPoint(Input.mousePosition);
+        GameObject nodeGO = (GameObject)GameObject.Instantiate(roadNodePrefab);
+        nodeGO.transform.position = new Vector3(screenPoint.x, screenPoint.y, 0.0f);
 
+        //roadNodes.AddLast(nodeGO.GetComponent() as RoadNode);
+
+        foreach (RoadNode node in roadNodes)
+        {
+            print(node.transform.position.ToString());
+        }
     }
 
     private void OnWorldSpaceMouseDown()
@@ -138,7 +149,7 @@ public class MainCamera : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0) && Input.mousePosition.y > uiTopBoundary)
         {
-            //if left mouse down
+            //if left mouse down outside of UI
             OnWorldSpaceMouseDown();
         }
 

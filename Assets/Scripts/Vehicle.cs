@@ -49,6 +49,6 @@ public class Vehicle
 
     public String getVehicleType()
     {
-
+        return null;
     }
 }
