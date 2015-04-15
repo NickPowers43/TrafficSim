@@ -21,6 +21,7 @@ public class Vehicle
 
     //statistical data
     private float creationTime;
+    private float currentTime;
     public float Age //Age in real-time
     {
         get
