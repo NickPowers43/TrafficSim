@@ -22,7 +22,7 @@ public class MainCamera : MonoBehaviour {
     private ActiveTool activeTool = ActiveTool.Select;
     private GameObject buildToolCursor;
     private Camera self;
-    private LinkedList<RoadNode> roadNodes;
+    private LinkedList<RoadNode> roadNodes = new LinkedList<RoadNode>();
     //build tool
     LinkedListNode<RoadNode> currentSelectedRoadNode;
 
@@ -88,12 +88,20 @@ public class MainCamera : MonoBehaviour {
         GameObject nodeGO = (GameObject)GameObject.Instantiate(roadNodePrefab);
         nodeGO.transform.position = new Vector3(screenPoint.x, screenPoint.y, 0.0f);
 
-        //roadNodes.AddLast(nodeGO.GetComponent() as RoadNode);
+        roadNodes.AddLast(nodeGO.GetComponent<RoadNode>());
 
+        UpdateRoadNetwork();
+    }
+
+    private void UpdateRoadNetwork()
+    {
+        int i = 0;
         foreach (RoadNode node in roadNodes)
         {
-            print(node.transform.position.ToString());
+            node.Index = i++;
         }
+
+
     }
 
     private void OnWorldSpaceMouseDown()
