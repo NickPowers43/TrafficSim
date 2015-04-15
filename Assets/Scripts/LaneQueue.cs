@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using Vehicle;
 
-public class LaneQueue : MonoBehaviour
+public class LaneQueue
 {
     private int index;
 
@@ -55,7 +55,7 @@ public class LaneQueue : MonoBehaviour
     {
         if (MaxLength < CurrentLength)
         {
-            print("Queue is Full.");
+            Console.WriteLine("Queue is Full.");
         }
     }
 }
