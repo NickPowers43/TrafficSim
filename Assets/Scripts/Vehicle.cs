@@ -12,6 +12,22 @@ public class Vehicle
     private int speed;
     private double distance;
     private String type;
+    private int index;
+    private float length;
+    private VehicleType vr;
+    private double acceleration;
+
+    public int Index
+    {
+        get
+        {
+            return index;
+        }
+        set
+        {
+            index = value;
+        }
+    }
     
     public Vehicle()
 	{
@@ -47,8 +63,43 @@ public class Vehicle
         return distance;
     }
 
-    public String getVehicleType()
+    public VehicleType getVehicleType()
     {
-        return null;
+        return vr;
+    }
+
+    public VehicleType setVehicleType(VehicleType v){
+        if(v == VehicleType.Car){
+            vr = v;
+        }
+        else if(v == VehicleType.Bus){
+            vr = v;
+        }
+        else if(v == VehicleType.Truck){
+            vr = v;
+        }
+        return v;
+    }
+
+    public float getVehicleLength()
+    {
+        return length;
+    }
+
+    public float setVehicleLength(float l)
+    {
+        l = length;
+        return l;
+    }
+
+    public double getAcceleration()
+    {
+        return acceleration;
+    }
+
+    public double setAcceleration(double a)
+    {
+        a = acceleration;
+        return a;
     }
 }
