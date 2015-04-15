@@ -5,12 +5,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
 using System.Text;
-using Vehicle;
 
 public class LaneQueue
 {
     private int index;
-
     public int Index
     {
         get
@@ -23,9 +21,44 @@ public class LaneQueue
         }
     }
 
-    private Thread WaitingThread;
-    private float MaxLength;
-    private float CurrentLength;
+    private Thread waitingThread;
+    public Thread WaitingThread
+    {
+        get
+        {
+            return waitingThread;
+        }
+        set
+        {
+            waitingThread = value;
+        }
+    }
+
+    private float maxLength;
+    public float MaxLength
+    {
+        get
+        {
+            return maxLength;
+        }
+        set
+        {
+            maxLength = value;
+        }
+    }
+
+    private float currentLength;
+    public float CurrentLength
+    {
+        get
+        {
+            return currentLength;
+        }
+        set
+        {
+            currentLength = value;
+        }
+    }
 
     private Queue<Vehicle> vehicleQueue = new Queue<Vehicle>();
 

@@ -1,13 +1,161 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
-enum ActiveTool
+public enum ActiveTool
 {
+    None,
     Select,
-    BuildRoadConnect,
-    BuildRoadCreateIntersection
+    Build
+}
+
+public class SelectTools
+{
+    class SelectIntersection
+    {
+        private LinkedList<Intersection> intersections;
+
+        public SelectIntersection(LinkedList<Intersection> intersections)
+        {
+            this.intersections = intersections;
+        }
+
+        public void Activate()
+        {
+
+        }
+
+        public void Deactivate()
+        {
+            foreach (Intersection node in intersections)
+            {
+                node.selectionSprite.SetActive(false);
+            }
+        }
+
+        public void Initialize()
+        {
+
+        }
+    }
+
+    public enum ActiveTool
+    {
+        None,
+        Intersection
+    }
+
+    private ActiveTool activeTool;
+    SelectIntersection selectIntersection;
+
+    public SelectTools(LinkedList<Intersection> intersections)
+    {
+        selectIntersection = new SelectIntersection(intersections);
+    }
+
+    public void Activate()
+    {
+
+    }
+
+    public void Deactivate()
+    {
+        switch (activeTool)
+        {
+            case ActiveTool.None:
+                break;
+            case ActiveTool.Intersection:
+                selectIntersection.Deactivate();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void Initialize()
+    {
+
+    }
+}
+
+public class BuildTools
+{
+    class Connect
+    {
+        Intersection currentSelected;
+
+        public Connect()
+        {
+            currentSelected = null;
+        }
+
+        public void Activate()
+        {
+
+        }
+
+        public void Deactivate()
+        {
+
+        }
+
+        public void Initialize()
+        {
+
+        }
+    }
+
+    public enum ActiveTool
+    {
+        None,
+        CreateIntersection,
+        Connect
+    }
+
+    private ActiveTool activeTool;
+
+    private Connect connect = new Connect();
+
+    public BuildTools()
+    {
+        activeTool = ActiveTool.None;
+    }
+
+    public void Activate(ActiveTool tool)
+    {
+        switch (activeTool)
+        {
+            case ActiveTool.None:
+                break;
+            case ActiveTool.CreateIntersection:
+                break;
+            case ActiveTool.Connect:
+                connect.Activate();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void Deactivate()
+    {
+        switch (activeTool)
+        {
+            case ActiveTool.None:
+                break;
+            case ActiveTool.CreateIntersection:
+                break;
+            case ActiveTool.Connect:
+                connect.Deactivate();
+                break;
+            default:
+                break;
+        }
+
+        activeTool = ActiveTool.None;
+    }
 }
 
 public class MainCamera : MonoBehaviour {
@@ -15,20 +163,22 @@ public class MainCamera : MonoBehaviour {
     private const float MAX_HOVER_HIGHLIGHT_DIST = 32.0f;
     private const float CAMERA_MOVE_SPEED = 5.0f;
 
-    public float roadNodeSelectRange = 0.01f;
+    public float intersectionSelectRange = 0.01f;
     public float uiTopBoundary;
     public GameObject buildToolCursorPrefab;
-    public GameObject roadNodePrefab;
+    public GameObject intersectionPrefab;
 
     private Vector3 prevMousePos = new Vector3(0.0f, 0.0f, 0.0f);
     private ActiveTool activeTool = ActiveTool.Select;
     private GameObject buildToolCursor;
     private Camera self;
-    private LinkedList<RoadNode> roadNodes = new LinkedList<RoadNode>();
+    private LinkedList<Intersection> intersections = new LinkedList<Intersection>();
     //build tool
-    LinkedListNode<RoadNode> currentSelectedRoadNode;
+    public BuildTools buildTools = new BuildTools();
+    LinkedListNode<Intersection> currentSelectedIntersection;
     //select tool
-    //RoadNode currentSelectedRoadNode = null;
+    //Intersection currentSelectedIntersection = null;
+    //build Connect Tool
 
     public static void printHello()
     {
@@ -36,6 +186,8 @@ public class MainCamera : MonoBehaviour {
     }
 
 	void Start () {
+
+        buildTools.Initialize();
 
         Thread t = new Thread(new ThreadStart(printHello));
         t.Start();
@@ -47,12 +199,14 @@ public class MainCamera : MonoBehaviour {
         this.prevMousePos = Input.mousePosition;
 	}
 	
-    private void DeselectCurrentTool()
+    private void DeActivateCurrentTool()
     {
+        buildTools.Deactivate();
+
         switch (activeTool)
         {
             case ActiveTool.Select:
-                foreach (RoadNode node in roadNodes)
+                foreach (Intersection node in intersections)
                 {
                     node.selectionSprite.SetActive(false);
                 }
@@ -126,10 +280,10 @@ public class MainCamera : MonoBehaviour {
     private void OnBuildRoadCreateIntersectionWSClick()
     {
         Vector3 screenPoint = self.ScreenToWorldPoint(Input.mousePosition);
-        GameObject nodeGO = (GameObject)GameObject.Instantiate(roadNodePrefab);
+        GameObject nodeGO = (GameObject)GameObject.Instantiate(intersectionPrefab);
         nodeGO.transform.position = new Vector3(screenPoint.x, screenPoint.y, 0.0f);
 
-        roadNodes.AddLast(nodeGO.GetComponent<RoadNode>());
+        intersections.AddLast(nodeGO.GetComponent<Intersection>());
 
         UpdateRoadNetwork();
     }
@@ -137,7 +291,7 @@ public class MainCamera : MonoBehaviour {
     private void UpdateRoadNetwork()
     {
         int i = 0;
-        foreach (RoadNode node in roadNodes)
+        foreach (Intersection node in intersections)
         {
             node.Index = i++;
             print(node.Index.ToString());
@@ -150,9 +304,9 @@ public class MainCamera : MonoBehaviour {
     {
         //hilight nearby selectable objects
 
-        RoadNode closest = null;
+        Intersection closest = null;
         float dist = float.PositiveInfinity;
-        foreach (RoadNode node in roadNodes)
+        foreach (Intersection node in intersections)
         {
             float currDist = Vector3.Magnitude(self.WorldToScreenPoint(node.transform.position) - Input.mousePosition);
             if (currDist < dist)

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-struct Edge
+public struct Edge
 {
     public int start;
     public int end;
     public float cost;
 }
 
-class BellmanFord
+public class BellmanFord
 {
     private static T[][] DuplicateSquareMat<T>(T[][] src)
     {

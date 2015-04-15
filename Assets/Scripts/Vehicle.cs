@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-enum VehicleType
+public enum VehicleType
 {
     Car, Truck, Bus
 }
@@ -16,6 +17,17 @@ public class Vehicle
     private float length;
     private VehicleType vr;
     private double acceleration;
+    private float takeoffTime = Time.time;
+
+    //statistical data
+    private float creationTime;
+    public float Age //Age in real-time
+    {
+        get
+        {
+            return Time.time - creationTime;
+        }
+    }
 
     public int Index
     {
@@ -31,6 +43,7 @@ public class Vehicle
     
     public Vehicle()
 	{
+        creationTime = Time.time;
 	}
 
     public void Run()
