@@ -3,6 +3,8 @@ using System.Collections;
 
 public class RoadNode : MonoBehaviour {
 
+    public GameObject selectionSprite = null;
+
     private int index;
     public int Index
     {
