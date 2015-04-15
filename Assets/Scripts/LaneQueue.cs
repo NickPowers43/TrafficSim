@@ -68,20 +68,16 @@ public class LaneQueue
         
     }
 
-    public void Queue(){
-        lock (vehicleQueue)
-        {
-            CurrentLength = vehicleQueue.Sum(length => vehicle.getVehicleLength());
-            vehicleQueue.Enqueue(vehicle);
-        }
+    public void Queue()
+    {
+        CurrentLength = vehicleQueue.Sum(length => vehicle.getVehicleLength());
+        vehicleQueue.Enqueue(vehicle);
     }
+    
     public void DeQueue()
     {
-        lock (vehicleQueue)
-        {
-            CurrentLength = vehicleQueue.Sum(length => vehicle.getVehicleLength());
-            vehicleQueue.Dequeue();
-        }
+        CurrentLength = vehicleQueue.Sum(length => vehicle.getVehicleLength());
+        vehicleQueue.Dequeue();
     }
 
     public void Full()
