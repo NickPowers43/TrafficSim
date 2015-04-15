@@ -88,7 +88,7 @@ public class BellmanFord
 
         for (int i = 0; i < edges.Length; i++)
         {
-            output[edges[i].start][edges[i].end] = edges[i].cost;
+            //TODO: Verify this is correct
             output[edges[i].start][edges[i].end] = edges[i].cost;
         }
 
