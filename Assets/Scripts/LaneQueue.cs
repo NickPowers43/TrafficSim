@@ -60,6 +60,89 @@ public class LaneQueue
         }
     }
 
+    private bool turningSymbol;
+
+    public bool TurningSymbol
+    {
+        get
+        {
+            return turningSymbol;
+        }
+        set
+        {
+            turningSymbol = value;
+        }
+    }
+
+    private bool straight;
+
+    public bool Straight
+    {
+        get
+        {
+            return straight;
+        }
+        set
+        {
+            straight = value;
+        }
+    }
+
+    private bool left;
+    public bool Left
+    {
+        get
+        {
+            return left;
+        }
+        set
+        {
+            left = value;
+        }
+    }
+
+    private bool right;
+
+    public bool Right
+    {
+        get
+        {
+            return right;
+        }
+        set
+        {
+            right = value;
+        }
+    }
+
+    private bool uturn;
+
+    public bool Uturn
+    {
+        get
+        {
+            return uturn;
+        }
+        set
+        {
+            uturn = value;
+        }
+    }
+
+    private LaneQueue[] destinations;
+
+    public LaneQueue[] Destinations
+    {
+        get
+        {
+            return destinations;
+        }
+        set
+        {
+            destinations = value;
+        }
+    }
+
     private Queue<Vehicle> vehicleQueue = new Queue<Vehicle>();
 
     private Vehicle vehicle = new Vehicle();
