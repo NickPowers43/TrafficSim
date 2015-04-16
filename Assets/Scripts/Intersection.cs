@@ -7,6 +7,39 @@ public class Intersection : MonoBehaviour {
 
     private const int MAX_THREAD_STACK_SIZE = 1024;
 
+    private static LinkedList<Intersection> intersections = new LinkedList<Intersection>();
+    public static LinkedList<Intersection> Intersections
+    {
+        get
+        {
+            return intersections;
+        }
+    }
+
+    public static Intersection ClosestToCursor(ref float dist)
+    {
+        Intersection closest = null;
+        dist = float.PositiveInfinity;
+        foreach (Intersection node in intersections)
+        {
+            float currDist = Vector3.Magnitude(MainCamera.Instance.Self.WorldToScreenPoint(node.transform.position) - Input.mousePosition);
+            if (currDist < dist)
+            {
+                closest = node;
+                dist = currDist;
+            }
+
+            node.selectionSprite.SetActive(false);
+        }
+
+        return closest;
+    }
+
+    private static void UpdateRoadNetwork()
+    {
+
+    }
+
     public GameObject selectionSprite = null;
 
     private IntersectionInlet[] inlets = new IntersectionInlet[4];
@@ -39,13 +72,32 @@ public class Intersection : MonoBehaviour {
         }
     }
 
+    private bool running;
+    public bool Running
+    {
+        get
+        {
+            return running;
+        }
+        set
+        {
+            running = value;
+        }
+    }
+
     private Thread thread;
+    public Thread Thread
+    {
+        get
+        {
+            return thread;
+        }
+    }
 
 	// Use this for initialization
 	void Start()
     {
-        thread = new Thread(new ThreadStart(Run), MAX_THREAD_STACK_SIZE);
-        thread.Start();
+        Intersections.AddLast(this);
 	}
 	
 	// Update is called once per frame
@@ -53,6 +105,24 @@ public class Intersection : MonoBehaviour {
     {
 	    
 	}
+
+    public void Run()
+    {
+        thread = new Thread(new ThreadStart(RunMethod), MAX_THREAD_STACK_SIZE);
+        running = true;
+        thread.Start();
+    }
+    private void RunMethod()
+    {
+        while (true)
+        {
+            //check incoming car queues
+
+            //iterate street light state
+
+
+        }
+    }
 
     public void SortAdjIntersectionsByAngle()
     {
@@ -92,17 +162,5 @@ public class Intersection : MonoBehaviour {
             vehicles.Remove(v);
         }
         if (vehicles.Count == )
-    }
-
-    void Run()
-    {
-        while (true)
-        {
-            //check incoming car queues
-
-            //iterate street light state
-
-
-        }
     }
 }

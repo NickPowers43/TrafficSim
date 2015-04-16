@@ -86,19 +86,9 @@ public class SelectTools : ToolsArray
         {
             //hilight nearby selectable objects
 
-            Intersection closest = null;
             float dist = float.PositiveInfinity;
-            foreach (Intersection node in intersections)
-            {
-                float currDist = Vector3.Magnitude(self.WorldToScreenPoint(node.transform.position) - Input.mousePosition);
-                if (currDist < dist)
-                {
-                    closest = node;
-                    dist = currDist;
-                }
 
-                node.selectionSprite.SetActive(false);
-            }
+            Intersection closest = Intersection.ClosestToCursor(ref dist);
 
             if (dist < MAX_HOVER_HIGHLIGHT_DIST)
             {
@@ -191,9 +181,11 @@ public class BuildTools : ToolsArray
 
     class CreateIntersection : Tool
     {
-        public CreateIntersection()
-        {
+        private GameObject intersectionPrefab;
 
+        public CreateIntersection(GameObject intersectionPrefab)
+        {
+            this.intersectionPrefab = intersectionPrefab;
         }
 
         public void Activate()
@@ -210,24 +202,15 @@ public class BuildTools : ToolsArray
         }
         public void Update()
         {
-            //rotate cursor
-            buildToolCursor.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), Time.deltaTime * 360.0f);
-            //position cursor
-            Vector3 cursorPosition = self.ScreenToWorldPoint(Input.mousePosition);
-            cursorPosition.z = 0.0f;
-            buildToolCursor.transform.position = cursorPosition;
-
             //hilight nearby road nodes
         }
         public void OnClick()
         {
-            Vector3 screenPoint = self.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 screenPoint = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
             GameObject nodeGO = (GameObject)GameObject.Instantiate(intersectionPrefab);
             nodeGO.transform.position = new Vector3(screenPoint.x, screenPoint.y, 0.0f);
 
-            intersections.AddLast(nodeGO.GetComponent<Intersection>());
-
-            UpdateRoadNetwork();
+            //UpdateRoadNetwork();
         }
     }
 
@@ -239,23 +222,26 @@ public class BuildTools : ToolsArray
 
     private Tool activeTool;
     private GameObject buildToolCursor;
+    private GameObject intersectionPrefab;
+    //Tool objects
     private Connect connect;
     private CreateIntersection createIntersection;
 
-    public BuildTools(GameObject buildToolCursorPrefab)
+    public BuildTools(GameObject buildToolCursorPrefab, GameObject intersectionPrefab)
     {
+        this.intersectionPrefab = intersectionPrefab;
+
         connect = new Connect();
-        createIntersection = new CreateIntersection();
+        createIntersection = new CreateIntersection(intersectionPrefab);
 
         buildToolCursor = GameObject.Instantiate(buildToolCursorPrefab);
+        this.intersectionPrefab = intersectionPrefab;
     }
 
     public void Activate(Tools tool)
     {
         switch (tool)
         {
-            case Tools.None:
-                break;
             case Tools.CreateIntersection:
                 activeTool = createIntersection;
                 break;
@@ -282,6 +268,13 @@ public class BuildTools : ToolsArray
     }
     public void Update()
     {
+        //rotate cursor
+        buildToolCursor.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), Time.deltaTime * 360.0f);
+        //position cursor
+        Vector3 cursorPosition = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
+        cursorPosition.z = 0.0f;
+        buildToolCursor.transform.position = cursorPosition;
+
         activeTool.Update();
     }
     public void OnClick()
@@ -292,6 +285,19 @@ public class BuildTools : ToolsArray
 
 public class MainCamera : MonoBehaviour {
 
+    private static MainCamera instance;
+    public static MainCamera Instance
+    {
+        get
+        {
+            return instance;
+        }
+        set
+        {
+            instance = value;
+        }
+    }
+
     private const float CAMERA_MOVE_SPEED = 5.0f;
 
     public float intersectionSelectRange = 0.01f;
@@ -301,8 +307,6 @@ public class MainCamera : MonoBehaviour {
 
     private Vector3 prevMousePos = new Vector3(0.0f, 0.0f, 0.0f);
     private ToolArrays activeTool = ToolArrays.Select;
-    private GameObject buildToolCursor;
-    private Camera self;
     private LinkedList<Intersection> intersections;
     private BuildTools buildTools;
     private SelectTools selectTools;
@@ -312,25 +316,34 @@ public class MainCamera : MonoBehaviour {
     //Intersection currentSelectedIntersection = null;
     //build Connect Tool
 
+
+    private Camera self;
+    public Camera Self
+    {
+        get
+        {
+            return self;
+        }
+    }
+
     public static void printHello()
     {
         print("Hello");
     }
 
 	void Start () {
+        Instance = this;
+        self = GetComponent<Camera>();
+
         intersections = new LinkedList<Intersection>();
 
-        buildTools = new BuildTools(buildToolCursorPrefab);
+        buildTools = new BuildTools(buildToolCursorPrefab, intersectionPrefab);
         buildTools.Initialize();
         selectTools = new SelectTools(intersections);
         selectTools.Initialize();
 
         Thread t = new Thread(new ThreadStart(printHello));
         t.Start();
-
-        //Cursor.visible = false;
-        self = GetComponent<Camera>();
-        buildToolCursor = GameObject.Instantiate(buildToolCursorPrefab);
 
         this.prevMousePos = Input.mousePosition;
 	}
