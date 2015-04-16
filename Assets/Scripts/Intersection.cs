@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class Intersection : MonoBehaviour {
 
     private const int MAX_THREAD_STACK_SIZE = 1024;
+    public const float INITIAL_RADIUS = 0.09f;
 
     private static LinkedList<Intersection> intersections = new LinkedList<Intersection>();
     public static LinkedList<Intersection> Intersections
@@ -33,6 +34,19 @@ public class Intersection : MonoBehaviour {
         }
 
         return closest;
+    }
+    public static bool CheckOverlap(Vector3 position, float r)
+    {
+        foreach (Intersection node in intersections)
+        {
+            float currDist = Vector3.Magnitude(node.transform.position - position);
+            if (currDist - r - node.Radius < 0.0f)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static void UpdateRoadNetwork()
@@ -91,6 +105,14 @@ public class Intersection : MonoBehaviour {
         get
         {
             return thread;
+        }
+    }
+
+    public float Radius
+    {
+        get
+        {
+            return INITIAL_RADIUS;
         }
     }
 

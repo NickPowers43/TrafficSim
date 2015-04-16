@@ -67,22 +67,22 @@ public class SelectTools : ToolsArray
             this.intersections = intersections;
         }
 
-        public void Activate()
+        public override void Activate()
         {
 
         }
-        public void Deactivate()
+        public override void Deactivate()
         {
             foreach (Intersection node in intersections)
             {
                 node.selectionSprite.SetActive(false);
             }
         }
-        public void Initialize()
+        public override void Initialize()
         {
 
         }
-        public void Update()
+        public override void Update()
         {
             //hilight nearby selectable objects
 
@@ -95,7 +95,7 @@ public class SelectTools : ToolsArray
                 closest.selectionSprite.SetActive(true);
             }
         }
-        public void OnClick()
+        public override void OnClick()
         {
 
         }
@@ -128,26 +128,39 @@ public class SelectTools : ToolsArray
         activeTool.Activate();
     }
 
-    public void Initialize()
+    public override void Initialize()
     {
         selectIntersection.Initialize();
     }
-    public void Deactivate()
+    public override void Deactivate()
     {
-        activeTool.Deactivate();
+        if (activeTool != null)
+        {
+            activeTool.Deactivate();
+            activeTool = null; 
+        }
     }
-    public void Update()
+    public override void Update()
     {
-        activeTool.Update();
+        if (activeTool != null)
+        {
+            activeTool.Update(); 
+        }
     }
-    public void OnClick()
+    public override void OnClick()
     {
-        activeTool.OnClick();
+        if (activeTool != null)
+        {
+            activeTool.OnClick(); 
+        }
     }
 }
 
 public class BuildTools : ToolsArray
 {
+    private const float CURSOR_Z = -0.25f;
+    private const float INTERSECTION_Z = 0.0f;
+
     class Connect : Tool
     {
         Intersection currentSelected;
@@ -161,19 +174,20 @@ public class BuildTools : ToolsArray
         {
 
         }
-        public void Deactivate()
+
+        public override void Deactivate()
         {
 
         }
-        public void Initialize()
+        public override void Initialize()
         {
 
         }
-        public void Update()
+        public override void Update()
         {
 
         }
-        public void OnClick()
+        public override void OnClick()
         {
 
         }
@@ -182,33 +196,48 @@ public class BuildTools : ToolsArray
     class CreateIntersection : Tool
     {
         private GameObject intersectionPrefab;
+        private GameObject cursor;
 
-        public CreateIntersection(GameObject intersectionPrefab)
+        public CreateIntersection(GameObject intersectionPrefab, GameObject cursor)
         {
             this.intersectionPrefab = intersectionPrefab;
+            this.cursor = cursor;
         }
 
         public void Activate()
         {
 
         }
-        public void Deactivate()
+
+        public override void Deactivate()
         {
 
         }
-        public void Initialize()
+        public override void Initialize()
         {
 
         }
-        public void Update()
+        public override void Update()
         {
-            //hilight nearby road nodes
+            //color cursor appropriately
+            Vector3 cursorPos = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
+            cursorPos.z = INTERSECTION_Z;
+            if (!Intersection.CheckOverlap(cursorPos, Intersection.INITIAL_RADIUS))
+            {
+                //highlight cursor green
+                cursor.GetComponent<SpriteRenderer>().color = new Color(0.0f, 1.0f, 0.0f);
+            }
+            else
+            {
+                //highlight cursor red
+                cursor.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
+            }
         }
-        public void OnClick()
+        public override void OnClick()
         {
             Vector3 screenPoint = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
             GameObject nodeGO = (GameObject)GameObject.Instantiate(intersectionPrefab);
-            nodeGO.transform.position = new Vector3(screenPoint.x, screenPoint.y, 0.0f);
+            nodeGO.transform.position = new Vector3(screenPoint.x, screenPoint.y, INTERSECTION_Z);
 
             //UpdateRoadNetwork();
         }
@@ -220,7 +249,7 @@ public class BuildTools : ToolsArray
         Connect
     }
 
-    private Tool activeTool;
+    private Tool activeTool = null;
     private GameObject buildToolCursor;
     private GameObject intersectionPrefab;
     //Tool objects
@@ -231,11 +260,10 @@ public class BuildTools : ToolsArray
     {
         this.intersectionPrefab = intersectionPrefab;
 
-        connect = new Connect();
-        createIntersection = new CreateIntersection(intersectionPrefab);
-
         buildToolCursor = GameObject.Instantiate(buildToolCursorPrefab);
-        this.intersectionPrefab = intersectionPrefab;
+
+        connect = new Connect();
+        createIntersection = new CreateIntersection(intersectionPrefab, buildToolCursor);
     }
 
     public void Activate(Tools tool)
@@ -256,30 +284,40 @@ public class BuildTools : ToolsArray
         activeTool.Activate();
     }
 
-    public void Initialize()
+    public override void Initialize()
     {
         connect.Initialize();
         createIntersection.Initialize();
     }
-    public void Deactivate()
+    public override void Deactivate()
     {
-        activeTool.Deactivate();
+        if (activeTool != null)
+        {
+            activeTool.Deactivate();
+            activeTool = null;
+        }
         buildToolCursor.SetActive(false);
     }
-    public void Update()
+    public override void Update()
     {
-        //rotate cursor
-        buildToolCursor.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), Time.deltaTime * 360.0f);
-        //position cursor
-        Vector3 cursorPosition = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
-        cursorPosition.z = 0.0f;
-        buildToolCursor.transform.position = cursorPosition;
+        if (activeTool != null)
+        {
+            activeTool.Update();
 
-        activeTool.Update();
+            //rotate cursor
+            buildToolCursor.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), Time.deltaTime * 360.0f);
+            //position cursor
+            Vector3 cursorPosition = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
+            cursorPosition.z = CURSOR_Z;
+            buildToolCursor.transform.position = cursorPosition;
+        }
     }
-    public void OnClick()
+    public override void OnClick()
     {
-        activeTool.OnClick();
+        if (activeTool != null)
+        {
+            activeTool.OnClick(); 
+        }
     }
 }
 
@@ -326,11 +364,6 @@ public class MainCamera : MonoBehaviour {
         }
     }
 
-    public static void printHello()
-    {
-        print("Hello");
-    }
-
 	void Start () {
         Instance = this;
         self = GetComponent<Camera>();
@@ -342,27 +375,33 @@ public class MainCamera : MonoBehaviour {
         selectTools = new SelectTools(intersections);
         selectTools.Initialize();
 
-        Thread t = new Thread(new ThreadStart(printHello));
-        t.Start();
-
         this.prevMousePos = Input.mousePosition;
 	}
 	
     public void OnBuildRoadConnectClick()
     {
-        activeTools.Deactivate();
+        if (activeTools != null)
+        {
+            activeTools.Deactivate(); 
+        }
         buildTools.Activate(BuildTools.Tools.Connect);
         activeTools = buildTools;
     }
     public void OnBuildRoadCreateIntersectionClick()
     {
-        activeTools.Deactivate();
+        if (activeTools != null)
+        {
+            activeTools.Deactivate(); 
+        }
         buildTools.Activate(BuildTools.Tools.CreateIntersection);
-        activeTools = (ToolsArray)buildTools;
+        activeTools = buildTools;
     }
     public void OnSelectClick()
     {
-        activeTools.Deactivate();
+        if (activeTools != null)
+        {
+            activeTools.Deactivate(); 
+        }
         selectTools.Activate(SelectTools.Tools.Intersection);
         activeTools = selectTools;
     }
@@ -370,10 +409,6 @@ public class MainCamera : MonoBehaviour {
     public void OnWorldSpaceClick()
     {
         activeTools.OnClick();
-    }
-    private void UpdateActiveTool()
-    {
-        activeTools.Update();
     }
 
 	void Update () {
@@ -389,7 +424,10 @@ public class MainCamera : MonoBehaviour {
 
         self.orthographicSize *= 1.0f + (0.25f * Input.mouseScrollDelta.y);//zoom camera
 
-        UpdateActiveTool();
+        if (activeTools != null)
+        {
+            activeTools.Update();
+        }
 
         prevMousePos = Input.mousePosition;
 	}
