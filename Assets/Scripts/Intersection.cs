@@ -161,6 +161,5 @@ public class Intersection : MonoBehaviour {
         {
             vehicles.Remove(v);
         }
-        if (vehicles.Count == )
     }
 }

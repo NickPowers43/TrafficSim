@@ -51,7 +51,7 @@ public class IntersectionInlet : Object
     {
         get
         {
-            return outgoingInlet.lanesIn;
+            return outgoingInlet.LanesIn;
         }
         set
         {
@@ -59,13 +59,12 @@ public class IntersectionInlet : Object
         }
     }
 
-    
-
     public int MaxLanes
     {
         get
         {
-
+            //TODO: replace when more than one LaneQueue array is allowed
+            return 1;
         }
         set
         {
