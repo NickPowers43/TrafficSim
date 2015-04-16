@@ -22,8 +22,6 @@ public class IntersectionInlet : Object
         }
     }
 
-    private int lanesIn;
-
     public int LanesIn
     {
         get
@@ -82,50 +80,30 @@ public class IntersectionInlet : Object
 
     public bool CanLaneTurnLeft(int laneIndex)
     {
-        if (laneIndex == null)
-        {
-            throw new NotImplementedException("Lane not implemented");
-        }
-        else
-        {
-            return true;
-        }
+        //laneQueues[laneIndex]
+
+        return false;
     }
 
     public bool CanLaneTurnRight(int laneIndex)
     {
-        if (laneIndex == null)
-        {
-            throw new NotImplementedException("Lane not implemented");
-        }
-        else
-        {
-            return true;
-        }
+        //laneQueues[laneIndex]
+
+        return false;
     }
 
     public bool CanLaneGoStraight(int laneIndex)
     {
-        if (laneIndex == null)
-        {
-            throw new NotImplementedException("Lane not implemented");
-        }
-        else
-        {
-            return true;
-        }
+        //laneQueues[laneIndex]
+
+        return false;
     }
 
     public bool CanLaneUTurn(int laneIndex)
     {
-        if (laneIndex == null)
-        {
-            throw new NotImplementedException("Lane not implemented");
-        }
-        else
-        {
-            return true;
-        }
+        //laneQueues[laneIndex]
+
+        return false;
     }
 }
 
