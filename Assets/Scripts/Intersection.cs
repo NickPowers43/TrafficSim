@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Threading;
+using System.Collections.Generic;
 
 public class Intersection : MonoBehaviour {
 
@@ -9,6 +10,8 @@ public class Intersection : MonoBehaviour {
     public GameObject selectionSprite = null;
 
     private IntersectionInlet[] inlets = new IntersectionInlet[4];
+
+    private List<Vehicle> vehicles = new List<Vehicle>();
 
     private int index;
     public int Index
@@ -75,6 +78,20 @@ public class Intersection : MonoBehaviour {
         //        }
         //    }
         //}
+    }
+
+    public void createPointofInterest(int destination)
+    {
+        Vehicle v = new Vehicle();
+        if (v.Destination == index)
+        {
+            vehicles.Add(v);
+        }
+        else
+        {
+            vehicles.Remove(v);
+        }
+        if (vehicles.Count == )
     }
 
     void Run()

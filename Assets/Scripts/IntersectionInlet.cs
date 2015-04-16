@@ -9,6 +9,11 @@ using System.Threading;
 public class IntersectionInlet : Object
 {
     private int inletIndex;
+    private LaneQueue[] laneQueues = new LaneQueue[3];
+    private int lanesOut;
+    private int maxLanes;
+
+    private IntersectionInlet outgoingInlet;
 
     public int InletIndex
     {
@@ -22,6 +27,7 @@ public class IntersectionInlet : Object
         }
     }
 
+
     public int LanesIn
     {
         get
@@ -30,11 +36,16 @@ public class IntersectionInlet : Object
         }
         set
         {
-            lanesIn = value;
+            LaneQueue[] t = new LaneQueue[value];
+            for (int i = 0; i < t.Length; i++)
+            {
+                t[i] = laneQueues[i];
+                laneQueues = t;
+            }
         }
     }
 
-    private int lanesOut;
+   
 
     public int LanesOut
     {
@@ -48,7 +59,7 @@ public class IntersectionInlet : Object
         }
     }
 
-    private int maxLanes;
+    
 
     public int MaxLanes
     {
@@ -62,7 +73,6 @@ public class IntersectionInlet : Object
         }
     }
 
-    private IntersectionInlet outgoingInlet;
 
     public IntersectionInlet OutgoingInlet
     {
@@ -76,7 +86,6 @@ public class IntersectionInlet : Object
         }
     }
 
-    private LaneQueue[] laneQueues = new LaneQueue[3];
 
     public bool CanLaneTurnLeft(int laneIndex)
     {

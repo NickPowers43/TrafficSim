@@ -7,6 +7,10 @@ public enum VehicleType
 {
     Car, Truck, Bus
 }
+public enum Intention
+{
+    Food, Gas, Services, Residential, Work, Goods, School
+}
 
 public class Vehicle
 {
@@ -16,8 +20,10 @@ public class Vehicle
     private int index;
     private float length;
     private VehicleType vr;
+    private Intention i;
     private double acceleration;
     private float takeoffTime = Time.time;
+    private int destination;
 
     //statistical data
     private float creationTime;
@@ -39,6 +45,18 @@ public class Vehicle
         set
         {
             index = value;
+        }
+    }
+
+    public int Destination
+    {
+        get
+        {
+            return destination;
+        }
+        set
+        {
+            destination = value;
         }
     }
     
@@ -93,6 +111,44 @@ public class Vehicle
             vr = v;
         }
         return v;
+    }
+
+    public Intention getVehicleIntention()
+    {
+        return i;
+    }
+
+    public Intention setVehicleIntention(Intention ir)
+    {
+        if (ir == Intention.Food)
+        {
+            i = ir;
+        }
+        else if (ir == Intention.Gas)
+        {
+            i = ir;
+        }
+        else if (ir == Intention.Goods)
+        {
+            i = ir;
+        }
+        else if (ir == Intention.Residential)
+        {
+            i = ir;
+        }
+        else if (ir == Intention.School)
+        {
+            i = ir;
+        }
+        else if (ir == Intention.Services)
+        {
+            i = ir;
+        }
+        else if (ir == Intention.Work)
+        {
+            i = ir;
+        }
+        return ir;
     }
 
     public float getVehicleLength()
