@@ -20,7 +20,7 @@ public class Vehicle
     private int index;
     private float length;
     private VehicleType vr;
-    private Intention i;
+    private Intention intention;
     private double acceleration;
     private float takeoffTime = Time.time;
     private int destination;
@@ -115,38 +115,18 @@ public class Vehicle
 
     public Intention getVehicleIntention()
     {
-        return i;
+        return intention;
     }
 
     public Intention setVehicleIntention(Intention ir)
     {
-        if (ir == Intention.Food)
+        if (ir == null)
         {
-            i = ir;
+            throw new NotImplementedException("Intention not implemented");
         }
-        else if (ir == Intention.Gas)
+        else
         {
-            i = ir;
-        }
-        else if (ir == Intention.Goods)
-        {
-            i = ir;
-        }
-        else if (ir == Intention.Residential)
-        {
-            i = ir;
-        }
-        else if (ir == Intention.School)
-        {
-            i = ir;
-        }
-        else if (ir == Intention.Services)
-        {
-            i = ir;
-        }
-        else if (ir == Intention.Work)
-        {
-            i = ir;
+            intention = ir;
         }
         return ir;
     }
