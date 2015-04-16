@@ -42,8 +42,7 @@ public class IntersectionInlet : Object
     {
         get
         {
-            int size = sizeof(outgoingInlet.lanesIn);
-            return sizeof(outgoingInlet.lanesIn);
+            return outgoingInlet.lanesIn;
         }
     }
 
