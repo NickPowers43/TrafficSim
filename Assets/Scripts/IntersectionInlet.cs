@@ -44,6 +44,24 @@ public class IntersectionInlet : Object
         {
             return outgoingInlet.lanesIn;
         }
+        set
+        {
+            lanesOut = value;
+        }
+    }
+
+    private int maxLanes;
+
+    public int MaxLanes
+    {
+        get
+        {
+
+        }
+        set
+        {
+            maxLanes = value;
+        }
     }
 
     private IntersectionInlet outgoingInlet;
@@ -61,5 +79,53 @@ public class IntersectionInlet : Object
     }
 
     private LaneQueue[] laneQueues = new LaneQueue[3];
+
+    public bool CanLaneTurnLeft(int laneIndex)
+    {
+        if (laneIndex == null)
+        {
+            throw new NotImplementedException("Lane not implemented");
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public bool CanLaneTurnRight(int laneIndex)
+    {
+        if (laneIndex == null)
+        {
+            throw new NotImplementedException("Lane not implemented");
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public bool CanLaneGoStraight(int laneIndex)
+    {
+        if (laneIndex == null)
+        {
+            throw new NotImplementedException("Lane not implemented");
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public bool CanLaneUTurn(int laneIndex)
+    {
+        if (laneIndex == null)
+        {
+            throw new NotImplementedException("Lane not implemented");
+        }
+        else
+        {
+            return true;
+        }
+    }
 }
 

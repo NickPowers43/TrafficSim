@@ -8,6 +8,8 @@ public class Intersection : MonoBehaviour {
 
     public GameObject selectionSprite = null;
 
+    private IntersectionInlet[] inlets = new IntersectionInlet[4];
+
     private int index;
     public int Index
     {
