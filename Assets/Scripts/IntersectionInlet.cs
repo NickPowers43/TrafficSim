@@ -8,13 +8,20 @@ using System.Threading;
 
 public class IntersectionInlet : Object
 {
+    private Intersection parent;
     private int inletIndex;
     private LaneQueue[] laneQueues = new LaneQueue[3];
     private int lanesOut;
     private int maxLanes;
-
     private IntersectionInlet outgoingInlet;
 
+    public Intersection Parent
+    {
+        get
+        {
+            return parent;
+        }
+    }
     public int InletIndex
     {
         get
@@ -26,8 +33,6 @@ public class IntersectionInlet : Object
             inletIndex = value;
         }
     }
-
-
     public int LanesIn
     {
         get
@@ -44,9 +49,6 @@ public class IntersectionInlet : Object
             }
         }
     }
-
-   
-
     public int LanesOut
     {
         get
@@ -58,7 +60,6 @@ public class IntersectionInlet : Object
             lanesOut = value;
         }
     }
-
     public int MaxLanes
     {
         get
@@ -71,8 +72,6 @@ public class IntersectionInlet : Object
             maxLanes = value;
         }
     }
-
-
     public IntersectionInlet OutgoingInlet
     {
         get
@@ -85,6 +84,10 @@ public class IntersectionInlet : Object
         }
     }
 
+    public IntersectionInlet(Intersection parent)
+    {
+        this.parent = parent;
+    }
 
     public bool CanLaneTurnLeft(int laneIndex)
     {

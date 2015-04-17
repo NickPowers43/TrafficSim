@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Threading;
 using System.Collections.Generic;
@@ -29,8 +30,38 @@ public class Intersection : MonoBehaviour {
                 closest = node;
                 dist = currDist;
             }
+        }
 
-            node.selectionSprite.SetActive(false);
+        return closest;
+    }
+    public static Intersection ClosestToPosition(Vector3 position, ref float dist)
+    {
+        Intersection closest = null;
+        dist = float.PositiveInfinity;
+        foreach (Intersection node in intersections)
+        {
+            float currDist = Vector3.Magnitude(node.transform.position - position);
+            if (currDist < dist)
+            {
+                closest = node;
+                dist = currDist;
+            }
+        }
+
+        return closest;
+    }
+    public static Intersection ClosestToPositionAndInRadius(Vector3 position)
+    {
+        Intersection closest = null;
+        float dist = float.PositiveInfinity;
+        foreach (Intersection node in intersections)
+        {
+            float currDist = Vector3.Magnitude(node.transform.position - position);
+            if (currDist < dist && currDist < node.Radius)
+            {
+                closest = node;
+                dist = currDist;
+            }
         }
 
         return closest;
@@ -58,6 +89,20 @@ public class Intersection : MonoBehaviour {
 
     private IntersectionInlet[] inlets = new IntersectionInlet[4];
 
+    public IntersectionInlet GenerateInlet()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (inlets[i] == null)
+            {
+                inlets[i] = new IntersectionInlet(this);
+                return inlets[i];
+            }
+        }
+
+        throw new NotImplementedException();
+    }
+
     private List<Vehicle> vehicles = new List<Vehicle>();
 
     private int index;
@@ -70,6 +115,22 @@ public class Intersection : MonoBehaviour {
         set
         {
             index = value;
+        }
+    }
+
+    public int Degree
+    {
+        get
+        {
+            int j = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                if (inlets[i] != null)
+                {
+                    j++;
+                }
+            }
+            return j;
         }
     }
 

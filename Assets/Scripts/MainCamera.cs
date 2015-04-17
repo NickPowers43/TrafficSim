@@ -4,6 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
+public enum PointsOfInterest
+{
+    House = 0,
+    Food = 1,
+    Fuel = 2,
+    Services = 3,
+    Work = 4
+}
+
 public enum ToolArrays
 {
     Select,
@@ -32,6 +41,19 @@ public class ToolsArray
 
 public class Tool
 {
+    protected Intersection GetHoveredIntersection()
+    {
+        Vector3 cursorPos = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
+        cursorPos.z = BuildTools.INTERSECTION_Z;
+        return Intersection.ClosestToPositionAndInRadius(cursorPos);
+    }
+    protected void ToggleHighlight(Intersection intersection)
+    {
+        intersection.selectionSprite.SetActive(!intersection.selectionSprite.activeSelf);
+    }
+
+
+
     public virtual void Deactivate()
     {
 
@@ -60,11 +82,11 @@ public class SelectTools : ToolsArray
 
     class SelectIntersection : Tool
     {
-        private LinkedList<Intersection> intersections;
+        private Intersection currentHighlighted;
 
-        public SelectIntersection(LinkedList<Intersection> intersections)
+        public SelectIntersection()
         {
-            this.intersections = intersections;
+            currentHighlighted = null;
         }
 
         public override void Activate()
@@ -73,9 +95,10 @@ public class SelectTools : ToolsArray
         }
         public override void Deactivate()
         {
-            foreach (Intersection node in intersections)
+            if (currentHighlighted != null)
             {
-                node.selectionSprite.SetActive(false);
+                currentHighlighted.selectionSprite.SetActive(false);
+                currentHighlighted = null;
             }
         }
         public override void Initialize()
@@ -84,16 +107,7 @@ public class SelectTools : ToolsArray
         }
         public override void Update()
         {
-            //hilight nearby selectable objects
 
-            float dist = float.PositiveInfinity;
-
-            Intersection closest = Intersection.ClosestToCursor(ref dist);
-
-            if (dist < MAX_HOVER_HIGHLIGHT_DIST)
-            {
-                closest.selectionSprite.SetActive(true);
-            }
         }
         public override void OnClick()
         {
@@ -111,7 +125,7 @@ public class SelectTools : ToolsArray
 
     public SelectTools(LinkedList<Intersection> intersections)
     {
-        selectIntersection = new SelectIntersection(intersections);
+        selectIntersection = new SelectIntersection();
     }
 
     public void Activate(Tools toolToActivate)
@@ -158,16 +172,18 @@ public class SelectTools : ToolsArray
 
 public class BuildTools : ToolsArray
 {
-    private const float CURSOR_Z = -0.25f;
-    private const float INTERSECTION_Z = 0.0f;
+    public const float CURSOR_Z = -0.25f;
+    public const float INTERSECTION_Z = 0.0f;
 
-    class Connect : Tool
+    class BuildRoad : Tool
     {
-        Intersection currentSelected;
+        private GameObject roadPrefab;
+        private Intersection startNode;
 
-        public Connect()
+        public BuildRoad(GameObject roadPrefab)
         {
-            currentSelected = null;
+            this.roadPrefab = roadPrefab;
+            startNode = null;
         }
 
         public void Activate()
@@ -177,7 +193,11 @@ public class BuildTools : ToolsArray
 
         public override void Deactivate()
         {
-
+            if (startNode != null)
+            {
+                startNode.selectionSprite.SetActive(false);
+                startNode = null;
+            }
         }
         public override void Initialize()
         {
@@ -189,16 +209,39 @@ public class BuildTools : ToolsArray
         }
         public override void OnClick()
         {
+            Intersection hovered = GetHoveredIntersection();
+
+            if (hovered != null)
+            {
+                if (startNode != null)
+                {
+                    if (startNode.Degree < 4 && hovered.Degree < 4)
+                    {
+                        Road road = GameObject.Instantiate(roadPrefab).GetComponent<Road>();
+                        road.gameObject.transform.position = (startNode.transform.position + hovered.transform.position) * 0.5f;
+
+                        road.SetEndPoints(startNode.GenerateInlet(), hovered.GenerateInlet());
+                    }
+
+                    ToggleHighlight(startNode);
+                    startNode = null;
+                }
+                else
+                {
+                    startNode = hovered;
+                    ToggleHighlight(startNode);
+                }
+            }
 
         }
     }
 
-    class CreateIntersection : Tool
+    class BuildIntersection : Tool
     {
         private GameObject intersectionPrefab;
         private GameObject cursor;
 
-        public CreateIntersection(GameObject intersectionPrefab, GameObject cursor)
+        public BuildIntersection(GameObject intersectionPrefab, GameObject cursor)
         {
             this.intersectionPrefab = intersectionPrefab;
             this.cursor = cursor;
@@ -243,38 +286,75 @@ public class BuildTools : ToolsArray
         }
     }
 
+    class BuildPointOfInterest : Tool
+    {
+
+        public BuildPointOfInterest()
+        {
+
+        }
+
+        public void Activate()
+        {
+
+        }
+
+        public override void Deactivate()
+        {
+
+        }
+        public override void Initialize()
+        {
+
+        }
+        public override void Update()
+        {
+
+        }
+        public override void OnClick()
+        {
+
+        }
+    }
+
     public enum Tools
     {
-        CreateIntersection,
-        Connect
+        BuildPointOfInterest,
+        BuildIntersection,
+        BuildRoad
     }
 
     private Tool activeTool = null;
     private GameObject buildToolCursor;
     private GameObject intersectionPrefab;
     //Tool objects
-    private Connect connect;
-    private CreateIntersection createIntersection;
+    private BuildRoad buildRoad;
+    private BuildIntersection buildIntersection;
+    private BuildPointOfInterest buildPointOfInterest;
 
-    public BuildTools(GameObject buildToolCursorPrefab, GameObject intersectionPrefab)
+    public BuildTools(GameObject buildToolCursorPrefab, GameObject roadPrefab, GameObject intersectionPrefab)
     {
         this.intersectionPrefab = intersectionPrefab;
 
         buildToolCursor = GameObject.Instantiate(buildToolCursorPrefab);
 
-        connect = new Connect();
-        createIntersection = new CreateIntersection(intersectionPrefab, buildToolCursor);
+        buildRoad = new BuildRoad(roadPrefab);
+        buildIntersection = new BuildIntersection(intersectionPrefab, buildToolCursor);
+        buildPointOfInterest = new BuildPointOfInterest();
     }
 
     public void Activate(Tools tool)
     {
         switch (tool)
         {
-            case Tools.CreateIntersection:
-                activeTool = createIntersection;
+            case Tools.BuildPointOfInterest:
+                activeTool = buildPointOfInterest;
                 break;
-            case Tools.Connect:
-                activeTool = connect;
+            case Tools.BuildIntersection:
+                activeTool = buildIntersection;
+                break;
+            case Tools.BuildRoad:
+                activeTool = buildRoad;
                 break;
             default:
                 break;
@@ -286,8 +366,8 @@ public class BuildTools : ToolsArray
 
     public override void Initialize()
     {
-        connect.Initialize();
-        createIntersection.Initialize();
+        buildRoad.Initialize();
+        buildIntersection.Initialize();
     }
     public override void Deactivate()
     {
@@ -342,6 +422,7 @@ public class MainCamera : MonoBehaviour {
     public float uiTopBoundary;
     public GameObject buildToolCursorPrefab;
     public GameObject intersectionPrefab;
+    public GameObject roadPrefab;
 
     private Vector3 prevMousePos = new Vector3(0.0f, 0.0f, 0.0f);
     private ToolArrays activeTool = ToolArrays.Select;
@@ -350,10 +431,6 @@ public class MainCamera : MonoBehaviour {
     private SelectTools selectTools;
     private ToolsArray activeTools;
     LinkedListNode<Intersection> currentSelectedIntersection;
-    //select tool
-    //Intersection currentSelectedIntersection = null;
-    //build Connect Tool
-
 
     private Camera self;
     public Camera Self
@@ -370,45 +447,48 @@ public class MainCamera : MonoBehaviour {
 
         intersections = new LinkedList<Intersection>();
 
-        buildTools = new BuildTools(buildToolCursorPrefab, intersectionPrefab);
+        buildTools = new BuildTools(buildToolCursorPrefab, roadPrefab, intersectionPrefab);
         buildTools.Initialize();
         selectTools = new SelectTools(intersections);
         selectTools.Initialize();
 
         this.prevMousePos = Input.mousePosition;
 	}
-	
-    public void OnBuildRoadConnectClick()
+
+    private void DeactivateCurrentTool()
     {
         if (activeTools != null)
         {
-            activeTools.Deactivate(); 
+            activeTools.Deactivate();
         }
-        buildTools.Activate(BuildTools.Tools.Connect);
+    }
+    public void OnWorldSpaceClick()
+    {
+        activeTools.OnClick();
+    }
+	
+    public void OnBuildPointOfInterestClick(int poi)
+    {
+
+    }
+
+    public void OnBuildRoadClick()
+    {
+        DeactivateCurrentTool();
+        buildTools.Activate(BuildTools.Tools.BuildRoad);
         activeTools = buildTools;
     }
-    public void OnBuildRoadCreateIntersectionClick()
+    public void OnBuildIntersectionClick()
     {
-        if (activeTools != null)
-        {
-            activeTools.Deactivate(); 
-        }
-        buildTools.Activate(BuildTools.Tools.CreateIntersection);
+        DeactivateCurrentTool();
+        buildTools.Activate(BuildTools.Tools.BuildIntersection);
         activeTools = buildTools;
     }
     public void OnSelectClick()
     {
-        if (activeTools != null)
-        {
-            activeTools.Deactivate(); 
-        }
+        DeactivateCurrentTool();
         selectTools.Activate(SelectTools.Tools.Intersection);
         activeTools = selectTools;
-    }
-
-    public void OnWorldSpaceClick()
-    {
-        activeTools.OnClick();
     }
 
 	void Update () {
