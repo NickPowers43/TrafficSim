@@ -21,21 +21,45 @@ public enum ToolArrays
 
 public class ToolsArray
 {
+    protected Tool activeTool = null;
+    protected Tool ActiveTool
+    {
+        get
+        {
+            return activeTool;
+        }
+        set
+        {
+            if (activeTool != null)
+            {
+                activeTool.Deactivate();
+            }
+            activeTool = value;
+            activeTool.Activate();
+        }
+    }
+
     public virtual void Deactivate()
     {
-
-    }
-    public virtual void Initialize()
-    {
-
+        if (activeTool != null)
+        {
+            activeTool.Deactivate();
+            activeTool = null;
+        }
     }
     public virtual void Update()
     {
-
+        if (activeTool != null)
+        {
+            activeTool.Update(); 
+        }
     }
     public virtual void OnClick()
     {
-
+        if (activeTool != null)
+        {
+            activeTool.OnClick(); 
+        }
     }
 }
 
@@ -43,13 +67,17 @@ public class Tool
 {
     protected Intersection GetHoveredIntersection()
     {
-        Vector3 cursorPos = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
-        cursorPos.z = BuildTools.INTERSECTION_Z;
-        return Intersection.ClosestToPositionAndInRadius(cursorPos);
+        return Intersection.ClosestToPositionAndInRadius(CursorPos(BuildTools.INTERSECTION_Z));
     }
     protected void ToggleHighlight(Intersection intersection)
     {
         intersection.selectionSprite.SetActive(!intersection.selectionSprite.activeSelf);
+    }
+    protected Vector3 CursorPos(float z)
+    {
+        Vector3 cursorPos = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
+        cursorPos.z = z;
+        return cursorPos;
     }
 
 
@@ -59,10 +87,6 @@ public class Tool
 
     }
     public virtual void Activate()
-    {
-
-    }
-    public virtual void Initialize()
     {
 
     }
@@ -101,10 +125,6 @@ public class SelectTools : ToolsArray
                 currentHighlighted = null;
             }
         }
-        public override void Initialize()
-        {
-
-        }
         public override void Update()
         {
 
@@ -133,39 +153,10 @@ public class SelectTools : ToolsArray
         switch (toolToActivate)
         {
             case Tools.Intersection:
-                activeTool = selectIntersection;
+                ActiveTool = selectIntersection;
                 break;
             default:
                 break;
-        }
-
-        activeTool.Activate();
-    }
-
-    public override void Initialize()
-    {
-        selectIntersection.Initialize();
-    }
-    public override void Deactivate()
-    {
-        if (activeTool != null)
-        {
-            activeTool.Deactivate();
-            activeTool = null; 
-        }
-    }
-    public override void Update()
-    {
-        if (activeTool != null)
-        {
-            activeTool.Update(); 
-        }
-    }
-    public override void OnClick()
-    {
-        if (activeTool != null)
-        {
-            activeTool.OnClick(); 
         }
     }
 }
@@ -199,13 +190,12 @@ public class BuildTools : ToolsArray
                 startNode = null;
             }
         }
-        public override void Initialize()
-        {
-
-        }
         public override void Update()
         {
-
+            if (startNode != null)
+            {
+                Debug.DrawLine(startNode.transform.position, CursorPos(INTERSECTION_Z), new Color(0, 0, 0), 1.0f, true);
+            }
         }
         public override void OnClick()
         {
@@ -249,19 +239,21 @@ public class BuildTools : ToolsArray
 
         public void Activate()
         {
-
+            cursor.SetActive(true);
         }
-
         public override void Deactivate()
         {
-
-        }
-        public override void Initialize()
-        {
-
+            cursor.SetActive(false);
         }
         public override void Update()
         {
+            //rotate cursor
+            cursor.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), Time.deltaTime * 360.0f);
+            //position cursor
+            Vector3 cursorPosition = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
+            cursorPosition.z = CURSOR_Z;
+            cursor.transform.position = cursorPosition;
+
             //color cursor appropriately
             Vector3 cursorPos = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
             cursorPos.z = INTERSECTION_Z;
@@ -288,6 +280,14 @@ public class BuildTools : ToolsArray
 
     class BuildPointOfInterest : Tool
     {
+        private PointsOfInterest poi;
+        public PointsOfInterest POI
+        {
+            set
+            {
+                poi = value;
+            }
+        }
 
         public BuildPointOfInterest()
         {
@@ -298,12 +298,7 @@ public class BuildTools : ToolsArray
         {
 
         }
-
         public override void Deactivate()
-        {
-
-        }
-        public override void Initialize()
         {
 
         }
@@ -337,6 +332,7 @@ public class BuildTools : ToolsArray
         this.intersectionPrefab = intersectionPrefab;
 
         buildToolCursor = GameObject.Instantiate(buildToolCursorPrefab);
+        buildToolCursor.SetActive(false);
 
         buildRoad = new BuildRoad(roadPrefab);
         buildIntersection = new BuildIntersection(intersectionPrefab, buildToolCursor);
@@ -348,55 +344,28 @@ public class BuildTools : ToolsArray
         switch (tool)
         {
             case Tools.BuildPointOfInterest:
-                activeTool = buildPointOfInterest;
+                ActiveTool = buildPointOfInterest;
                 break;
             case Tools.BuildIntersection:
-                activeTool = buildIntersection;
+                ActiveTool = buildIntersection;
                 break;
             case Tools.BuildRoad:
-                activeTool = buildRoad;
+                ActiveTool = buildRoad;
                 break;
             default:
                 break;
         }
-
-        buildToolCursor.SetActive(true);
-        activeTool.Activate();
     }
-
-    public override void Initialize()
+    public void Activate(Tools tool, int index)
     {
-        buildRoad.Initialize();
-        buildIntersection.Initialize();
-    }
-    public override void Deactivate()
-    {
-        if (activeTool != null)
+        switch (tool)
         {
-            activeTool.Deactivate();
-            activeTool = null;
-        }
-        buildToolCursor.SetActive(false);
-    }
-    public override void Update()
-    {
-        if (activeTool != null)
-        {
-            activeTool.Update();
-
-            //rotate cursor
-            buildToolCursor.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), Time.deltaTime * 360.0f);
-            //position cursor
-            Vector3 cursorPosition = MainCamera.Instance.Self.ScreenToWorldPoint(Input.mousePosition);
-            cursorPosition.z = CURSOR_Z;
-            buildToolCursor.transform.position = cursorPosition;
-        }
-    }
-    public override void OnClick()
-    {
-        if (activeTool != null)
-        {
-            activeTool.OnClick(); 
+            case Tools.BuildPointOfInterest:
+                buildPointOfInterest.POI = (PointsOfInterest)index;
+                ActiveTool = buildPointOfInterest;
+                break;
+            default:
+                break;
         }
     }
 }
@@ -448,9 +417,7 @@ public class MainCamera : MonoBehaviour {
         intersections = new LinkedList<Intersection>();
 
         buildTools = new BuildTools(buildToolCursorPrefab, roadPrefab, intersectionPrefab);
-        buildTools.Initialize();
         selectTools = new SelectTools(intersections);
-        selectTools.Initialize();
 
         this.prevMousePos = Input.mousePosition;
 	}
@@ -469,7 +436,9 @@ public class MainCamera : MonoBehaviour {
 	
     public void OnBuildPointOfInterestClick(int poi)
     {
-
+        DeactivateCurrentTool();
+        buildTools.Activate(BuildTools.Tools.BuildPointOfInterest, poi);
+        activeTools = buildTools;
     }
 
     public void OnBuildRoadClick()
