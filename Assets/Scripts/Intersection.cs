@@ -17,7 +17,7 @@ public enum PointsOfInterest
 public class Intersection : MonoBehaviour {
 
     public const float Z_POSITION = 0.0f;
-    private const int MAX_THREAD_STACK_SIZE = 1024;
+    private const int MAX_THREAD_STACK_SIZE = 2 << 10; // 2KB
     public const float INITIAL_RADIUS = 0.09f;
 
     private static LinkedList<Intersection> intersections = new LinkedList<Intersection>();
@@ -159,17 +159,6 @@ public class Intersection : MonoBehaviour {
     }
 
     private bool running;
-    public bool Running
-    {
-        get
-        {
-            return running;
-        }
-        set
-        {
-            running = value;
-        }
-    }
 
     private Thread thread;
     public Thread Thread
@@ -208,13 +197,21 @@ public class Intersection : MonoBehaviour {
     }
     private void RunMethod()
     {
-        while (true)
+        while (running)
         {
             //check incoming car queues
 
             //iterate street light state
 
 
+        }
+    }
+    public void Stop()
+    {
+        if (running)
+        {
+            running = false;
+            thread.Join(Timeout.Infinite);
         }
     }
 

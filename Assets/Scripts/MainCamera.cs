@@ -26,6 +26,7 @@ public class MainCamera : MonoBehaviour {
     public GameObject buildToolCursorPrefab;
     public GameObject intersectionPrefab;
     public GameObject roadPrefab;
+    public GameObject stopSimulationButton;
 
     private Vector3 prevMousePos = new Vector3(0.0f, 0.0f, 0.0f);
     private LinkedList<Intersection> intersections;
@@ -101,12 +102,29 @@ public class MainCamera : MonoBehaviour {
         activeTools = selectTools;
     }
 
+    bool simulationRunning = false;
+
     public void OnStartClick()
     {
+        if (simulationRunning)
+            OnStopClick();
+
         Navigator navigator = new Navigator();
         Navigator.Instance = navigator;
 
         //TODO: start simulation
+
+
+        if (true)
+        {
+            stopSimulationButton.SetActive(true);
+        }
+    }
+
+    public void OnStopClick()
+    {
+        stopSimulationButton.SetActive(false);
+
     }
 
 	void Update () {
