@@ -50,8 +50,8 @@ public class MainCamera : MonoBehaviour {
 
         intersections = new LinkedList<Intersection>();
 
-        buildTools = new BuildTools(buildToolCursorPrefab, roadPrefab, intersectionPrefab);
-        selectTools = new SelectTools(intersections);
+        buildTools = new Tools.Build.ToolBar(buildToolCursorPrefab, roadPrefab, intersectionPrefab);
+        selectTools = new Tools.Select.ToolBar(intersections);
 
         this.prevMousePos = Input.mousePosition;
 	}
