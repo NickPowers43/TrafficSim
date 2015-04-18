@@ -5,9 +5,42 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
 using System.Text;
+using Utility;
 
 public class LaneQueue
 {
+
+    private static List<LaneQueue> laneQueues = new List<LaneQueue>();
+    public static List<LaneQueue> LaneQueues
+    {
+        get
+        {
+            return laneQueues;
+        }
+    }
+
+    private static List<WeightedEdge<LaneQueue>> laneQueueEdges = new List<WeightedEdge<LaneQueue>>();
+    public static List<WeightedEdge<LaneQueue>> LaneQueueEdges
+    {
+        get
+        {
+            return laneQueueEdges;
+        }
+    }
+
+    private static int nextIndex;
+    public static int NextIndex
+    {
+        get
+        {
+            return nextIndex;
+        }
+        set
+        {
+            nextIndex = value;
+        }
+    }
+
     private int index;
     public int Index
     {
@@ -61,7 +94,6 @@ public class LaneQueue
     }
 
     private bool turningSymbol;
-
     public bool TurningSymbol
     {
         get
@@ -75,7 +107,6 @@ public class LaneQueue
     }
 
     private bool straight;
-
     public bool Straight
     {
         get
@@ -102,7 +133,6 @@ public class LaneQueue
     }
 
     private bool right;
-
     public bool Right
     {
         get
@@ -116,7 +146,6 @@ public class LaneQueue
     }
 
     private bool uturn;
-
     public bool Uturn
     {
         get
@@ -126,6 +155,19 @@ public class LaneQueue
         set
         {
             uturn = value;
+        }
+    }
+
+    private bool isDestination;
+    public bool IsDestination
+    {
+        get
+        {
+            return isDestination;
+        }
+        set
+        {
+            isDestination = value;
         }
     }
 

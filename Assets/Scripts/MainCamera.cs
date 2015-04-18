@@ -93,6 +93,70 @@ public class MainCamera : MonoBehaviour {
         activeTools = selectTools;
     }
 
+    public void OnStartClick()
+    {
+        //clear everything
+        LaneQueue.LaneQueueEdges.Clear();
+
+        foreach (Intersection intersection in Intersection.Intersections)
+        {
+            intersection.ConnectInlets();
+        }
+
+
+        List<int> destinationIndices = new List<int>(LaneQueue.NextIndex / 4);
+        foreach (LaneQueue laneQueue in LaneQueue.LaneQueues)
+        {
+            if (laneQueue.IsDestination)
+            {
+                destinationIndices.Add(laneQueue.Index); 
+            }
+        }
+
+        float[][] leastCostMat = Utility.BellmanFord.RunAlgorithm(LaneQueue.LaneQueueEdges, LaneQueue.NextIndex);
+
+
+        //node i is a destination create a column
+        LaneQueue[][] nextHopFirst = new LaneQueue[LaneQueue.NextIndex][];
+        LaneQueue[][] nextHopSecond = new LaneQueue[LaneQueue.NextIndex][];
+        for (int i = 0; i < destinationIndices.Count; i++)
+            nextHopFirst[destinationIndices[i]] = new LaneQueue[LaneQueue.NextIndex];
+        for (int i = 0; i < destinationIndices.Count; i++)
+            nextHopSecond[destinationIndices[i]] = new LaneQueue[LaneQueue.NextIndex];
+
+        int start = 0;
+        while (start < Intersection.Intersections.Count)
+        {
+            for (int i = 0; i < destinationIndices.Count; i++)
+                FindNextHop(
+                    ref start,
+                    leastCostMat,
+                    destinationIndices[i],
+                    out nextHopFirst[destinationIndices[i]][LaneQueue.LaneQueueEdges[start].start.Index],
+                    out nextHopSecond[destinationIndices[i]][LaneQueue.LaneQueueEdges[start].start.Index]);
+        }
+    }
+
+    private void FindNextHop(ref int start, float[][] leastCostMat, int dest, out LaneQueue first, out LaneQueue second)
+    {
+        float lowestCost = leastCostMat[LaneQueue.LaneQueueEdges[start].end.Index][dest];
+        first = LaneQueue.LaneQueueEdges[start].end;
+        second = null;
+        LaneQueue startNode = LaneQueue.LaneQueueEdges[start].start;
+
+        //continue until we meet an edge that does not start from startNode
+        while (startNode == LaneQueue.LaneQueueEdges[++start].start)
+        {
+            float cost = leastCostMat[LaneQueue.LaneQueueEdges[start].end.Index][dest];
+            if (lowestCost > cost)
+            {
+                lowestCost = cost;
+                second = first;
+                first = LaneQueue.LaneQueueEdges[start].end;
+            }
+        }
+    }
+
 	void Update () {
 
         transform.position += new Vector3(0.0f, Input.GetAxis("Vertical") * CAMERA_MOVE_SPEED * Time.deltaTime, 0.0f);

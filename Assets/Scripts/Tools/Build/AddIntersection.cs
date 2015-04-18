@@ -10,14 +10,6 @@ namespace Tools.Build
     {
         private GameObject intersectionPrefab;
         private GameObject cursor;
-        private bool adding;
-        public bool Adding
-        {
-            set
-            {
-                adding = value;
-            }
-        }
 
         public AddIntersection(GameObject intersectionPrefab, GameObject cursor)
         {

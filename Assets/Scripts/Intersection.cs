@@ -256,4 +256,15 @@ public class Intersection : MonoBehaviour {
             vehicles.Remove(v);
         }
     }
+
+    public void ConnectInlets()
+    {
+        //TODO: void Intersection.ConnectInlets()
+    }
+
+    public void RemoveInlet(int index)
+    {
+        //TODO: void Intersection.RemoveInlet(int index)
+        inlets[index] = null;
+    }
 }

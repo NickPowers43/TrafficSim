@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class Road : MonoBehaviour {
 
-    private static LinkedList<Road> roads = new LinkedList<Road>();
-    public static LinkedList<Road> Roads
+    private static List<Road> roads = new List<Road>();
+    public static List<Road> Roads
     {
         get
         {
@@ -82,7 +82,7 @@ public class Road : MonoBehaviour {
         this.source = null;
         this.destination = null;
 
-        roads.AddLast(this);
+        roads.Add(this);
 	}
 	
 	void Update () 
@@ -92,4 +92,10 @@ public class Road : MonoBehaviour {
             Debug.DrawLine(source.Parent.transform.position, destination.Parent.transform.position, new Color(0, 0, 0));
         }
 	}
+
+    public void Disconnect()
+    {
+        source.Parent.RemoveInlet(source.InletIndex);
+        destination.Parent.RemoveInlet(destination.InletIndex);
+    }
 }
