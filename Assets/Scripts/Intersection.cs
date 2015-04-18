@@ -4,8 +4,19 @@ using System.Collections;
 using System.Threading;
 using System.Collections.Generic;
 
+public enum PointsOfInterest
+{
+    House = 0,
+    Food = 1,
+    Fuel = 2,
+    Services = 3,
+    Work = 4,
+    None = 5
+}
+
 public class Intersection : MonoBehaviour {
 
+    public const float Z_POSITION = 0.0f;
     private const int MAX_THREAD_STACK_SIZE = 1024;
     public const float INITIAL_RADIUS = 0.09f;
 
