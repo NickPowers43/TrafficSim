@@ -40,10 +40,11 @@ namespace Tools.Build
         {
             base.OnClick();
 
-            GameObject nodeGO = (GameObject)GameObject.Instantiate(intersectionPrefab);
-            nodeGO.transform.position = CursorPos(Intersection.Z_POSITION);
-
-            //UpdateRoadNetwork();
+            if (!Intersection.CheckOverlap(CursorPos(Intersection.Z_POSITION), Intersection.INITIAL_RADIUS))
+            {
+                GameObject nodeGO = (GameObject)GameObject.Instantiate(intersectionPrefab);
+                nodeGO.transform.position = CursorPos(Intersection.Z_POSITION);
+            }
         }
     }
 }
