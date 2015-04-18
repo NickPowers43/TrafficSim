@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: 6223bff8b8f6c2447ab6faffc7109dea
-timeCreated: 1428258153
+timeCreated: 1429329333
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: sprite_sheet_0
+    21300002: sprite_sheet_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -54,6 +55,16 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 959
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sprite_sheet_1
+      rect:
+        serializedVersion: 2
+        x: 64
         y: 959
         width: 64
         height: 64

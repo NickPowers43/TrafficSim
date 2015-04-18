@@ -28,7 +28,6 @@ public class MainCamera : MonoBehaviour {
     public GameObject roadPrefab;
 
     private Vector3 prevMousePos = new Vector3(0.0f, 0.0f, 0.0f);
-    private ToolArrays activeTool = ToolArrays.Select;
     private LinkedList<Intersection> intersections;
     private Tools.Build.ToolBar buildTools;
     private Tools.Select.ToolBar selectTools;
@@ -45,13 +44,20 @@ public class MainCamera : MonoBehaviour {
     }
 
 	void Start () {
+
+        LaneQueue.NextIndex = 0;
+
+        Tools.Build.BuildTool.Cursor = GameObject.Instantiate(buildToolCursorPrefab);
+        Tools.Build.BuildTool.IntersectionPrefab = intersectionPrefab;
+        Tools.Build.BuildTool.RoadPrefab = roadPrefab;
+
         Instance = this;
         self = GetComponent<Camera>();
 
         intersections = new LinkedList<Intersection>();
 
-        buildTools = new Tools.Build.ToolBar(buildToolCursorPrefab, roadPrefab, intersectionPrefab);
-        selectTools = new Tools.Select.ToolBar(intersections);
+        buildTools = new Tools.Build.ToolBar();
+        selectTools = new Tools.Select.ToolBar();
 
         this.prevMousePos = Input.mousePosition;
 	}
@@ -65,7 +71,10 @@ public class MainCamera : MonoBehaviour {
     }
     public void OnWorldSpaceClick()
     {
-        activeTools.OnClick();
+        if (activeTools != null)
+        {
+            activeTools.OnClick();
+        }
     }
 
     public void OnBuildPointOfInterestClick(int arg)

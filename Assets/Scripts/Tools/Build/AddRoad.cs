@@ -6,24 +6,23 @@ using System.Text;
 
 namespace Tools.Build
 {
-    class BuildRoad : Tool
+    class AddRoad : BuildTool
     {
-        private GameObject roadPrefab;
         private Intersection startNode;
 
-        public BuildRoad(GameObject roadPrefab)
+        public AddRoad()
         {
-            this.roadPrefab = roadPrefab;
             startNode = null;
         }
 
-        public void Activate()
+        public override void Activate()
         {
-
+            base.Activate();
         }
-
         public override void Deactivate()
         {
+            base.Deactivate();
+
             if (startNode != null)
             {
                 startNode.selectionSprite.SetActive(false);
@@ -32,6 +31,8 @@ namespace Tools.Build
         }
         public override void Update()
         {
+            base.Update();
+
             if (startNode != null)
             {
                 Debug.DrawLine(startNode.transform.position, CursorPos(Intersection.Z_POSITION), new Color(0, 0, 0), 1.0f, true);
@@ -39,6 +40,8 @@ namespace Tools.Build
         }
         public override void OnClick()
         {
+            base.OnClick();
+
             Intersection hovered = GetHoveredIntersection();
 
             if (hovered != null)
@@ -62,7 +65,6 @@ namespace Tools.Build
                     ToggleHighlight(startNode);
                 }
             }
-
         }
     }
 }

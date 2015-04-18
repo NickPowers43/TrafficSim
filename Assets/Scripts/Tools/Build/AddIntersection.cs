@@ -6,31 +6,23 @@ using System.Text;
 
 namespace Tools.Build
 {
-    class AddIntersection : Tool
+    class AddIntersection : BuildTool
     {
-        private GameObject intersectionPrefab;
-        private GameObject cursor;
-
-        public AddIntersection(GameObject intersectionPrefab, GameObject cursor)
+        public AddIntersection()
         {
-            this.intersectionPrefab = intersectionPrefab;
-            this.cursor = cursor;
         }
 
-        public void Activate()
+        public override void Activate()
         {
-            cursor.SetActive(true);
+            base.Activate();
         }
         public override void Deactivate()
         {
-            cursor.SetActive(false);
+            base.Deactivate();
         }
         public override void Update()
         {
-            //rotate cursor
-            cursor.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), Time.deltaTime * 360.0f);
-            //position cursor
-            cursor.transform.position = CursorPos(CURSOR_Z);
+            base.Update();
 
             //color cursor appropriately
             if (!Intersection.CheckOverlap(CursorPos(Intersection.Z_POSITION), Intersection.INITIAL_RADIUS))
@@ -46,6 +38,8 @@ namespace Tools.Build
         }
         public override void OnClick()
         {
+            base.OnClick();
+
             GameObject nodeGO = (GameObject)GameObject.Instantiate(intersectionPrefab);
             nodeGO.transform.position = CursorPos(Intersection.Z_POSITION);
 

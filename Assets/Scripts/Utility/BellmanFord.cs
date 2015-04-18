@@ -77,6 +77,11 @@ namespace Utility
         }
         public static float[][] RunAlgorithm(ICollection<WeightedEdge<LaneQueue>> edges, int size)
         {
+            if(size < 1)
+            {
+                throw new ArgumentException();
+            }
+
             float[][] c = ComputeCostMatrix(edges, size);
             float[][] d = Utility.DuplicateSquareMat(c);
             float[][] prevD = Utility.SquareMat(size, 0.0f);

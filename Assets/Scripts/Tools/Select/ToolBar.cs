@@ -17,9 +17,9 @@ namespace Tools.Select
         private Tool activeTool;
         SelectIntersection selectIntersection;
 
-        public ToolBar(LinkedList<Intersection> intersections)
+        public ToolBar()
         {
-            selectIntersection = new SelectIntersection();
+
         }
 
         public void Activate(Tools toolToActivate)

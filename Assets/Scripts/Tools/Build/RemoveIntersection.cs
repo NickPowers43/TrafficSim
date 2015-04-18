@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Tools.Build
 {
-    public class RemoveIntersection : Tool
+    public class RemoveIntersection : BuildTool
     {
         private Intersection currentHighlighted;
 
@@ -16,9 +16,12 @@ namespace Tools.Build
 
         public void Activate()
         {
+            base.Activate();
         }
         public override void Deactivate()
         {
+            base.Deactivate();
+
             if (currentHighlighted != null)
             {
                 currentHighlighted.selectionSprite.SetActive(false);
@@ -27,6 +30,8 @@ namespace Tools.Build
         }
         public override void Update()
         {
+            base.Update();
+
             Intersection temp = GetHoveredIntersection();
 
             if (currentHighlighted != temp)
@@ -42,6 +47,8 @@ namespace Tools.Build
         }
         public override void OnClick()
         {
+            base.OnClick();
+
             if (currentHighlighted != null)
             {
                 for (int i = 0; i < Road.Roads.Count; i++)

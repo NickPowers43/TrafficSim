@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Tools.Build
 {
-    class AddPointOfInterest : Tool
+    public class AddPointOfInterest : Tool
     {
         private PointsOfInterest poi;
         public PointsOfInterest POI
@@ -21,21 +21,21 @@ namespace Tools.Build
 
         }
 
-        public void Activate()
+        public override void Activate()
         {
-
+            base.Activate();
         }
         public override void Deactivate()
         {
-
+            base.Deactivate();
         }
         public override void Update()
         {
-
+            base.Update();
         }
         public override void OnClick()
         {
-
+            base.OnClick();
         }
     }
 }

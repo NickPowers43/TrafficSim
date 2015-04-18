@@ -18,23 +18,15 @@ namespace Tools.Build
             BuildRoad
         }
 
-        private Tool activeTool = null;
-        private GameObject buildToolCursor;
-        private GameObject intersectionPrefab;
         //Tool objects
-        private BuildRoad buildRoad;
+        private AddRoad addRoad;
         private AddIntersection addIntersection;
         private AddPointOfInterest addPointOfInterest;
 
-        public ToolBar(GameObject buildToolCursorPrefab, GameObject roadPrefab, GameObject intersectionPrefab)
+        public ToolBar()
         {
-            this.intersectionPrefab = intersectionPrefab;
-
-            buildToolCursor = GameObject.Instantiate(buildToolCursorPrefab);
-            buildToolCursor.SetActive(false);
-
-            buildRoad = new BuildRoad(roadPrefab);
-            addIntersection = new AddIntersection(intersectionPrefab, buildToolCursor);
+            addRoad = new AddRoad();
+            addIntersection = new AddIntersection();
             addPointOfInterest = new AddPointOfInterest();
         }
 
@@ -49,7 +41,7 @@ namespace Tools.Build
                     ActiveTool = addIntersection;
                     break;
                 case Tools.BuildRoad:
-                    ActiveTool = buildRoad;
+                    ActiveTool = addRoad;
                     break;
                 default:
                     break;
