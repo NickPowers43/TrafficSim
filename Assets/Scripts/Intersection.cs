@@ -200,9 +200,19 @@ public class Intersection : MonoBehaviour {
         while (running)
         {
             //check incoming car queues
+            if (vehicles == null)
+            {
+                throw new NotImplementedException("Vehicle queue is empty");
+            }
+            else
+            {
+                Run();
+            }
 
             //iterate street light state
+            double interarrival = 0.0;
 
+            
 
         }
     }
