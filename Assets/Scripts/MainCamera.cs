@@ -123,6 +123,7 @@ public class MainCamera : MonoBehaviour {
     {
         stopSimulationButton.SetActive(false);
 
+        simulationRunning = true;
     }
 
 	void Update () {
