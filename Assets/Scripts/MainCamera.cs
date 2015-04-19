@@ -105,13 +105,15 @@ public class MainCamera : MonoBehaviour {
     public void OnStartClick()
     {
         if (simulationRunning)
+        {
             OnStopClick();
+        }
 
         Navigator navigator = new Navigator();
         Navigator.Instance = navigator;
 
         //TODO: start simulation
-        if (true)
+        if (simulationRunning == true)
         {
             stopSimulationButton.SetActive(true);
         }
