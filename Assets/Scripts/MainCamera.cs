@@ -29,11 +29,9 @@ public class MainCamera : MonoBehaviour {
     public GameObject stopSimulationButton;
 
     private Vector3 prevMousePos = new Vector3(0.0f, 0.0f, 0.0f);
-    private LinkedList<Intersection> intersections;
     private Tools.Build.ToolBar buildTools;
     private Tools.Select.ToolBar selectTools;
     private ToolArray activeTools;
-    LinkedListNode<Intersection> currentSelectedIntersection;
 
     private Camera self;
     public Camera Self
@@ -55,21 +53,13 @@ public class MainCamera : MonoBehaviour {
         Instance = this;
         self = GetComponent<Camera>();
 
-        intersections = new LinkedList<Intersection>();
-
+        activeTools = null;
         buildTools = new Tools.Build.ToolBar();
         selectTools = new Tools.Select.ToolBar();
 
         this.prevMousePos = Input.mousePosition;
 	}
 
-    private void DeactivateCurrentTool()
-    {
-        if (activeTools != null)
-        {
-            activeTools.Deactivate();
-        }
-    }
     public void OnWorldSpaceClick()
     {
         if (activeTools != null)
@@ -77,29 +67,37 @@ public class MainCamera : MonoBehaviour {
             activeTools.OnClick();
         }
     }
+    private ToolArray ActiveTools
+    {
+        set
+        {
+            if (activeTools != null)
+            {
+                activeTools.Deactivate();
+            }
+            activeTools = value;
+        }
+    }
+
     public void OnBuildPointOfInterestClick(int arg)
     {
-        DeactivateCurrentTool();
+        ActiveTools = buildTools;
         buildTools.Activate(Tools.Build.ToolBar.Tools.BuildPointOfInterest, arg);
-        activeTools = buildTools;
     }
-    public void OnBuildRoadClick()
+    public void OnBuildRoadClick(bool arg)
     {
-        DeactivateCurrentTool();
-        buildTools.Activate(Tools.Build.ToolBar.Tools.BuildRoad);
-        activeTools = buildTools;
+        ActiveTools = buildTools;
+        buildTools.Activate(Tools.Build.ToolBar.Tools.BuildRoad, arg);
     }
     public void OnBuildIntersectionClick(bool arg)
     {
-        DeactivateCurrentTool();
+        ActiveTools = buildTools;
         buildTools.Activate(Tools.Build.ToolBar.Tools.BuildIntersection, arg);
-        activeTools = buildTools;
     }
     public void OnSelectClick()
     {
-        DeactivateCurrentTool();
+        ActiveTools = selectTools;
         selectTools.Activate(Tools.Select.ToolBar.Tools.Intersection);
-        activeTools = selectTools;
     }
 
     bool simulationRunning = false;

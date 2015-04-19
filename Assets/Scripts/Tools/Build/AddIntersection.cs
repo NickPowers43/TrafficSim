@@ -40,6 +40,8 @@ namespace Tools.Build
         {
             base.OnClick();
 
+            Debug.Log("AddIntersection.OnClick()");
+
             if (!Intersection.CheckOverlap(CursorPos(Intersection.Z_POSITION), Intersection.INITIAL_RADIUS))
             {
                 GameObject nodeGO = (GameObject)GameObject.Instantiate(intersectionPrefab);

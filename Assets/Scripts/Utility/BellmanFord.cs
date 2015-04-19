@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Utility
 {
@@ -81,6 +82,8 @@ namespace Utility
             {
                 throw new ArgumentException();
             }
+
+            Debug.Log("Computing bellman ford algorithm\n|V| = " + size.ToString() + "\n|E| = " + edges.Count.ToString());
 
             float[][] c = ComputeCostMatrix(edges, size);
             float[][] d = Utility.DuplicateSquareMat(c);

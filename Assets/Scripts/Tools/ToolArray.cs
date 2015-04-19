@@ -25,7 +25,10 @@ namespace Tools
                     activeTool.Deactivate();
                 }
                 activeTool = value;
-                activeTool.Activate();
+                if (activeTool != null)
+                {
+                    activeTool.Activate();
+                }
             }
         }
 

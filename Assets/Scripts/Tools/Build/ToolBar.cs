@@ -20,13 +20,17 @@ namespace Tools.Build
 
         //Tool objects
         private AddRoad addRoad;
+        private RemoveRoad removeRoad;
         private AddIntersection addIntersection;
+        private RemoveIntersection removeIntersection;
         private AddPointOfInterest addPointOfInterest;
 
         public ToolBar()
         {
             addRoad = new AddRoad();
+            removeRoad = new RemoveRoad();
             addIntersection = new AddIntersection();
+            removeIntersection = new RemoveIntersection();
             addPointOfInterest = new AddPointOfInterest();
         }
 
@@ -34,17 +38,8 @@ namespace Tools.Build
         {
             switch (tool)
             {
-                case Tools.BuildPointOfInterest:
-                    ActiveTool = addPointOfInterest;
-                    break;
-                case Tools.BuildIntersection:
-                    ActiveTool = addIntersection;
-                    break;
-                case Tools.BuildRoad:
-                    ActiveTool = addRoad;
-                    break;
                 default:
-                    break;
+                    throw new NotImplementedException();
             }
         }
         public void Activate(Tools tool, int arg)
@@ -63,7 +58,7 @@ namespace Tools.Build
                     }
                     break;
                 default:
-                    break;
+                    throw new NotImplementedException();
             }
         }
         public void Activate(Tools tool, bool arg)
@@ -77,11 +72,21 @@ namespace Tools.Build
                     }
                     else
                     {
-
+                        ActiveTool = removeIntersection;
+                    }
+                    break;
+                case Tools.BuildRoad:
+                    if (arg)
+                    {
+                        ActiveTool = addRoad;
+                    }
+                    else
+                    {
+                        ActiveTool = removeRoad;
                     }
                     break;
                 default:
-                    break;
+                    throw new NotImplementedException();
             }
         }
     } 

@@ -25,7 +25,7 @@ namespace Tools.Build
 
             if (startNode != null)
             {
-                startNode.selectionSprite.SetActive(false);
+                ToggleHighlight(startNode);
                 startNode = null;
             }
         }
@@ -33,14 +33,12 @@ namespace Tools.Build
         {
             base.Update();
 
-            if (startNode != null)
-            {
-                Debug.DrawLine(startNode.transform.position, CursorPos(Intersection.Z_POSITION), new Color(0, 0, 0), 1.0f, true);
-            }
         }
         public override void OnClick()
         {
             base.OnClick();
+
+            Debug.Log("AddRoad.OnClick()");
 
             Intersection hovered = GetHoveredIntersection();
 
