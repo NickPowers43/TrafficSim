@@ -106,7 +106,7 @@ public class Intersection : MonoBehaviour {
         {
             if (inlets[i] == null)
             {
-                inlets[i] = new IntersectionInlet(this);
+                inlets[i] = new IntersectionInlet(this, i);
                 return inlets[i];
             }
         }

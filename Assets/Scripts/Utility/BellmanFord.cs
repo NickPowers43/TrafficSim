@@ -8,6 +8,19 @@ namespace Utility
 {
     public class BellmanFord
     {
+        private static void PrintMatrix(float[][] mat)
+        {
+            for (int i = 0; i < mat.Length; i++)
+            {
+                string temp = "[" + mat[i][0].ToString();
+                for (int j = 1; j < mat[i].Length; j++)
+                {
+                    temp += ", " + mat[i][j].ToString();
+                }
+                temp += "]";
+                Debug.Log(temp);
+            }
+        }
         private static void CopyData<T>(T[][] src, T[][] dst)
         {
             for (int i = 0; i < src.Length; i++)
@@ -86,17 +99,21 @@ namespace Utility
             Debug.Log("Computing bellman ford algorithm\n|V| = " + size.ToString() + "\n|E| = " + edges.Count.ToString());
 
             float[][] c = ComputeCostMatrix(edges, size);
-            float[][] d = Utility.DuplicateSquareMat(c);
-            float[][] prevD = Utility.SquareMat(size, 0.0f);
+            float[][] d = Utility.SquareMat(size, 0.0f);
+            float[][] prevD = Utility.DuplicateSquareMat(c);
 
-            bool same = false;
-            while (!same)
+            int iterations = 0;
+
+            bool diff = true;
+            while (diff && iterations < size)
             {
+                iterations++;
+
                 float[][] temp = prevD;
                 prevD = d;
                 d = temp;
 
-                same = false;
+                diff = false;
                 for (int i = 0; i < size; i++)
                 {
                     for (int j = 0; j < size; j++)
@@ -110,10 +127,14 @@ namespace Utility
                             d[i][j] = 0;
                         }
 
-                        same |= d[i][j] != prevD[i][j];
+                        diff |= d[i][j] != prevD[i][j];
                     }
                 }
-                same = !same;
+
+                Debug.Log("Printing C");
+                PrintMatrix(c);
+                Debug.Log("Printing D");
+                PrintMatrix(d);
             }
 
             return d;

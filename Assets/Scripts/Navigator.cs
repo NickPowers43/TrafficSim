@@ -44,13 +44,13 @@ public class Navigator
     {
         //clear everything
         LaneQueue.LaneQueueEdges.Clear();
+        LaneQueue.NextIndex = 0;
 
         foreach (Intersection intersection in Intersection.Intersections)
         {
             intersection.ConnectInlets();
         }
 
-        
         //Run Bellman Ford algorithm to compute the lowest cost to get from
         //node i to node j.
         float[][] leastCostMat = Utility.BellmanFord.RunAlgorithm(LaneQueue.LaneQueueEdges, LaneQueue.NextIndex);
@@ -63,6 +63,8 @@ public class Navigator
 
         //Fill the non-null columns of the nextHop matrices
         PopulateNextHopMatrices(leastCostMat, destinationIndices, nextHopMats);
+
+        LaneQueue.LaneQueueEdges.Clear();
     }
 
     private LaneQueue[][][] GetNextHopMatrices(int priorities, List<int> destinations)

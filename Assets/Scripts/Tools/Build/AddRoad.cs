@@ -38,8 +38,6 @@ namespace Tools.Build
         {
             base.OnClick();
 
-            Debug.Log("AddRoad.OnClick()");
-
             Intersection hovered = GetHoveredIntersection();
 
             if (hovered != null)

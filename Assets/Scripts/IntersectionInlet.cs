@@ -10,7 +10,7 @@ public class IntersectionInlet : Object
 {
     private Intersection parent;
     private int inletIndex;
-    private LaneQueue[] laneQueues = new LaneQueue[1];
+    private LaneQueue[] laneQueues;
     private int lanesOut;
     private int maxLanes;
     private IntersectionInlet outgoingInlet;
@@ -95,9 +95,16 @@ public class IntersectionInlet : Object
         }
     }
 
-    public IntersectionInlet(Intersection parent)
+    public IntersectionInlet(Intersection parent, int inletIndex)
     {
+        this.inletIndex = inletIndex;
         this.parent = parent;
+
+        laneQueues = new LaneQueue[1];
+        for (int i = 0; i < laneQueues.Length; i++)
+        {
+            laneQueues[i] = new LaneQueue();
+        }
     }
 
     public bool CanLaneTurnLeft(int laneIndex)
@@ -146,13 +153,26 @@ public class IntersectionInlet : Object
         {
             laneQueues[i].Index = LaneQueue.NextIndex++;
 
+            //connect laneQueues[i] to all appropriate other lane queues. Connect them in such a way that
+            //all edges originating from laneQueues[i] are consecutive in the LaneQueue.LaneQueueEdges List.
+
+
             //TODO: do this differently for cases where it is turn only
-            if (true) // Left turn lane
-                ConnectToAll(laneQueues[i], left.OutgoingInlet.LaneQueues);
-            if (true) // Straight lane
-                ConnectToAll(laneQueues[i], straight.OutgoingInlet.LaneQueues);
-            if (true) // Right turn lane
-                ConnectToAll(laneQueues[i], right.OutgoingInlet.LaneQueues);
+            if (left != null)
+            {
+                if (true) // Left turn lane
+                    ConnectToAll(laneQueues[i], left.OutgoingInlet.LaneQueues); 
+            }
+            if (straight != null)
+            {
+                if (true) // Straight lane
+                    ConnectToAll(laneQueues[i], straight.OutgoingInlet.LaneQueues); 
+            }
+            if (right != null)
+            {
+                if (true) // Right turn lane
+                    ConnectToAll(laneQueues[i], right.OutgoingInlet.LaneQueues); 
+            }
             if (true) // U-turn lane
                 ConnectToAll(laneQueues[i], outgoingInlet.LaneQueues);
         }
