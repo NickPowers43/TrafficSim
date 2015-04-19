@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public class Navigator
 {
@@ -32,36 +33,34 @@ public class Navigator
         }
     }
 
-    /// <summary>
-    /// <remarks>
-    /// Ensure that the following variables are populated:
-    /// LaneQueue.LaneQueues,
-    /// LaneQueue.LaneQueueEdges,
-    /// LaneQueue.NextIndex
-    /// </remarks>
-    /// </summary>
     public Navigator()
     {
         //clear everything
+        LaneQueue.LaneQueues.Clear();
         LaneQueue.LaneQueueEdges.Clear();
         LaneQueue.NextIndex = 0;
 
+        Debug.Log("Iterating over intersections");
         //build new LaneQueue edges
         foreach (Intersection intersection in Intersection.Intersections)
         {
             intersection.ConnectInlets();
         }
 
+        Debug.Log("Invoking BellmanFord.RunAlgorithm");
         //Run Bellman Ford algorithm to compute the lowest cost to get from
         //node i to node j.
         float[][] leastCostMat = Utility.BellmanFord.RunAlgorithm(LaneQueue.LaneQueueEdges, LaneQueue.NextIndex);
 
+
+        Debug.Log("generate next hop matrices");
         //generate next hop matrices
         //the vehicles are assumed to never query most of the columns of this matrix. 
         //The matrices therefore will have nullable entries for the column
         List<int> destinationIndices = GetListOfDestinationIndices();
         nextHopMats = GetNextHopMatrices(2, destinationIndices);
 
+        Debug.Log("Filling the non-null columns of the nextHop matrices");
         //Fill the non-null columns of the nextHop matrices
         PopulateNextHopMatrices(leastCostMat, destinationIndices, nextHopMats);
 
@@ -100,7 +99,7 @@ public class Navigator
     private void PopulateNextHopMatrices(float[][] leastCostMat, List<int> dstIndices, LaneQueue[][][] nextHopMats)
     {
         int start = 0;
-        while (start < Intersection.Intersections.Count)
+        while (start < LaneQueue.NextIndex)
         {
             for (int i = 0; i < dstIndices.Count; i++)
                 FindNextHop(
@@ -119,15 +118,20 @@ public class Navigator
         LaneQueue startNode = LaneQueue.LaneQueueEdges[start].start;
 
         //continue until we meet an edge that does not start from startNode
-        while (startNode == LaneQueue.LaneQueueEdges[++start].start)
+        while (++start < LaneQueue.NextIndex)
         {
-            float cost = leastCostMat[LaneQueue.LaneQueueEdges[start].end.Index][dest];
-            if (lowestCost > cost)
+            if (startNode == LaneQueue.LaneQueueEdges[start].start)
             {
-                lowestCost = cost;
-                second = first;
-                first = LaneQueue.LaneQueueEdges[start].end;
+                float cost = leastCostMat[LaneQueue.LaneQueueEdges[start].end.Index][dest];
+                if (lowestCost > cost)
+                {
+                    lowestCost = cost;
+                    second = first;
+                    first = LaneQueue.LaneQueueEdges[start].end;
+                }
             }
+            else
+                break;
         }
     }
 }

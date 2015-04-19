@@ -10,16 +10,17 @@ namespace Utility
     {
         private static void PrintMatrix(float[][] mat)
         {
+            string temp = "";
             for (int i = 0; i < mat.Length; i++)
             {
-                string temp = "[" + mat[i][0].ToString();
+                temp += "[" + mat[i][0].ToString();
                 for (int j = 1; j < mat[i].Length; j++)
                 {
                     temp += ", " + mat[i][j].ToString();
                 }
-                temp += "]";
-                Debug.Log(temp);
+                temp += "]\n";
             }
+            Debug.Log(temp);
         }
         private static void CopyData<T>(T[][] src, T[][] dst)
         {
@@ -99,10 +100,13 @@ namespace Utility
             Debug.Log("Computing bellman ford algorithm\n|V| = " + size.ToString() + "\n|E| = " + edges.Count.ToString());
 
             float[][] c = ComputeCostMatrix(edges, size);
-            float[][] d = Utility.SquareMat(size, 0.0f);
-            float[][] prevD = Utility.DuplicateSquareMat(c);
+            float[][] d = Utility.DuplicateSquareMat(c);
+            float[][] prevD = Utility.SquareMat(size, 0.0f);
 
             int iterations = 0;
+
+            Debug.Log("Printing C");
+            PrintMatrix(c);
 
             bool diff = true;
             while (diff && iterations < size)
@@ -131,8 +135,6 @@ namespace Utility
                     }
                 }
 
-                Debug.Log("Printing C");
-                PrintMatrix(c);
                 Debug.Log("Printing D");
                 PrintMatrix(d);
             }

@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using UnityEngine;
 
-public class IntersectionInlet : Object
+public class IntersectionInlet
 {
     private Intersection parent;
     private int inletIndex;
@@ -151,6 +152,7 @@ public class IntersectionInlet : Object
     {
         for (int i = 0; i < laneQueues.Length; i++)
         {
+            LaneQueue.LaneQueues.Add(laneQueues[i]);
             laneQueues[i].Index = LaneQueue.NextIndex++;
 
             //connect laneQueues[i] to all appropriate other lane queues. Connect them in such a way that

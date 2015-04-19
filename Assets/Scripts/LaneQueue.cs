@@ -171,18 +171,13 @@ public class LaneQueue
         }
     }
 
-    private LaneQueue[] destinations;
-
-    public LaneQueue[] Destinations
+    public LaneQueue()
     {
-        get
-        {
-            return destinations;
-        }
-        set
-        {
-            destinations = value;
-        }
+        isDestination = true;
+        left = true;
+        right = true;
+        straight = true;
+        uturn = true;
     }
 
     private Queue<Vehicle> vehicleQueue = new Queue<Vehicle>();
