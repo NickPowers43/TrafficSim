@@ -46,6 +46,7 @@ public class Navigator
         LaneQueue.LaneQueueEdges.Clear();
         LaneQueue.NextIndex = 0;
 
+        //build new LaneQueue edges
         foreach (Intersection intersection in Intersection.Intersections)
         {
             intersection.ConnectInlets();
