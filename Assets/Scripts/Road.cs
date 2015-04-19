@@ -78,6 +78,16 @@ public class Road : MonoBehaviour {
 
         source.OutgoingInlet = destination;
         destination.OutgoingInlet = source;
+
+        float length = Vector3.Magnitude(source.Parent.transform.position - destination.Parent.transform.position);
+        for (int i = 0; i < source.LaneQueues.Length; i++)
+        {
+            source.LaneQueues[i].MaxLength = length;
+        }
+        for (int i = 0; i < destination.LaneQueues.Length; i++)
+        {
+            destination.LaneQueues[i].MaxLength = length;
+        }
     }
 
 	void Start ()
@@ -100,5 +110,10 @@ public class Road : MonoBehaviour {
     {
         source.Parent.RemoveInlet(source.InletIndex);
         destination.Parent.RemoveInlet(destination.InletIndex);
+    }
+
+    public static void SplitWithDegenerate(Vector3 position, )
+    {
+
     }
 }

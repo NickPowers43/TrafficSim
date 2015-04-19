@@ -173,6 +173,8 @@ public class LaneQueue
 
     public LaneQueue()
     {
+        maxLength = 0.0f;
+
         isDestination = true;
         left = true;
         right = true;

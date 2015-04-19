@@ -143,7 +143,7 @@ public class IntersectionInlet
             Utility.WeightedEdge<LaneQueue> edge;
             edge.start = lq;
             edge.end = lqs[i];
-            edge.weight = 1.0f;
+            edge.weight = lqs[i].MaxLength;
             LaneQueue.LaneQueueEdges.Add(edge);
         }
     }

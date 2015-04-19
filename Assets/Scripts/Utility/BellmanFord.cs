@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using System.Globalization;
 
 namespace Utility
 {
@@ -13,10 +14,10 @@ namespace Utility
             string temp = "";
             for (int i = 0; i < mat.Length; i++)
             {
-                temp += "[" + mat[i][0].ToString();
+                temp += "[" + mat[i][0].ToString("F", CultureInfo.InvariantCulture);
                 for (int j = 1; j < mat[i].Length; j++)
                 {
-                    temp += ", " + mat[i][j].ToString();
+                    temp += ", " + mat[i][j].ToString("F", CultureInfo.InvariantCulture);
                 }
                 temp += "]\n";
             }
