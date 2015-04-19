@@ -84,6 +84,25 @@ public class IntersectionInlet : Object
         }
     }
 
+    public void ConnectLaneQueues(IntersectionInlet left, IntersectionInlet forward, IntersectionInlet right)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (left.CanLaneTurnLeft(i) == true && forward.CanLaneGoStraight(i) == true)
+            {
+                left = forward;
+            }
+            if (left.CanLaneTurnLeft(i) == true && right.CanLaneTurnRight(i) == true)
+            {
+                left = right;
+            }
+            if (right.CanLaneTurnRight(i) == true && forward.CanLaneGoStraight(i) == true)
+            {
+                right = forward;
+            }
+        }
+    }
+
     public IntersectionInlet(Intersection parent)
     {
         this.parent = parent;

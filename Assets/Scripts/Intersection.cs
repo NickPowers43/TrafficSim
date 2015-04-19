@@ -260,6 +260,20 @@ public class Intersection : MonoBehaviour {
     public void ConnectInlets()
     {
         //TODO: void Intersection.ConnectInlets()
+        Intersection inter = new Intersection();
+        IntersectionInlet maininlet = GenerateInlet();
+        IntersectionInlet rightinlet = GenerateInlet();
+        IntersectionInlet leftinlet = GenerateInlet();
+        IntersectionInlet forwardinlet = GenerateInlet();
+
+        if (maininlet != null)
+        {
+            maininlet.ConnectLaneQueues(leftinlet, forwardinlet, rightinlet);
+        }
+        else
+        {
+            throw new NotImplementedException("Main Inlet Not Implemented");
+        }
     }
 
     public void RemoveInlet(int index)
