@@ -75,6 +75,9 @@ public class Road : MonoBehaviour {
     {
         this.source = source;
         this.destination = destination;
+
+        source.OutgoingInlet = destination;
+        destination.OutgoingInlet = source;
     }
 
 	void Start ()

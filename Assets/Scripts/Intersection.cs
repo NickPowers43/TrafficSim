@@ -257,6 +257,14 @@ public class Intersection : MonoBehaviour {
     public void ConnectInlets()
     {
         //TODO: void Intersection.ConnectInlets()
+        if (inlets[0] != null)
+            inlets[0].ConnectLaneQueues(inlets[3], inlets[1], inlets[2]);
+        if (inlets[1] != null)
+            inlets[1].ConnectLaneQueues(inlets[2], inlets[0], inlets[3]);
+        if (inlets[2] != null)
+            inlets[2].ConnectLaneQueues(inlets[0], inlets[3], inlets[1]);
+        if (inlets[3] != null)
+            inlets[3].ConnectLaneQueues(inlets[1], inlets[2], inlets[0]);
     }
 
     public void RemoveInlet(int index)
