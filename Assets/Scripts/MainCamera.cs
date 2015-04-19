@@ -109,12 +109,19 @@ public class MainCamera : MonoBehaviour {
         if (simulationRunning)
             OnStopClick();
 
+        LaneQueue.NextIndex = 0;
+
+        foreach (Intersection intersection in Intersection.Intersections)
+        {
+            intersection.ConnectInlets();
+        }
+
         Navigator navigator = new Navigator();
         Navigator.Instance = navigator;
 
+        LaneQueue.LaneQueueEdges.Clear();
+
         //TODO: start simulation
-
-
         if (true)
         {
             stopSimulationButton.SetActive(true);
