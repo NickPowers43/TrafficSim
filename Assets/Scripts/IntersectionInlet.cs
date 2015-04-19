@@ -148,11 +148,11 @@ public class IntersectionInlet : Object
 
             //TODO: do this differently for cases where it is turn only
             if (true) // Left turn lane
-                ConnectToAll(laneQueues[i], left.LaneQueues);
+                ConnectToAll(laneQueues[i], left.OutgoingInlet.LaneQueues);
             if (true) // Straight lane
-                ConnectToAll(laneQueues[i], straight.LaneQueues);
+                ConnectToAll(laneQueues[i], straight.OutgoingInlet.LaneQueues);
             if (true) // Right turn lane
-                ConnectToAll(laneQueues[i], right.LaneQueues);
+                ConnectToAll(laneQueues[i], right.OutgoingInlet.LaneQueues);
             if (true) // U-turn lane
                 ConnectToAll(laneQueues[i], outgoingInlet.LaneQueues);
         }
