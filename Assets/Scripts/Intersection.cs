@@ -92,11 +92,6 @@ public class Intersection : MonoBehaviour {
         return false;
     }
 
-    private static void UpdateRoadNetwork()
-    {
-
-    }
-
     public GameObject selectionSprite = null;
 
     private IntersectionInlet[] inlets = new IntersectionInlet[4];
