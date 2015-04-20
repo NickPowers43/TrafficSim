@@ -210,19 +210,30 @@ public class Intersection : MonoBehaviour {
                 Run();
             }
 
+            Vehicle v = new Vehicle();
+
             //iterate street light state
             tlight.OperateTrafficLightsatIntersection(this.index);
 
             for (int i = 0; i < this.index; i++)
             {
-                if (tlight.Green == true)
-                {
-                    inlets[i].SetInletTrafficLight(tlight.Green);
+                for (int j = 0; j < i; j++){
+                    IntersectionInlet source = inlets[i];
+                    IntersectionInlet destination = inlets[j];
+                    if (tlight.Green == true)
+                    {
+                        source.SetInletTrafficLight(tlight.Green);
+                        if (source.CanLaneGoStraight(i))
+                        {
+                            vehicles.Add()
+                        }
+                    }
+                    else
+                    {
+                        inlets[i].SetInletTrafficLight(tlight.Red);
+                    }
                 }
-                else
-                {
-                    inlets[i].SetInletTrafficLight(tlight.Red);
-                }
+                
             }
 
         }
