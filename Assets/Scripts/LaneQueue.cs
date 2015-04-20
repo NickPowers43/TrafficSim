@@ -184,29 +184,44 @@ public class LaneQueue
 
     private Queue<Vehicle> vehicleQueue = new Queue<Vehicle>();
 
-    private Vehicle vehicle = new Vehicle();
-
     void Start(){
         
     }
 
-    public void Queue()
+    public void Queue(Vehicle vehicle)
     {
         CurrentLength = vehicleQueue.Sum(length => vehicle.getVehicleLength());
         vehicleQueue.Enqueue(vehicle);
     }
-    
-    public void DeQueue()
+
+    public Vehicle DeQueue()
     {
-        CurrentLength = vehicleQueue.Sum(length => vehicle.getVehicleLength());
-        vehicleQueue.Dequeue();
+        if (vehicleQueue.Count > 0)
+        {
+            Vehicle v = vehicleQueue.Dequeue();
+            CurrentLength -= v.getVehicleLength();
+            return v;
+        }
+        else
+        {
+            return null;
+        }
     }
 
-    public void Full()
+    public bool Available(float length)
     {
-        if (MaxLength < CurrentLength)
+        return MaxLength < CurrentLength + length;
+    }
+
+    public Vehicle Peek()
+    {
+        if (vehicleQueue.Count > 0)
         {
-            Console.WriteLine("Queue is Full.");
+            return vehicleQueue.Peek(); 
+        }
+        else
+        {
+            return null;
         }
     }
 }

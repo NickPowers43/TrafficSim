@@ -200,42 +200,40 @@ public class Intersection : MonoBehaviour {
     {
         while (running)
         {
-            //check incoming car queues
-            if (vehicles == null)
-            {
-                throw new NotImplementedException("Vehicle queue is empty");
-            }
-            else
-            {
-                Run();
-            }
-
             Vehicle v = new Vehicle();
 
             //iterate street light state
             tlight.OperateTrafficLightsatIntersection(this.index);
 
-            for (int i = 0; i < this.index; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < i; j++){
-                    IntersectionInlet source = inlets[i];
-                    IntersectionInlet destination = inlets[j];
-                    if (tlight.Green == true)
+                for (int j = 0; j < inlets[i].LaneQueues.Length; j++)
+			    {
+                    LaneQueue source = inlets[i].LaneQueues[j];
+                    Vehicle turningVehicle = null;
+
+                    lock (source)
                     {
-                        source.SetInletTrafficLight(tlight.Green);
-                        if (source.CanLaneGoStraight(i))
-                        {
-                            vehicles.Add()
-                        }
+                        turningVehicle = source.DeQueue();
+                    }
+
+                    //determine what to do with first vehicle
+                    if (turningVehicle.Destination == source.Index)
+                    {
+                        //TODO: take vehicle out of simulation
                     }
                     else
                     {
-                        inlets[i].SetInletTrafficLight(tlight.Red);
-                    }
-                }
-                
-            }
+                        //route vehicle to its destination
+                        LaneQueue destination = Navigator.Instance.GetNextHop(0, source.Index, turningVehicle.Destination);
 
+                        lock (destination)
+                        {
+                            destination.Queue(turningVehicle);
+                        }
+                    }
+			    }
+            }
         }
     }
     public void Stop()
