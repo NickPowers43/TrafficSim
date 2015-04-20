@@ -118,11 +118,12 @@ public class Road : MonoBehaviour {
             destination.LaneQueues[i].MaxLength = length;
         }
 
+        this.transform.position = source.Parent.transform.position;
         float rotation = Mathf.Atan2(pathVector.y, pathVector.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.identity;
         transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), rotation);
 
-        tarmacGO.transform.position = new Vector3(0.5f * length, 0.0f, 0.0f);
+        tarmacGO.transform.localPosition = new Vector3(-0.5f * length, 0.0f, 0.0f);
         tarmacGO.transform.localScale = new Vector3(length, Intersection.INITIAL_RADIUS * 2.0f, 1.0f);
     }
 

@@ -44,7 +44,7 @@ namespace Tools.Build
             {
                 if (startNode != null)
                 {
-                    if (startNode.Degree < 4 && hovered.Degree < 4)
+                    if (startNode.Degree < 4 && hovered.Degree < 4 && startNode != hovered)
                     {
                         Road road = GameObject.Instantiate(Road.Prefab).GetComponent<Road>();
                         road.gameObject.transform.position = (startNode.transform.position + hovered.transform.position) * 0.5f;
