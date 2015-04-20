@@ -20,8 +20,6 @@ public class Intersection : MonoBehaviour {
     private const int MAX_THREAD_STACK_SIZE = 2 << 10; // 2KB
     public const float INITIAL_RADIUS = 0.09f;
     private TrafficLight tlight = new TrafficLight();
-    private IntersectionInlet[] opposite = new IntersectionInlet[2];
-    private IntersectionInlet[] adjacent = new IntersectionInlet[2];
 
     private static LinkedList<Intersection> intersections = new LinkedList<Intersection>();
     public static LinkedList<Intersection> Intersections
@@ -213,17 +211,17 @@ public class Intersection : MonoBehaviour {
             }
 
             //iterate street light state
-            tlight.OperateTrafficLightsatIntersection(index);
+            tlight.OperateTrafficLightsatIntersection(this.index);
 
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < this.index; i++)
             {
                 if (tlight.Green == true)
                 {
-                    opposite[i].SetInletTrafficLight(tlight.Green);
+                    inlets[i].SetInletTrafficLight(tlight.Green);
                 }
                 else
                 {
-                    adjacent[i].SetInletTrafficLight(tlight.Red);
+                    inlets[i].SetInletTrafficLight(tlight.Red);
                 }
             }
 
