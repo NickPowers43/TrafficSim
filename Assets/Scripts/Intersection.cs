@@ -19,6 +19,9 @@ public class Intersection : MonoBehaviour {
     public const float Z_POSITION = 0.0f;
     private const int MAX_THREAD_STACK_SIZE = 2 << 10; // 2KB
     public const float INITIAL_RADIUS = 0.09f;
+    private TrafficLight tlight = new TrafficLight();
+    private IntersectionInlet[] opposite = new IntersectionInlet[2];
+    private IntersectionInlet[] adjacent = new IntersectionInlet[2];
 
     private static LinkedList<Intersection> intersections = new LinkedList<Intersection>();
     public static LinkedList<Intersection> Intersections
@@ -210,9 +213,19 @@ public class Intersection : MonoBehaviour {
             }
 
             //iterate street light state
-            double interarrival = 0.0;
+            tlight.OperateTrafficLightsatIntersection(index);
 
-            
+            for (int i = 0; i < index; i++)
+            {
+                if (tlight.Green == true)
+                {
+                    opposite[i].SetInletTrafficLight(tlight.Green);
+                }
+                else
+                {
+                    adjacent[i].SetInletTrafficLight(tlight.Red);
+                }
+            }
 
         }
     }

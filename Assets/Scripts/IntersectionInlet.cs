@@ -15,6 +15,7 @@ public class IntersectionInlet
     private int lanesOut;
     private int maxLanes;
     private IntersectionInlet outgoingInlet;
+    private TrafficLight t;
 
     public LaneQueue[] LaneQueues
     {
@@ -105,6 +106,18 @@ public class IntersectionInlet
         for (int i = 0; i < laneQueues.Length; i++)
         {
             laneQueues[i] = new LaneQueue();
+        }
+    }
+
+    public bool SetInletTrafficLight(bool trl)
+    {
+        if (trl == null)
+        {
+            throw new NotImplementedException("Traffic Light not added");
+        }
+        else
+        {
+            return trl;
         }
     }
 

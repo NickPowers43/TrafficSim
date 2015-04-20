@@ -6,15 +6,21 @@ using System.Threading.Timer;
 using System.Linq;
 using System.Text;
 
-public class TrafficLight
+public class TrafficLight: Object
 {
     private bool red;
     private bool yellow;
     private bool green;
 
     private object threadLock = new object();
+    private object streetlight = new object();
 
-    private LaneQueue lanequeue = new LaneQueue();
+    private List<TrafficLight> traffic = new List<TrafficLight>();
+    private Queue<Vehicle> vqueue = new Queue<Vehicle>();
+    private Vehicle[] v;
+    private Navigator n = new Navigator();
+
+    private LaneQueue[] lanequeue;
     private Thread control;
     private TimerCallback callback;
     private Timer t;
@@ -23,7 +29,6 @@ public class TrafficLight
     {
         get
         {
-            PauseThread();
             return red;
         }
         set
@@ -36,7 +41,6 @@ public class TrafficLight
     {
         get
         {
-            ResumeThread();
             return green;
         }
         set
@@ -45,34 +49,33 @@ public class TrafficLight
         }
     }
 
-    public void SlowDown()
+    public bool Yellow
     {
-        if (yellow == true)
+        get
         {
-            callback = new TimerCallback(lanequeue);
+            return yellow;
+        }
+        set
+        {
+            yellow = value;
         }
     }
 
-    public void PauseThread()
+    public void OperateTrafficLightsatIntersection(int index)
     {
-        if (red == true)
+        for (int i = 0; i < index; i++)
         {
-            lock (threadLock)
+            for (int j = 0; j < i; i++)
             {
-                control = lanequeue.WaitingThread;
-                Monitor.Wait(control);
-            }
-        }
-    }
-
-    public void ResumeThread()
-    {
-        if (green == true)
-        {
-            lock (threadLock)
-            {
-                control = lanequeue.WaitingThread;
-                Monitor.Pulse(control);
+                
+                lock (n.GetNextHop(0, i, j))
+                {
+                    vqueue.Dequeue();
+                }
+                lock (n.GetNextHop(0, j, i))
+                {
+                    vqueue.Enqueue(v[i]);
+                }
             }
         }
     }
