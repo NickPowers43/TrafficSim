@@ -36,6 +36,15 @@ namespace Tools.Build
         public override void OnClick()
         {
             base.OnClick();
+
+            float dist = 0.0f;
+            Road road = Road.ClosestToCursor(ref dist, CursorPos(Intersection.Z_POSITION));
+
+            if (road != null)
+            {
+                Intersection i = road.SplitWithDegenerate(CursorPos(Intersection.Z_POSITION));
+                i.MakePOI(poi);
+            }
         }
     }
 }

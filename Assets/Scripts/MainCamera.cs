@@ -42,13 +42,26 @@ public class MainCamera : MonoBehaviour {
         }
     }
 
+    private static float speedMultiplier = 1.0f;
+    public static float SpeedMultiplier
+    {
+        get
+        {
+            return speedMultiplier;
+        }
+        set
+        {
+            speedMultiplier = value;
+        }
+    }
+
 	void Start () {
 
         LaneQueue.NextIndex = 0;
 
         Tools.Build.BuildTool.Cursor = GameObject.Instantiate(buildToolCursorPrefab);
-        Tools.Build.BuildTool.IntersectionPrefab = intersectionPrefab;
-        Tools.Build.BuildTool.RoadPrefab = roadPrefab;
+        Intersection.Prefab = intersectionPrefab;
+        Road.Prefab = roadPrefab;
 
         Instance = this;
         self = GetComponent<Camera>();

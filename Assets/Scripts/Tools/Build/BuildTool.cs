@@ -8,32 +8,6 @@ namespace Tools.Build
 {
     public class BuildTool : Tool
     {
-        protected static GameObject roadPrefab;
-        public static GameObject RoadPrefab
-        {
-            get
-            {
-                return roadPrefab;
-            }
-            set
-            {
-                roadPrefab = value;
-            }
-        }
-
-        protected static GameObject intersectionPrefab;
-        public static GameObject IntersectionPrefab
-        {
-            get
-            {
-                return intersectionPrefab;
-            }
-            set
-            {
-                intersectionPrefab = value;
-            }
-        }
-
         protected static GameObject cursor;
         public static GameObject Cursor
         {

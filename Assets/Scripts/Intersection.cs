@@ -16,6 +16,35 @@ public enum PointsOfInterest
 
 public class Intersection : MonoBehaviour {
 
+    private static GameObject prefab;
+    public static GameObject Prefab
+    {
+        get
+        {
+            return prefab;
+        }
+        set
+        {
+            prefab = value;
+        }
+    }
+
+    public Sprite[] POISprites;
+    public GameObject iconGO;
+
+    private PointsOfInterest poi;
+    public PointsOfInterest POI
+    {
+        get
+        {
+            return poi;
+        }
+        set
+        {
+            poi = value;
+        }
+    }
+
     public const float Z_POSITION = 0.0f;
     private const int MAX_THREAD_STACK_SIZE = 2 << 10; // 2KB
     public const float INITIAL_RADIUS = 0.09f;
@@ -95,20 +124,6 @@ public class Intersection : MonoBehaviour {
     public GameObject selectionSprite = null;
 
     private IntersectionInlet[] inlets = new IntersectionInlet[4];
-
-    public IntersectionInlet GenerateInlet()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            if (inlets[i] == null)
-            {
-                inlets[i] = new IntersectionInlet(this, i);
-                return inlets[i];
-            }
-        }
-
-        throw new NotImplementedException();
-    }
 
     private List<Vehicle> vehicles = new List<Vehicle>();
 
@@ -198,16 +213,20 @@ public class Intersection : MonoBehaviour {
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < inlets[i].LaneQueues.Length; j++)
-			    {
+                {
+                    //handle any point of interest duties
+                    HandlePOI();
+
                     LaneQueue source = inlets[i].LaneQueues[j];
                     Vehicle turningVehicle = null;
 
+                    //get vehicle coming into intersection
                     lock (source)
                     {
                         turningVehicle = source.DeQueue();
                     }
 
-                    //determine what to do with first vehicle
+                    //determine what to do with the vehicle
                     if (turningVehicle.Destination == source.Index)
                     {
                         //TODO: take vehicle out of simulation
@@ -215,8 +234,15 @@ public class Intersection : MonoBehaviour {
                     else
                     {
                         //route vehicle to its destination
+
+                        //sleep for some amount of time to simulate time
+                        float time = 1.0f;//seconds
+                        Thread.Sleep(new TimeSpan((long)(TimeSpan.TicksPerSecond * time * MainCamera.SpeedMultiplier)));
+
+                        //get the destination LaneQueue to deposit the vehicle
                         LaneQueue destination = Navigator.Instance.GetNextHop(0, source.Index, turningVehicle.Destination);
 
+                        //transfer the vehicle to the next intersection
                         lock (destination)
                         {
                             destination.Queue(turningVehicle);
@@ -232,6 +258,29 @@ public class Intersection : MonoBehaviour {
         {
             running = false;
             thread.Join(Timeout.Infinite);
+        }
+    }
+
+    private void HandlePOI()
+    {
+        //spawn vehicles that have an appropriate destination
+
+        switch (poi)
+        {
+            case PointsOfInterest.House:
+                break;
+            case PointsOfInterest.Food:
+                break;
+            case PointsOfInterest.Fuel:
+                break;
+            case PointsOfInterest.Services:
+                break;
+            case PointsOfInterest.Work:
+                break;
+            case PointsOfInterest.None:
+                break;
+            default:
+                break;
         }
     }
 
@@ -261,16 +310,18 @@ public class Intersection : MonoBehaviour {
         //}
     }
 
-    public void createPointofInterest(int destination)
+    public void MakePOI(PointsOfInterest poi)
     {
-        Vehicle v = new Vehicle();
-        if (v.Destination == index)
+        this.poi = poi;
+
+        if (poi == PointsOfInterest.None)
         {
-            vehicles.Add(v);
+            iconGO.SetActive(false);
         }
         else
         {
-            vehicles.Remove(v);
+            iconGO.SetActive(true);
+            iconGO.GetComponent<SpriteRenderer>().sprite = POISprites[(int)poi];
         }
     }
 
@@ -291,5 +342,19 @@ public class Intersection : MonoBehaviour {
     {
         //TODO: void Intersection.RemoveInlet(int index)
         inlets[index] = null;
+    }
+
+    public IntersectionInlet GenerateInlet()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (inlets[i] == null)
+            {
+                inlets[i] = new IntersectionInlet(this, i);
+                return inlets[i];
+            }
+        }
+
+        throw new NotImplementedException();
     }
 }
