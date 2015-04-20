@@ -19,7 +19,7 @@ public class Intersection : MonoBehaviour {
     public const float Z_POSITION = 0.0f;
     private const int MAX_THREAD_STACK_SIZE = 2 << 10; // 2KB
     public const float INITIAL_RADIUS = 0.09f;
-    private TrafficLight tlight = new TrafficLight();
+    //private TrafficLight tlight = new TrafficLight();
 
     private static LinkedList<Intersection> intersections = new LinkedList<Intersection>();
     public static LinkedList<Intersection> Intersections
@@ -200,11 +200,6 @@ public class Intersection : MonoBehaviour {
     {
         while (running)
         {
-            Vehicle v = new Vehicle();
-
-            //iterate street light state
-            tlight.OperateTrafficLightsatIntersection(this.index);
-
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < inlets[i].LaneQueues.Length; j++)

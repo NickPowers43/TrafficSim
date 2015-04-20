@@ -112,7 +112,7 @@ public class Road : MonoBehaviour {
         destination.Parent.RemoveInlet(destination.InletIndex);
     }
 
-    public static void SplitWithDegenerate(Vector3 position, )
+    public static void SplitWithDegenerate(Vector3 position, Intersection intersection)
     {
 
     }
