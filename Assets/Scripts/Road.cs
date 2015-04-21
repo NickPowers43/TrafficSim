@@ -38,6 +38,7 @@ public class Road : MonoBehaviour {
             Intersection destinationParent = destinationInlet.Parent;
 
             Vector3 diff = destinationParent.transform.position - sourceParent.transform.position;
+            float diff_length = diff.magnitude;
             diff.Normalize();
 
             Vector3 loc_diff = cursorPosition - sourceParent.transform.position;
@@ -47,7 +48,7 @@ public class Road : MonoBehaviour {
             Vector3 intersection_pos = sourceParent.transform.position + (diff * dot);
 
             float currDist = Vector3.Magnitude(loc_diff - (diff * dot));
-            if (currDist < dist)
+            if (currDist < dist && dot > 0.0f && dot < diff_length)
             {
                 closest = road;
                 dist = currDist;

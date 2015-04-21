@@ -213,6 +213,11 @@ public class Intersection : MonoBehaviour {
 	    
 	}
 
+    private static void SleepSimSeconds(float seconds)
+    {
+        Thread.Sleep(new TimeSpan((long)(TimeSpan.TicksPerSecond * seconds * MainCamera.SpeedMultiplier)));
+    }
+
     public void Run()
     {
         thread = new Thread(new ThreadStart(RunMethod), MAX_THREAD_STACK_SIZE);
@@ -225,6 +230,8 @@ public class Intersection : MonoBehaviour {
         {
             for (int i = 0; i < 4; i++)
             {
+                float elapsedTime = 0.0f;
+
                 for (int j = 0; j < inlets[i].LaneQueues.Length; j++)
                 {
                     //handle any point of interest duties
@@ -250,7 +257,6 @@ public class Intersection : MonoBehaviour {
 
                         //sleep for some amount of time to simulate time
                         float time = 1.0f;//seconds
-                        Thread.Sleep(new TimeSpan((long)(TimeSpan.TicksPerSecond * time * MainCamera.SpeedMultiplier)));
 
                         //get the destination LaneQueue to deposit the vehicle
                         LaneQueue destination = Navigator.Instance.GetNextHop(0, source.Index, turningVehicle.Destination);
@@ -258,6 +264,17 @@ public class Intersection : MonoBehaviour {
                         //transfer the vehicle to the next intersection
                         lock (destination)
                         {
+                            //set TimeBehind property to represent time this vehicle is behind the one in front
+                            Vehicle lastVehicle = destination.Last();
+                            if (lastVehicle != null)
+                            {
+                                turningVehicle.TimeBehind = /*Random value here*/0.0f;
+                            }
+                            else
+                            {
+                                turningVehicle.TimeBehind = destination.DistanceToTime(destination.MaxLength);
+                            }
+
                             destination.Queue(turningVehicle);
                         }
                     }

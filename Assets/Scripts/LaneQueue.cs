@@ -171,8 +171,22 @@ public class LaneQueue
         }
     }
 
+    private float speedLimit;
+    public float SpeedLimit
+    {
+        get
+        {
+            return speedLimit;
+        }
+        set
+        {
+            speedLimit = value;
+        }
+    }
+
     public LaneQueue()
     {
+        speedLimit = 0.1f;
         maxLength = 0.0f;
 
         isDestination = true;
@@ -219,10 +233,39 @@ public class LaneQueue
         {
             return vehicleQueue.Peek(); 
         }
-        else
+
+        return null;
+    }
+
+    public Vehicle Last()
+    {
+        if (vehicleQueue.Count > 0)
         {
-            return null;
+            return vehicleQueue.Last();
         }
+
+        return null;
+    }
+
+    public void SimulateTime(float seconds)
+    {
+        Vehicle first = vehicleQueue.Peek();
+        if (first.TimeBehind > 0)
+        {
+            if (first.TimeBehind > seconds)
+            {
+                first.TimeBehind -= seconds;
+            }
+            else
+            {
+                first.TimeBehind = 0.0f;
+            }
+        }
+    }
+
+    public float DistanceToTime(float distance)
+    {
+        return distance / speedLimit;
     }
 }
 

@@ -15,7 +15,8 @@ public enum Intention
 public class Vehicle
 {
     private int speed;
-    private double distance;
+    private float position;
+    private float timeBehind;
     private String type;
     private int index;
     private float length;
@@ -59,6 +60,18 @@ public class Vehicle
             destination = value;
         }
     }
+
+    public float TimeBehind
+    {
+        get
+        {
+            return timeBehind;
+        }
+        set
+        {
+            timeBehind = value;
+        }
+    }
     
     public Vehicle()
 	{
@@ -84,15 +97,16 @@ public class Vehicle
         return speed;
     }
 
-    public double getDistance()
+    public float Position
     {
-        return distance;
-    }
-
-    public double setDistance(double newDistance)
-    {
-        distance = newDistance;
-        return distance;
+        get
+        {
+            return position;
+        }
+        set
+        {
+            position = value;
+        }
     }
 
     public VehicleType getVehicleType()
