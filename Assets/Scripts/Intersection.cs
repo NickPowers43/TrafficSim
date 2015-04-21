@@ -268,7 +268,7 @@ public class Intersection : MonoBehaviour {
                             Vehicle lastVehicle = destination.Last();
                             if (lastVehicle != null)
                             {
-                                turningVehicle.TimeBehind = /*Random value here*/0.0f;
+                                turningVehicle.TimeBehind = destination.DistanceToTime(destination.MaxLength - destination.CurrentLength);
                             }
                             else
                             {
