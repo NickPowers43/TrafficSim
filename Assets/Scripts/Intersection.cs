@@ -17,6 +17,15 @@ public enum PointsOfInterest
 public class Intersection : MonoBehaviour {
 
     private static GameObject prefab;
+    private static List<PointsOfInterest> listofplaces = new List<PointsOfInterest>();
+
+    public static List<PointsOfInterest> Listofplaces
+    {
+        get
+        {
+            return listofplaces;
+        }
+    }
     public static GameObject Prefab
     {
         get
@@ -33,6 +42,10 @@ public class Intersection : MonoBehaviour {
     public GameObject iconGO;
 
     private PointsOfInterest poi;
+
+    private double mean;
+    private double stddev;
+
     public PointsOfInterest POI
     {
         get
@@ -318,6 +331,7 @@ public class Intersection : MonoBehaviour {
         {
             iconGO.SetActive(false);
         }
+
         else
         {
             iconGO.SetActive(true);
