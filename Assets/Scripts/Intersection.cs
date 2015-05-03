@@ -16,6 +16,8 @@ public enum PointsOfInterest
 
 public class Intersection : MonoBehaviour {
 
+    private const double TIME_PER_INLET = 15.0f;
+
     private static GameObject prefab;
     private static List<PointsOfInterest> listofplaces = new List<PointsOfInterest>();
 
@@ -213,11 +215,6 @@ public class Intersection : MonoBehaviour {
 	    
 	}
 
-    private static void SleepSimSeconds(float seconds)
-    {
-        Thread.Sleep(new TimeSpan((long)(TimeSpan.TicksPerSecond * seconds * MainCamera.SpeedMultiplier)));
-    }
-
     public void Run()
     {
         thread = new Thread(new ThreadStart(RunMethod), MAX_THREAD_STACK_SIZE);
@@ -226,59 +223,85 @@ public class Intersection : MonoBehaviour {
     }
     private void RunMethod()
     {
-        while (running)
+        while (Simulation.Running)
         {
             for (int i = 0; i < 4; i++)
             {
-                float elapsedTime = 0.0f;
-
-                for (int j = 0; j < inlets[i].LaneQueues.Length; j++)
+                if (inlets[i] != null)
                 {
-                    //handle any point of interest duties
-                    HandlePOI();
+                    double remainingLightTime = TIME_PER_INLET;
 
-                    LaneQueue source = inlets[i].LaneQueues[j];
-                    Vehicle turningVehicle = null;
-
-                    //get vehicle coming into intersection
-                    lock (source)
+                    while (remainingLightTime != 0.0)
                     {
-                        turningVehicle = source.DeQueue();
-                    }
+                        //handle any point of interest duties
+                        HandlePOI();
 
-                    //determine what to do with the vehicle
-                    if (turningVehicle.Destination == source.Index)
-                    {
-                        //TODO: take vehicle out of simulation
-                    }
-                    else
-                    {
-                        //route vehicle to its destination
+                        LaneQueue source = inlets[i].LaneQueues[0];
+                        Vehicle turningVehicle = null;
 
-                        //sleep for some amount of time to simulate time
-                        float time = 1.0f;//seconds
-
-                        //get the destination LaneQueue to deposit the vehicle
-                        LaneQueue destination = Navigator.Instance.GetNextHop(0, source.Index, turningVehicle.Destination);
-
-                        //transfer the vehicle to the next intersection
-                        lock (destination)
+                        //peek at vehicle coming into intersection
+                        lock (source)
                         {
-                            //set TimeBehind property to represent time this vehicle is behind the one in front
-                            Vehicle lastVehicle = destination.Last();
-                            if (lastVehicle != null)
+                            if (source.Count > 0)
                             {
-                                turningVehicle.TimeBehind = destination.DistanceToTime(destination.MaxLength - destination.CurrentLength);
+                                //if the car has been in the queue long enough to drive to the end
+                                double currentTime = Simulation.GetTime();
+                                double timeToDrive = currentTime - source.Peek().TimeQueued;
+                                double timeToDriveLeft = source.DistanceToTime(source.MaxLength) - timeToDrive;
+                                if (timeToDrive > source.DistanceToTime(source.MaxLength))
+                                {
+                                    turningVehicle = source.Dequeue();
+                                }
+                                else if (timeToDriveLeft < remainingLightTime)
+                                {
+                                    //sleep until vehicle arrives at the light
+                                    Simulation.SleepSimSeconds(timeToDriveLeft);
+                                    remainingLightTime -= timeToDriveLeft;
+                                    turningVehicle = source.Dequeue();
+                                }
+                                else
+                                {
+                                    //sleep for the rest of the light time
+                                    Simulation.SleepSimSeconds(remainingLightTime);
+                                    remainingLightTime = 0.0;
+                                }
+                            }
+                        }
+
+                        if (turningVehicle != null)
+                        {
+                            //determine what to do with the vehicle
+                            if (turningVehicle.Destination == source.Index)
+                            {
+                                //TODO: take vehicle out of simulation
                             }
                             else
                             {
-                                turningVehicle.TimeBehind = destination.DistanceToTime(destination.MaxLength);
+                                //route vehicle to its destination
+
+                                //sleep for some amount of time to simulate time
+                                Simulation.SleepSimSeconds(1.0);
+
+                                //get the destination LaneQueue to deposit the vehicle
+                                LaneQueue destination = Navigator.Instance.GetNextHop(0, source.Index, turningVehicle.Destination);
+
+                                //transfer the vehicle to the next intersection
+                                lock (destination)
+                                {
+                                    //set TimeBehind property to represent time this vehicle is behind the one in front
+                                    turningVehicle.TimeQueued = Simulation.GetTime();
+                                    destination.Enqueue(turningVehicle);
+                                }
                             }
 
-                            destination.Queue(turningVehicle);
+                            //sleep for the time it takes for the next vehicle to arrive at the light
+                        }
+                        else
+                        {
+                            //TODO: sleep for the rest of the light
                         }
                     }
-			    }
+                }
             }
         }
     }

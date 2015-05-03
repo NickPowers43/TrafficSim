@@ -35,20 +35,6 @@ public class MainCamera : MonoBehaviour {
     public GameObject intersectionPrefab;
     public GameObject roadPrefab;
     public GameObject stopSimulationButton;
-    //Simulation fields
-    private static float speedMultiplier = 1.0f;
-    public static float SpeedMultiplier
-    {
-        get
-        {
-            return speedMultiplier;
-        }
-        set
-        {
-            speedMultiplier = value;
-        }
-    }
-    bool simulationRunning = false;
     //UI object references and variables
     public float intersectionSelectRange = 0.01f;
     public float uiTopBoundary;
@@ -145,7 +131,7 @@ public class MainCamera : MonoBehaviour {
     }
     public void OnStartClick()
     {
-        if (simulationRunning)
+        if (Simulation.Running)
         {
             OnStopClick();
         }
@@ -154,15 +140,18 @@ public class MainCamera : MonoBehaviour {
         Navigator.Instance = navigator;
 
         //TODO: start simulation
-        if (simulationRunning == true)
+        stopSimulationButton.SetActive(true);
+        Simulation.Running = true;
+
+        //spin up active objects
+        foreach (Intersection i in Intersection.Intersections)
         {
-            stopSimulationButton.SetActive(true);
+            i.Run();
         }
     }
     public void OnStopClick()
     {
         stopSimulationButton.SetActive(false);
-
-        simulationRunning = true;
+        Simulation.Running = false;
     }
 }

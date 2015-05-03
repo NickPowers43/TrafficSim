@@ -15,17 +15,17 @@ public enum Intention
 public class Vehicle
 {
     //Fields
-    //time that this vehicle is behind whatever is in front
-    private float timeBehind;
-    public float TimeBehind
+    //time vehicle was last queued
+    private double timeQueued;
+    public double TimeQueued
     {
         get
         {
-            return timeBehind;
+            return timeQueued;
         }
         set
         {
-            timeBehind = value;
+            timeQueued = value;
         }
     }
     //index of destination LaneQueue
@@ -70,9 +70,9 @@ public class Vehicle
     }
 
     //statistical data
-    private float instantiateTime;
-    private float destroyTime;
-    public float Age //Age in real-time
+    private double instantiateTime;
+    private double destroyTime;
+    public double Age //Age in real-time
     {
         get
         {
@@ -80,7 +80,7 @@ public class Vehicle
         }
     }
 
-    public Vehicle(float instantiateTime, float length, int destination)
+    public Vehicle(double instantiateTime, float length, int destination)
 	{
         this.instantiateTime = instantiateTime;
         this.length = length;

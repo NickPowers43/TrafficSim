@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using Utility;
 
-public class LaneQueue
+public class LaneQueue : Queue<Vehicle>
 {
-
     private static List<LaneQueue> laneQueues = new List<LaneQueue>();
     public static List<LaneQueue> LaneQueues
     {
@@ -53,7 +52,7 @@ public class LaneQueue
             index = value;
         }
     }
-
+    //thead that is waiting for first vehicle to stop
     private Thread waitingThread;
     public Thread WaitingThread
     {
@@ -66,7 +65,7 @@ public class LaneQueue
             waitingThread = value;
         }
     }
-
+    //maximum physical length of this section of road
     private float maxLength;
     public float MaxLength
     {
@@ -79,7 +78,7 @@ public class LaneQueue
             maxLength = value;
         }
     }
-
+    //sum of contained vehicles
     private float currentLength;
     public float CurrentLength
     {
@@ -184,88 +183,74 @@ public class LaneQueue
         }
     }
 
-    public LaneQueue()
+    public LaneQueue(float speedLimit, float maxLength, bool isDestination)
     {
-        speedLimit = 0.1f;
-        maxLength = 0.0f;
+        this.speedLimit = speedLimit;
+        this.maxLength = maxLength;
+        this.isDestination = isDestination;
 
-        isDestination = true;
         left = true;
         right = true;
         straight = true;
         uturn = true;
     }
 
-    private Queue<Vehicle> vehicleQueue = new Queue<Vehicle>();
-
-    void Start(){
-        
-    }
-
-    public void Queue(Vehicle vehicle)
+    public void Enqueue(Vehicle vehicle)
     {
-        CurrentLength = vehicleQueue.Sum(length => vehicle.Length);
-        vehicleQueue.Enqueue(vehicle);
-    }
+        base.Enqueue(vehicle);
 
+        CurrentLength += vehicle.Length + TimeToDistance(vehicle.TimeBehind);
+    }
     public Vehicle DeQueue()
     {
-        if (vehicleQueue.Count > 0)
-        {
-            Vehicle v = vehicleQueue.Dequeue();
-            CurrentLength -= v.Length;
-            return v;
-        }
-        else
-        {
-            return null;
-        }
+        Vehicle v = base.Dequeue();
+
+        CurrentLength -= v.Length;
+
+        return v;
     }
 
     public bool Available(float length)
     {
-        return MaxLength < CurrentLength + length;
-    }
-
-    public Vehicle Peek()
-    {
-        if (vehicleQueue.Count > 0)
-        {
-            return vehicleQueue.Peek(); 
-        }
-
-        return null;
-    }
-
-    public Vehicle Last()
-    {
-        if (vehicleQueue.Count > 0)
-        {
-            return vehicleQueue.Last();
-        }
-
-        return null;
+        return MaxLength > CurrentLength + length;
     }
 
     public void SimulateTime(float seconds)
     {
-        Vehicle first = vehicleQueue.Peek();
-        if (first.TimeBehind > 0)
+        foreach (Vehicle v in this)
         {
-            if (first.TimeBehind > seconds)
+            if (v.TimeBehind != 0.0f)
             {
-                first.TimeBehind -= seconds;
-            }
-            else
-            {
-                first.TimeBehind = 0.0f;
+                if (seconds != 0.0f)
+                {
+                    if (seconds > v.TimeBehind)
+                    {
+                        seconds -= v.TimeBehind;
+                        v.TimeBehind = 0.0f;
+                        //awaken thread that may be waiting for this vehicle
+                        waitingThread.Interrupt();
+                    }
+                    else
+                    {
+                        v.TimeBehind -= seconds;
+                        seconds = 0.0f;
+                    } 
+                }
+                else
+                {
+                    break;
+                }
             }
         }
     }
-
+    //the amount of time a vehicle takes to travel a given distance
     public float DistanceToTime(float distance)
     {
         return distance / speedLimit;
+    }
+    public float TimeToDistance(float time)
+    {
+        return time / speedLimit;
     }
 }
 
