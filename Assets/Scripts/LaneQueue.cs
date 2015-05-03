@@ -66,8 +66,8 @@ public class LaneQueue : Queue<Vehicle>
         }
     }
     //maximum physical length of this section of road
-    private float maxLength;
-    public float MaxLength
+    private double maxLength;
+    public double MaxLength
     {
         get
         {
@@ -79,8 +79,8 @@ public class LaneQueue : Queue<Vehicle>
         }
     }
     //sum of contained vehicles
-    private float currentLength;
-    public float CurrentLength
+    private double currentLength;
+    public double CurrentLength
     {
         get
         {
@@ -170,8 +170,8 @@ public class LaneQueue : Queue<Vehicle>
         }
     }
 
-    private float speedLimit;
-    public float SpeedLimit
+    private double speedLimit;
+    public double SpeedLimit
     {
         get
         {
@@ -183,7 +183,7 @@ public class LaneQueue : Queue<Vehicle>
         }
     }
 
-    public LaneQueue(float speedLimit, float maxLength, bool isDestination)
+    public LaneQueue(double speedLimit, double maxLength, bool isDestination)
     {
         this.speedLimit = speedLimit;
         this.maxLength = maxLength;
@@ -199,7 +199,8 @@ public class LaneQueue : Queue<Vehicle>
     {
         base.Enqueue(vehicle);
 
-        CurrentLength += vehicle.Length + TimeToDistance(vehicle.TimeBehind);
+        vehicle.TimeQueued = Simulation.GetTime();
+        CurrentLength += vehicle.Length + TimeToDistance(vehicle.TimeQueued - Peek().TimeQueued);
     }
     public Vehicle DeQueue()
     {
@@ -210,45 +211,18 @@ public class LaneQueue : Queue<Vehicle>
         return v;
     }
 
-    public bool Available(float length)
+    public bool Available(double length)
     {
         return MaxLength > CurrentLength + length;
     }
 
-    public void SimulateTime(float seconds)
-    {
-        foreach (Vehicle v in this)
-        {
-            if (v.TimeBehind != 0.0f)
-            {
-                if (seconds != 0.0f)
-                {
-                    if (seconds > v.TimeBehind)
-                    {
-                        seconds -= v.TimeBehind;
-                        v.TimeBehind = 0.0f;
-                        //awaken thread that may be waiting for this vehicle
-                        waitingThread.Interrupt();
-                    }
-                    else
-                    {
-                        v.TimeBehind -= seconds;
-                        seconds = 0.0f;
-                    } 
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-    }
     //the amount of time a vehicle takes to travel a given distance
-    public float DistanceToTime(float distance)
+    public double DistanceToTime(double distance)
     {
         return distance / speedLimit;
     }
-    public float TimeToDistance(float time)
+    //the distance a vehicle travels within the given time
+    public double TimeToDistance(double time)
     {
         return time / speedLimit;
     }

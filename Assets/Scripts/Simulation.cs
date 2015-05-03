@@ -6,6 +6,8 @@ using System.Threading;
 
 class Simulation
 {
+    private static double timeScale = TimeSpan.TicksPerSecond;
+    private static double invSpeedMultilier = 1.0;
     private static double speedMultiplier = 1.0;
     public static double SpeedMultiplier
     {
@@ -16,6 +18,8 @@ class Simulation
         set
         {
             speedMultiplier = value;
+            invSpeedMultilier = 1.0 / value;
+            timeScale = TimeSpan.TicksPerSecond / invSpeedMultilier;
         }
     }
 
@@ -44,6 +48,6 @@ class Simulation
 
     public static void SleepSimSeconds(double seconds)
     {
-        Thread.Sleep(new TimeSpan((long)(TimeSpan.TicksPerSecond * seconds * speedMultiplier)));
+        Thread.Sleep(new TimeSpan((long)(seconds * timeScale)));
     }
 }

@@ -9,25 +9,27 @@ public enum PointsOfInterest
     House = 0,
     Food = 1,
     Fuel = 2,
-    Services = 3,
     Work = 4,
     None = 5
 }
 
 public class Intersection : MonoBehaviour {
 
-    private const double TIME_PER_INLET = 15.0f;
+    private const double TIME_PER_INLET = 15.0;
+    private const double CHECK_DESTINATION_RATE = 1.0;
+    private const double CHECK_NEXT_VEHICLE_RATE = 5.0;
 
     private static GameObject prefab;
-    private static List<PointsOfInterest> listofplaces = new List<PointsOfInterest>();
-
-    public static List<PointsOfInterest> Listofplaces
+    private static List<int>[] poiDestinations = new List<int>[5];
+    public static List<int>[] POIDestinations
     {
         get
         {
-            return listofplaces;
+            return poiDestinations;
         }
     }
+
+    //stores the unity prefab for intersection GameObjects
     public static GameObject Prefab
     {
         get
@@ -42,12 +44,54 @@ public class Intersection : MonoBehaviour {
 
     public Sprite[] POISprites;
     public GameObject iconGO;
-
+    //index to identify this intersection with
+    private int index;
+    public int Index
+    {
+        get
+        {
+            return index;
+        }
+        set
+        {
+            index = value;
+        }
+    }
+    //number of road edges connecting to this intersection
+    public int Degree
+    {
+        get
+        {
+            int j = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                if (inlets[i] != null)
+                {
+                    j++;
+                }
+            }
+            return j;
+        }
+    }
+    //the thread simulating this object
+    private Thread thread;
+    public Thread Thread
+    {
+        get
+        {
+            return thread;
+        }
+    }
+    //the radius of the intersection body
+    public float Radius
+    {
+        get
+        {
+            return INITIAL_RADIUS;
+        }
+    }
+    //the type of intersection
     private PointsOfInterest poi;
-
-    private double mean;
-    private double stddev;
-
     public PointsOfInterest POI
     {
         get
@@ -59,6 +103,10 @@ public class Intersection : MonoBehaviour {
             poi = value;
         }
     }
+
+    private double mean;
+    private double stddev;
+
 
     public const float Z_POSITION = 0.0f;
     private const int MAX_THREAD_STACK_SIZE = 2 << 10; // 2KB
@@ -142,66 +190,6 @@ public class Intersection : MonoBehaviour {
 
     private List<Vehicle> vehicles = new List<Vehicle>();
 
-    private int index;
-    public int Index
-    {
-        get
-        {
-            return index;
-        }
-        set
-        {
-            index = value;
-        }
-    }
-
-    public int Degree
-    {
-        get
-        {
-            int j = 0;
-            for (int i = 0; i < 4; i++)
-            {
-                if (inlets[i] != null)
-                {
-                    j++;
-                }
-            }
-            return j;
-        }
-    }
-
-    private Intersection[] adjIntersections;
-    public Intersection[] AdjIntersections
-    {
-        get
-        {
-            return adjIntersections;
-        }
-        set
-        {
-            adjIntersections = value;
-        }
-    }
-
-    private bool running;
-
-    private Thread thread;
-    public Thread Thread
-    {
-        get
-        {
-            return thread;
-        }
-    }
-
-    public float Radius
-    {
-        get
-        {
-            return INITIAL_RADIUS;
-        }
-    }
 
 	// Use this for initialization
 	void Start()
@@ -218,7 +206,6 @@ public class Intersection : MonoBehaviour {
     public void Run()
     {
         thread = new Thread(new ThreadStart(RunMethod), MAX_THREAD_STACK_SIZE);
-        running = true;
         thread.Start();
     }
     private void RunMethod()
@@ -250,14 +237,16 @@ public class Intersection : MonoBehaviour {
                                 double timeToDriveLeft = source.DistanceToTime(source.MaxLength) - timeToDrive;
                                 if (timeToDrive > source.DistanceToTime(source.MaxLength))
                                 {
+                                    //take waiting vehicle
                                     turningVehicle = source.Dequeue();
                                 }
                                 else if (timeToDriveLeft < remainingLightTime)
                                 {
+                                    //take waiting vehicle
+                                    turningVehicle = source.Dequeue();
                                     //sleep until vehicle arrives at the light
                                     Simulation.SleepSimSeconds(timeToDriveLeft);
                                     remainingLightTime -= timeToDriveLeft;
-                                    turningVehicle = source.Dequeue();
                                 }
                                 else
                                 {
@@ -279,27 +268,39 @@ public class Intersection : MonoBehaviour {
                             {
                                 //route vehicle to its destination
 
-                                //sleep for some amount of time to simulate time
-                                Simulation.SleepSimSeconds(1.0);
+                                //sleep until vehicle passes light
+                                Simulation.SleepSimSeconds(source.DistanceToTime(turningVehicle.Length));
+                                remainingLightTime -= source.DistanceToTime(turningVehicle.Length);
 
-                                //get the destination LaneQueue to deposit the vehicle
+                                //get the destination LaneQueue to enqueue the vehicle
                                 LaneQueue destination = Navigator.Instance.GetNextHop(0, source.Index, turningVehicle.Destination);
+
+                                while (true)
+                                {
+                                    if (destination.Available(turningVehicle.Length))
+                                        break;
+
+                                    //wait for chance and hold up traffic
+                                    Simulation.SleepSimSeconds(source.DistanceToTime(CHECK_DESTINATION_RATE));
+                                    remainingLightTime -= CHECK_DESTINATION_RATE;
+                                }
 
                                 //transfer the vehicle to the next intersection
                                 lock (destination)
                                 {
                                     //set TimeBehind property to represent time this vehicle is behind the one in front
-                                    turningVehicle.TimeQueued = Simulation.GetTime();
                                     destination.Enqueue(turningVehicle);
                                 }
                             }
-
-                            //sleep for the time it takes for the next vehicle to arrive at the light
                         }
                         else
                         {
-                            //TODO: sleep for the rest of the light
+                            Simulation.SleepSimSeconds(source.DistanceToTime(CHECK_NEXT_VEHICLE_RATE));
+                            remainingLightTime -= CHECK_NEXT_VEHICLE_RATE;
                         }
+
+                        if (remainingLightTime < 0.0)
+                            remainingLightTime = 0.0;
                     }
                 }
             }
@@ -335,32 +336,6 @@ public class Intersection : MonoBehaviour {
             default:
                 break;
         }
-    }
-
-    public void SortAdjIntersectionsByAngle()
-    {
-        //float[] angles = new float[adjIntersections.Length];
-        //for (int i = 0; i < adjIntersections.Length; i++)
-        //{
-        //    Vector3 temp = adjIntersections[i].transform.position - transform.position;
-        //    angles[i] = Mathf.Atan2(temp.y, temp.x) * Mathf.Rad2Deg;
-        //    if (true)
-        //    {
-		 
-        //    }
-        //}
-
-        //for (int i = 0; i < adjIntersections.Length; i++)
-        //{
-        //    int smallest = i;
-        //    for (int j = i; j < adjIntersections.Length - 1; j++)
-        //    {
-        //        if (angles[i] < )
-        //        {
-                    
-        //        }
-        //    }
-        //}
     }
 
     public void MakePOI(PointsOfInterest poi)
