@@ -204,7 +204,7 @@ public class LaneQueue
 
     public void Queue(Vehicle vehicle)
     {
-        CurrentLength = vehicleQueue.Sum(length => vehicle.getVehicleLength());
+        CurrentLength = vehicleQueue.Sum(length => vehicle.Length);
         vehicleQueue.Enqueue(vehicle);
     }
 
@@ -213,7 +213,7 @@ public class LaneQueue
         if (vehicleQueue.Count > 0)
         {
             Vehicle v = vehicleQueue.Dequeue();
-            CurrentLength -= v.getVehicleLength();
+            CurrentLength -= v.Length;
             return v;
         }
         else

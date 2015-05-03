@@ -5,62 +5,18 @@ using UnityEngine;
 
 public enum VehicleType
 {
-    Car, Truck, Bus
+    Car
 }
 public enum Intention
 {
-    Food, Gas, Services, Residential, Work, Goods, School
+    Food, Gas, Residential, Work
 }
 
 public class Vehicle
 {
-    private int speed;
-    private float position;
+    //Fields
+    //time that this vehicle is behind whatever is in front
     private float timeBehind;
-    private String type;
-    private int index;
-    private float length;
-    private VehicleType vr;
-    private Intention intention;
-    private double acceleration;
-    private float takeoffTime = Time.time;
-    private int destination;
-
-    //statistical data
-    private float creationTime;
-    private float currentTime;
-    public float Age //Age in real-time
-    {
-        get
-        {
-            return Time.time - creationTime;
-        }
-    }
-
-    public int Index
-    {
-        get
-        {
-            return index;
-        }
-        set
-        {
-            index = value;
-        }
-    }
-
-    public int Destination
-    {
-        get
-        {
-            return destination;
-        }
-        set
-        {
-            destination = value;
-        }
-    }
-
     public float TimeBehind
     {
         get
@@ -72,98 +28,62 @@ public class Vehicle
             timeBehind = value;
         }
     }
-    
-    public Vehicle()
-	{
-        creationTime = Time.time;
-	}
-
-    public void Run()
-    {
-        while (true)
-        {
-
-        }
-    }
-
-    public int getSpeed()
-    {
-        return speed;
-    }
-
-    public int setSpeed(int newSpeed)
-    {
-        speed = newSpeed;
-        return speed;
-    }
-
-    public float Position
+    //index of destination LaneQueue
+    private int destination;
+    public int Destination
     {
         get
         {
-            return position;
+            return destination;
         }
         set
         {
-            position = value;
+            destination = value;
         }
     }
-
-    public VehicleType getVehicleType()
+    //vehicle physical length
+    private float length;
+    public float Length
     {
-        return vr;
-    }
-
-    public VehicleType setVehicleType(VehicleType v){
-        if(v == VehicleType.Car){
-            vr = v;
-        }
-        else if(v == VehicleType.Bus){
-            vr = v;
-        }
-        else if(v == VehicleType.Truck){
-            vr = v;
-        }
-        return v;
-    }
-
-    public Intention getVehicleIntention()
-    {
-        return intention;
-    }
-
-    public Intention setVehicleIntention(Intention ir)
-    {
-        if (ir == null)
+        get
         {
-            throw new NotImplementedException("Intention not implemented");
+            return length;
         }
-        else
+    }
+    //vehicle type
+    private VehicleType type;
+    public VehicleType Type
+    {
+        get
         {
-            intention = ir;
+            return type;
         }
-        return ir;
+    }
+    //classification of destination LaneQueue's intersection node
+    private Intention intention;
+    public Intention Intention
+    {
+        get
+        {
+            return intention;
+        }
     }
 
-    public float getVehicleLength()
+    //statistical data
+    private float instantiateTime;
+    private float destroyTime;
+    public float Age //Age in real-time
     {
-        return length;
+        get
+        {
+            return destroyTime - instantiateTime;
+        }
     }
 
-    public float setVehicleLength(float l)
-    {
-        l = length;
-        return l;
-    }
-
-    public double getAcceleration()
-    {
-        return acceleration;
-    }
-
-    public double setAcceleration(double a)
-    {
-        a = acceleration;
-        return a;
-    }
+    public Vehicle(float instantiateTime, float length, int destination)
+	{
+        this.instantiateTime = instantiateTime;
+        this.length = length;
+        this.destination = destination;
+	}
 }
