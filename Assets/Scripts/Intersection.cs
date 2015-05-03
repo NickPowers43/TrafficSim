@@ -190,14 +190,11 @@ public class Intersection : MonoBehaviour {
 
     private List<Vehicle> vehicles = new List<Vehicle>();
 
-
-	// Use this for initialization
+    //overriden MonoBehaviour functions
 	void Start()
     {
         Intersections.AddLast(this);
 	}
-	
-	// Update is called once per frame
 	void Update()
     {
 	    
@@ -299,6 +296,8 @@ public class Intersection : MonoBehaviour {
                             remainingLightTime -= CHECK_NEXT_VEHICLE_RATE;
                         }
 
+
+
                         if (remainingLightTime < 0.0)
                             remainingLightTime = 0.0;
                     }
@@ -306,28 +305,22 @@ public class Intersection : MonoBehaviour {
             }
         }
     }
-    public void Stop()
-    {
-        if (running)
-        {
-            running = false;
-            thread.Join(Timeout.Infinite);
-        }
-    }
 
     private void HandlePOI()
     {
         //spawn vehicles that have an appropriate destination
 
+        Vehicle v = null;
+
         switch (poi)
         {
             case PointsOfInterest.House:
+                //pick random destination in the appropriate poiDestination list
+                v = new Vehicle(Simulation.GetTime(), 0.05f, poiDestinations[(int)PointsOfInterest.Work][0]);
                 break;
             case PointsOfInterest.Food:
                 break;
             case PointsOfInterest.Fuel:
-                break;
-            case PointsOfInterest.Services:
                 break;
             case PointsOfInterest.Work:
                 break;
@@ -335,6 +328,11 @@ public class Intersection : MonoBehaviour {
                 break;
             default:
                 break;
+        }
+
+        if (v != null)
+        {
+            inlets[0].LaneQueues[0].Enqueue(v);
         }
     }
 
@@ -365,6 +363,13 @@ public class Intersection : MonoBehaviour {
             inlets[2].ConnectLaneQueues(inlets[0], inlets[3], inlets[1]);
         if (inlets[3] != null)
             inlets[3].ConnectLaneQueues(inlets[1], inlets[2], inlets[0]);
+
+        foreach (LaneQueue lq in inlets[0].LaneQueues)
+        {
+            //add this LaneQueue's index to the appropriate point of interest destination index list
+            lq.IsDestination = true;
+            poiDestinations[(int)poi].Add(lq.Index);
+        }
     }
 
     public void RemoveInlet(int index)
