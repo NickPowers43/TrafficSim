@@ -42,8 +42,8 @@ public class Vehicle
         }
     }
     //vehicle physical length
-    private float length;
-    public float Length
+    private double length;
+    public double Length
     {
         get
         {
@@ -80,7 +80,7 @@ public class Vehicle
         }
     }
 
-    public Vehicle(double instantiateTime, float length, int destination)
+    public Vehicle(double instantiateTime, double length, int destination)
 	{
         this.instantiateTime = instantiateTime;
         this.length = length;

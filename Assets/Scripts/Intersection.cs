@@ -364,11 +364,21 @@ public class Intersection : MonoBehaviour {
         if (inlets[3] != null)
             inlets[3].ConnectLaneQueues(inlets[1], inlets[2], inlets[0]);
 
-        foreach (LaneQueue lq in inlets[0].LaneQueues)
+        //add incoming LaneQueues to destination indices lists
+        if (poi != PointsOfInterest.None)
         {
-            //add this LaneQueue's index to the appropriate point of interest destination index list
-            lq.IsDestination = true;
-            poiDestinations[(int)poi].Add(lq.Index);
+            for (int i = 0; i < 4; i++)
+            {
+                if (inlets[i] != null)
+                {
+                    foreach (LaneQueue lq in inlets[i].LaneQueues)
+                    {
+                        //add this LaneQueue's index to the appropriate point of interest destination index list
+                        lq.IsDestination = true;
+                        poiDestinations[(int)poi].Add(lq.Index);
+                    }
+                }
+            } 
         }
     }
 

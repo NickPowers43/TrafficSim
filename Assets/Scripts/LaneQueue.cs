@@ -9,6 +9,8 @@ using Utility;
 
 public class LaneQueue : Queue<Vehicle>
 {
+    public static double DEFAULT_SPEED_LIMIT = 0.1f;
+
     private static List<LaneQueue> laneQueues = new List<LaneQueue>();
     public static List<LaneQueue> LaneQueues
     {

@@ -110,7 +110,7 @@ public class IntersectionInlet
         laneQueues = new LaneQueue[1];
         for (int i = 0; i < laneQueues.Length; i++)
         {
-            laneQueues[i] = new LaneQueue();
+            laneQueues[i] = new LaneQueue(LaneQueue.DEFAULT_SPEED_LIMIT, 0.0, false);
         }
     }
 
@@ -140,7 +140,7 @@ public class IntersectionInlet
             Utility.WeightedEdge<LaneQueue> edge;
             edge.start = lq;
             edge.end = lqs[i];
-            edge.weight = lqs[i].MaxLength;
+            edge.weight = (float)lqs[i].MaxLength;
             LaneQueue.LaneQueueEdges.Add(edge);
         }
     }
