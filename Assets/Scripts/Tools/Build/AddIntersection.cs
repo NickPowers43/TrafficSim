@@ -44,6 +44,8 @@ namespace Tools.Build
             {
                 GameObject nodeGO = (GameObject)GameObject.Instantiate(Intersection.Prefab);
                 nodeGO.transform.position = CursorPos(Intersection.Z_POSITION);
+
+                Intersection.Intersections.Add(nodeGO.GetComponent<Intersection>());
             }
         }
     }

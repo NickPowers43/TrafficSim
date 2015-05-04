@@ -13,6 +13,18 @@ public enum PointsOfInterest
     None = 5
 }
 
+[Serializable]
+public class IntersectionData
+{
+    public PointsOfInterest poi;
+    public Vector2 position;
+
+    public string ToString()
+    {
+        return "{position: " + position.ToString() + ", poi: " + poi.ToString() + "}";
+    }
+}
+
 public class Intersection : MonoBehaviour {
 
     private const double TIME_PER_INLET = 15.0;
@@ -113,8 +125,8 @@ public class Intersection : MonoBehaviour {
     public const float INITIAL_RADIUS = 0.09f;
     //private TrafficLight tlight = new TrafficLight();
 
-    private static LinkedList<Intersection> intersections = new LinkedList<Intersection>();
-    public static LinkedList<Intersection> Intersections
+    private static List<Intersection> intersections = new List<Intersection>();
+    public static List<Intersection> Intersections
     {
         get
         {
@@ -193,7 +205,7 @@ public class Intersection : MonoBehaviour {
     //overriden MonoBehaviour functions
 	void Start()
     {
-        Intersections.AddLast(this);
+        
 	}
 	void Update()
     {
@@ -400,5 +412,14 @@ public class Intersection : MonoBehaviour {
         }
 
         throw new NotImplementedException();
+    }
+
+    public IntersectionData GetData()
+    {
+        IntersectionData temp = new IntersectionData();
+        temp.poi = this.poi;
+        temp.position = new Vector2(this.transform.position.x, this.transform.position.y);
+
+        return temp;
     }
 }

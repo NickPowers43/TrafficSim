@@ -3,6 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Tools;
+using SimpleJson;
+using System.IO;
+using System.Text;
 
 public class MainCamera : MonoBehaviour {
 
@@ -57,7 +60,7 @@ public class MainCamera : MonoBehaviour {
     //Functions:
 
     //On the start of this Unity component
-	void Start () {
+	void Start(){
 
         LaneQueue.NextIndex = 0;
 
@@ -73,6 +76,8 @@ public class MainCamera : MonoBehaviour {
 
         Instance = this;
         self = GetComponent<Camera>();
+
+        LoadSaveFile();
 	}
     //On the update of this Unity component
     void Update()
@@ -99,6 +104,40 @@ public class MainCamera : MonoBehaviour {
 
         //store current mouse position
         prevMousePos = Input.mousePosition;
+    }
+    //Load street network information from "temp.save"
+    private void LoadSaveFile()
+    {
+        string json = File.ReadAllText("temp.save");
+
+        JsonObject mainObj = (JsonObject)SimpleJson.SimpleJson.DeserializeObject(json);
+
+        JsonArray intersections = (JsonArray)mainObj["intersections"];
+
+        JsonArray roads = (JsonArray)mainObj["roads"];
+
+        //add intersections
+        foreach (JsonObject intersection in intersections)
+        {
+            Vector2 pos = new Vector2();
+            pos.x = float.Parse((string)intersection["posX"]);
+            pos.y = float.Parse((string)intersection["posY"]);
+
+            Intersection intersectionGO = ((GameObject)GameObject.Instantiate(Intersection.Prefab, new Vector3(pos.x, pos.y, Intersection.Z_POSITION), Quaternion.identity)).GetComponent<Intersection>();
+
+            Intersection.Intersections.Add(intersectionGO);
+        }
+
+        //add roads
+        foreach (JsonObject road in roads)
+        {
+            int sourceIndex = int.Parse((string)road["source"]);
+            int destinationIndex = int.Parse((string)road["destination"]);
+
+            Road roadGO = GameObject.Instantiate(Road.Prefab).GetComponent<Road>();
+
+            roadGO.SetEndPoints(Intersection.Intersections[sourceIndex].GenerateInlet(), Intersection.Intersections[destinationIndex].GenerateInlet());
+        }
     }
     //when the user presses the giant button covering the background of the UI
     public void OnWorldSpaceClick()
@@ -153,5 +192,48 @@ public class MainCamera : MonoBehaviour {
     {
         stopSimulationButton.SetActive(false);
         Simulation.Running = false;
+    }
+    //Save street network information into "temp.save"
+    public void OnSaveClick()
+    {
+        //add intersections
+        JsonArray intersections = new JsonArray(Intersection.Intersections.Count);
+        int i = 0;
+        foreach (var intersection in Intersection.Intersections)
+        {
+            JsonObject temp = new JsonObject();
+
+            intersection.Index = i++;
+
+            temp["posX"] = intersection.transform.position.x.ToString();
+            temp["posY"] = intersection.transform.position.y.ToString();
+            temp["poi"] = intersection.POI.ToString();
+            temp["index"] = intersection.Index.ToString();
+
+            intersections.Add(temp);
+        }
+
+        //add roads
+        JsonArray roads = new JsonArray(Road.Roads.Count);
+        i = 0;
+        foreach (Road road in Road.Roads)
+        {
+            JsonObject temp = new JsonObject();
+
+            temp["source"] = road.Source.Parent.Index.ToString();
+            temp["destination"] = road.Destination.Parent.Index.ToString();
+
+            roads.Add(temp);
+        }
+
+        //create final object
+        JsonObject mainObj = new JsonObject();
+        mainObj["intersections"] = intersections;
+        mainObj["roads"] = roads;
+
+        string output = SimpleJson.SimpleJson.SerializeObject(mainObj);
+        //Debug.Log(temp);
+
+        File.WriteAllText("temp.save", output);
     }
 }
