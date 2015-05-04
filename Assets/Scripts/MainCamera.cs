@@ -38,6 +38,7 @@ public class MainCamera : MonoBehaviour {
     public GameObject intersectionPrefab;
     public GameObject roadPrefab;
     public GameObject stopSimulationButton;
+    public GameObject pathLinePrefab;
     //UI object references and variables
     public float intersectionSelectRange = 0.01f;
     public float uiTopBoundary;
@@ -68,6 +69,7 @@ public class MainCamera : MonoBehaviour {
         this.prevMousePos = Input.mousePosition;
         Tools.Build.BuildTool.Cursor = GameObject.Instantiate(buildToolCursorPrefab);
         Intersection.Prefab = intersectionPrefab;
+        Intersection.PathLineprefab = pathLinePrefab;
         Road.Prefab = roadPrefab;
         activeTools = null;
         buildTools = new Tools.Build.ToolBar();
@@ -174,9 +176,8 @@ public class MainCamera : MonoBehaviour {
         {
             OnStopClick();
         }
-
-        Navigator navigator = new Navigator();
-        Navigator.Instance = navigator;
+        //create a new single instance of the Navigator
+        Navigator.Instance = new Navigator();
 
         //TODO: start simulation
         stopSimulationButton.SetActive(true);

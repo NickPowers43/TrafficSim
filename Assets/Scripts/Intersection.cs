@@ -31,9 +31,15 @@ public class Intersection : MonoBehaviour {
     private const double CHECK_DESTINATION_RATE = 1.0;
     private const double CHECK_NEXT_VEHICLE_RATE = 5.0;
 
-    private static GameObject prefab;
-    private static List<int>[] poiDestinations = new List<int>[5];
-    public static List<int>[] POIDestinations
+    //lists of every type of point of interest
+    private static List<Intersection>[] poiDestinations = new List<Intersection>[5] {
+        new List<Intersection>(),
+        new List<Intersection>(),
+        new List<Intersection>(),
+        new List<Intersection>(),
+        new List<Intersection>()
+    };
+    public static List<Intersection>[] POIDestinations
     {
         get
         {
@@ -42,6 +48,7 @@ public class Intersection : MonoBehaviour {
     }
 
     //stores the unity prefab for intersection GameObjects
+    private static GameObject prefab;
     public static GameObject Prefab
     {
         get
@@ -51,6 +58,19 @@ public class Intersection : MonoBehaviour {
         set
         {
             prefab = value;
+        }
+    }
+    //stores the unity prefab for displaying the paths to destination nodes
+    private static GameObject pathLineprefab;
+    public static GameObject PathLineprefab
+    {
+        get
+        {
+            return pathLineprefab;
+        }
+        set
+        {
+            pathLineprefab = value;
         }
     }
 
@@ -85,6 +105,14 @@ public class Intersection : MonoBehaviour {
             return j;
         }
     }
+    //the index of the LaneQueue that is this point of interest's destination
+    public int DestinationIndex
+    {
+        get
+        {
+            return TryGetInlet().LaneQueues[0].Index;
+        }
+    }
     //the thread simulating this object
     private Thread thread;
     public Thread Thread
@@ -115,6 +143,10 @@ public class Intersection : MonoBehaviour {
             poi = value;
         }
     }
+    //destination intersections
+    private Dictionary<Intersection, float> destinationTravelTimeAvg = new Dictionary<Intersection,float>();
+    //path lines
+    private List<GameObject> pathLines = new List<GameObject>();
 
     private double mean;
     private double stddev;
@@ -324,23 +356,7 @@ public class Intersection : MonoBehaviour {
 
         Vehicle v = null;
 
-        switch (poi)
-        {
-            case PointsOfInterest.House:
-                //pick random destination in the appropriate poiDestination list
-                v = new Vehicle(Simulation.GetTime(), 0.05f, poiDestinations[(int)PointsOfInterest.Work][0]);
-                break;
-            case PointsOfInterest.Food:
-                break;
-            case PointsOfInterest.Fuel:
-                break;
-            case PointsOfInterest.Work:
-                break;
-            case PointsOfInterest.None:
-                break;
-            default:
-                break;
-        }
+        v = new Vehicle(Simulation.GetTime(), 0.05f, poiDestinations[(int)PointsOfInterest.Work][0].DestinationIndex);
 
         if (v != null)
         {
@@ -366,6 +382,11 @@ public class Intersection : MonoBehaviour {
 
     public void ConnectInlets()
     {
+        if (poi != PointsOfInterest.None)
+        {
+            poiDestinations[(int)poi].Add(this);
+        }
+
         //TODO: void Intersection.ConnectInlets()
         if (inlets[0] != null)
             inlets[0].ConnectLaneQueues(inlets[3], inlets[1], inlets[2]);
@@ -375,23 +396,42 @@ public class Intersection : MonoBehaviour {
             inlets[2].ConnectLaneQueues(inlets[0], inlets[3], inlets[1]);
         if (inlets[3] != null)
             inlets[3].ConnectLaneQueues(inlets[1], inlets[2], inlets[0]);
-
-        //add incoming LaneQueues to destination indices lists
-        if (poi != PointsOfInterest.None)
+    }
+    public void GetDestinations()
+    {
+        //add everything
+        foreach (var destinationList in poiDestinations)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                if (inlets[i] != null)
-                {
-                    foreach (LaneQueue lq in inlets[i].LaneQueues)
-                    {
-                        //add this LaneQueue's index to the appropriate point of interest destination index list
-                        lq.IsDestination = true;
-                        poiDestinations[(int)poi].Add(lq.Index);
-                    }
-                }
-            } 
+            AddDestinations(destinationList);
         }
+
+        //switch (poi)
+        //{
+        //    case PointsOfInterest.House:
+        //        AddDestinations(poiDestinations[(int)PointsOfInterest.Work]);
+        //        AddDestinations(poiDestinations[(int)PointsOfInterest.Food]);
+        //        AddDestinations(poiDestinations[(int)PointsOfInterest.Fuel]);
+        //        break;
+        //    case PointsOfInterest.Food:
+        //        break;
+        //    case PointsOfInterest.Fuel:
+        //        break;
+        //    case PointsOfInterest.Work:
+        //        break;
+        //    default:
+        //        break;
+        //}
+    }
+    private void AddDestinations(List<Intersection> destinations)
+    {
+        foreach (var destination in destinations)
+        {
+            destinationTravelTimeAvg[destination] = float.PositiveInfinity;
+        }
+    }
+    public void Clear()
+    {
+        destinationTravelTimeAvg.Clear();
     }
 
     public void RemoveInlet(int index)
@@ -421,5 +461,40 @@ public class Intersection : MonoBehaviour {
         temp.position = new Vector2(this.transform.position.x, this.transform.position.y);
 
         return temp;
+    }
+
+    public IntersectionInlet TryGetInlet()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (inlets[i] != null)
+            {
+                return inlets[i];
+            }
+        }
+        return null;
+    }
+
+    public void ShowPathLines()
+    {
+        foreach (var key in destinationTravelTimeAvg.Keys)
+        {
+            Vector3 labelPosition = (key.transform.position + transform.position) * 0.5f;
+
+            GameObject pathLine = (GameObject)GameObject.Instantiate(pathLineprefab, labelPosition, Quaternion.identity);
+
+            pathLine.transform.localScale = new Vector3(Vector3.Magnitude(key.transform.position - transform.position), Intersection.INITIAL_RADIUS * 0.2f, 1.0f);
+            float rotation = Mathf.Atan2((key.transform.position - transform.position).y, (key.transform.position - transform.position).x) * Mathf.Rad2Deg;
+            pathLine.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), rotation);
+        }
+    }
+    public void HidePathLines()
+    {
+        foreach (var path in pathLines)
+        {
+            GameObject.Destroy(path);
+        }
+
+        pathLines.Clear();
     }
 }

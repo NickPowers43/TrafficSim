@@ -20,19 +20,38 @@ namespace Tools.Select
         }
         public override void Deactivate()
         {
-            if (currentHighlighted != null)
-            {
-                currentHighlighted.selectionSprite.SetActive(false);
-                currentHighlighted = null;
-            }
+            DeselectCurrentIntersection();
         }
         public override void Update()
         {
 
         }
+
+        private void DeselectCurrentIntersection()
+        {
+            if (currentHighlighted != null)
+            {
+                currentHighlighted.selectionSprite.SetActive(false);
+
+                currentHighlighted.HidePathLines();
+
+                currentHighlighted = null;
+            }
+            currentHighlighted = null;
+        }
+
         public override void OnClick()
         {
+            DeselectCurrentIntersection();
 
+            Intersection hovered = GetHoveredIntersection();
+
+            if (hovered != null)
+            {
+                currentHighlighted = hovered;
+
+                currentHighlighted.ShowPathLines();
+            }
         }
     }
 }

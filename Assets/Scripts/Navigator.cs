@@ -39,11 +39,17 @@ public class Navigator
         LaneQueue.LaneQueues.Clear();
         LaneQueue.LaneQueueEdges.Clear();
         LaneQueue.NextIndex = 0;
+        //clear intersections
+        foreach (var intersection in Intersection.Intersections)
+        {
+            intersection.Clear();
+        }
         //clear destination indices lists
         foreach (var list in Intersection.POIDestinations)
         {
             list.Clear();
         }
+
 
         //build new LaneQueue edges
         foreach (Intersection intersection in Intersection.Intersections)

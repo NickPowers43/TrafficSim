@@ -49,6 +49,8 @@ namespace Tools.Build
                         Road road = GameObject.Instantiate(Road.Prefab).GetComponent<Road>();
 
                         road.SetEndPoints(startNode.GenerateInlet(), hovered.GenerateInlet());
+
+                        Road.Roads.Add(road);
                     }
 
                     ToggleHighlight(startNode);

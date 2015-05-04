@@ -72,6 +72,17 @@ public class Vehicle
     //statistical data
     private double instantiateTime;
     private double destroyTime;
+    private double DestroyTime
+    {
+        set
+        {
+            destroyTime = value;
+        }
+        get
+        {
+            return destroyTime;
+        }
+    }
     public double Age //Age in real-time
     {
         get

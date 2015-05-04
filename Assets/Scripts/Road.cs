@@ -130,7 +130,7 @@ public class Road : MonoBehaviour {
 
 	void Start ()
     {
-        roads.Add(this);
+
 	}
 	
 	void Update () 
