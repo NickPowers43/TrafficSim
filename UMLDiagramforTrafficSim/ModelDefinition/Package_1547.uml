@@ -1,0 +1,1838 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="9c236b38-c62a-4967-84b3-a3b81cb5dbd0"
+  name="Utility"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="76cbe989-dd49-41ff-8a48-b0e93734f799"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DUtility"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="14920f22-61b7-42c3-8ead-69cdfece54f0"
+        name="Utility"
+        visibility="Package"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="09db584b-4b19-4ebb-98dc-ea0931dc2b88"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DUtility"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="d82f90d0-b6f5-43a5-8ce3-a65d8e5f9e45"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e142ee0a-aafa-4c6e-a463-2553d7f9cd99">
+                <propertyInstance
+                  Id="cc4ada69-c89d-48f0-99ee-9898249652d9"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="cb39f81c-4833-41d3-b2bb-167cb28b07dd">
+                <propertyInstance
+                  Id="2d07d43e-6214-4540-89c4-76f790809e2c"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0d4e4570-ebde-4a7a-9dc9-4107e0c56d90">
+                <propertyInstance
+                  Id="1f75623c-5238-4c73-bb68-c2f8b1c32860"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="63e50a93-9727-4e9d-8391-febfaa1e9ca6">
+                <propertyInstance
+                  Id="6c174ee5-cd0b-4ebe-be41-b217f8424ca4"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="65c54cec-c26d-416c-a713-5349d2b7e613">
+                <propertyInstance
+                  Id="ac1d5655-2450-40b1-899d-dd7658e601a2"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="e17ddc0b-7777-4905-868d-809833b9ce2c"
+            isDerived="false"
+            sourceEndRoleName="Utility"
+            targetEndRoleName="BellmanFord"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="29390db9-75af-4b1e-aa8b-6d55789b9b68"
+              LastKnownName="BellmanFord"
+              LastKnownLocation="Package_1547.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c847efee-2b32-471a-8c16-011cfc9cbcb8"
+                  name="Utility"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="b317d25a-cfa3-4db4-be75-3619cdffb829"
+                  name="BellmanFord"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="892cfb78-5045-4a26-9a84-dad57ef8a60c"
+            name="DuplicateSquareMat‎&lt;T‎&gt;"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="a264adc6-cb36-4bea-b5a8-3c92344e6bbd"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DUtility Member%3D(Name%3DDuplicateSquareMat GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(ArrayRank%3D1 ParentType%3D(ArrayRank%3D1 ParentType%3D(ParameterIdentifier%3D0))))])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="fc37618d-4e00-48a2-8be8-f463f3d34a9e"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f0668edb-05cc-470f-b2a2-219457192a70">
+                    <propertyInstance
+                      Id="2069e022-a0cf-42b9-a6b7-124f40ae565b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e7778b28-2fd1-4b61-8233-5a60a85a5ec3">
+                    <propertyInstance
+                      Id="5e5357a2-d411-4c44-83ab-266f254facdb"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4de4c8da-7f69-421e-8c2a-99fa877242c9">
+                    <propertyInstance
+                      Id="4c13975a-3602-4eb2-b472-b8c795159e87"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c6c62bce-bd48-44a0-a62f-624e04883799">
+                    <propertyInstance
+                      Id="645cbdfe-bc68-45b3-9e0e-cbc05ee8d107"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c0780d98-cb6a-4439-95f0-bac134ea9d27">
+                    <propertyInstance
+                      Id="2397fb39-e1f4-4bda-9bbb-a1a49fa95cf4"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="75885af7-a62a-4fbc-9489-5a78468fa5eb">
+                    <propertyInstance
+                      Id="2226a631-b408-4649-a77e-e7d8431a700c"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="50a4023a-dae6-4d90-9369-15f336ceb843"
+                  direction="Return"
+                  isOrdered="true">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="3d876438-82f2-4862-a558-e2f1c121011a"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="e4fee54a-fbc9-4623-bc88-22e4cd435158"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="3eebd184-67f7-4a72-bb6d-42b369899033"
+                      LastKnownName="T‎[]‎[]"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b0bf4342-fd6f-449f-b15b-f9bbb53fdf4a"
+                  name="src"
+                  direction="In"
+                  isOrdered="true">
+                  <referencesInternal>
+                    <reference
+                      Id="d12a91c7-6e51-45ca-b02a-0afea6db7caf"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DUtility Member%3D(Name%3DDuplicateSquareMat GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(ArrayRank%3D1 ParentType%3D(ArrayRank%3D1 ParentType%3D(ParameterIdentifier%3D0))))]) ParameterIdentifier%3Dsrc"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <lowerValueInternal>
+                    <literalString
+                      Id="395c9e26-4660-4ffc-b638-e701ac435070"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="69d99488-f9d4-47b9-974c-60ed90ea3d52"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="3eebd184-67f7-4a72-bb6d-42b369899033"
+                      LastKnownName="T‎[]‎[]"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="113c389b-6ad8-47b8-adb8-d1a1a96f9767"
+            name="SquareMat‎&lt;T‎&gt;"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="ea054fe8-56cc-4d46-bb4d-b8d1a1058431"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DUtility Member%3D(Name%3DSquareMat GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(ParameterIdentifier%3D0)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="70188da9-a282-4ebf-8c80-45ae0af5ea4a"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="96cdb159-8526-413c-b884-9bf37815874a">
+                    <propertyInstance
+                      Id="9b90df7a-9d56-49a1-a486-033f0f9d2a3b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="228bc69a-d571-4d0d-b200-692d2c054e6a">
+                    <propertyInstance
+                      Id="04382e3d-8b9f-456f-b767-2c4dfdcdc0f1"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f19a3cb2-c29e-44ca-a073-690eeb0f5804">
+                    <propertyInstance
+                      Id="5679f468-b3f6-4432-9ecd-7401c89a31f0"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="29bd53b2-b065-422b-a148-698a5f335773">
+                    <propertyInstance
+                      Id="45bf48ff-730f-41c1-9689-02441290c9f3"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9875195f-45ea-4cfa-b2c8-b300e8f37198">
+                    <propertyInstance
+                      Id="2430726c-e52f-4b91-bf35-47ed355e7a04"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9944ddd6-81f0-41f6-83b7-3f899d9b9606">
+                    <propertyInstance
+                      Id="a58c76c3-df86-4ce9-829d-5738d0b83fdd"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b814fc51-5649-4244-9e1d-f2f5bf1e31f8"
+                  direction="Return"
+                  isOrdered="true">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="d8df26c4-29ac-49b3-980f-819fca487fa7"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="3474a322-4a65-40a5-a529-74109e8466a2"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="3eebd184-67f7-4a72-bb6d-42b369899033"
+                      LastKnownName="T‎[]‎[]"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="59d7076d-3ca6-457d-b100-0c31b3f89a51"
+                  name="size"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="cb7d4fd7-a3b5-48ad-9e75-5f1d45ca8316"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DUtility Member%3D(Name%3DSquareMat GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(ParameterIdentifier%3D0)]) ParameterIdentifier%3Dsize"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="4b44ee3c-de44-4052-bcae-d4921d0d66fd"
+                  name="def"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="0a612c77-5573-42c8-8787-a2b600f68988"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DUtility Member%3D(Name%3DSquareMat GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(ParameterIdentifier%3D0)]) ParameterIdentifier%3Ddef"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="30d2c885-3344-4a51-9703-3de43c733e94"
+                      LastKnownName="T"
+                      LastKnownLocation="Package_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="ff08429e-ffcc-4211-a2d5-34fe7eb4d116"
+            name="Utility"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="5e78cb7b-e67c-4c7d-87b6-086e5b9108ea"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DUtility Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="129db97b-1431-40f9-9935-6454fb28464b"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="049f2586-b643-4790-8d21-9f359766acb1">
+                    <propertyInstance
+                      Id="136ca9b5-6c38-47b0-8ec3-c30af939e605"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="472a2148-ade1-4318-b2c9-0c11714786dd">
+                    <propertyInstance
+                      Id="4a331162-63fe-4c77-89be-570799eb05fa"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="94ada5ed-ab71-41cb-bacf-b3dee1161b4b">
+                    <propertyInstance
+                      Id="fb3ac24a-135d-4027-9a85-f8bc91185b85"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f5c6e28c-726f-4ef4-8ea7-849148f24eb3">
+                    <propertyInstance
+                      Id="b7a1bd79-a9ba-44d9-a73b-d0a64e0a6733"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2f0caa28-39d0-4d66-94c4-59750c91245b">
+                    <propertyInstance
+                      Id="1be19a20-760c-4d86-b6f3-e6c2ff1cb051"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ba850bc4-83b5-4772-896b-f95ec281bd04">
+                    <propertyInstance
+                      Id="e42e32a0-53f9-40b5-a7e1-940fae33ff8f"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="eff230c0-2e99-477b-ac65-468d9bd1d962"
+        name="WeightedEdge"
+        visibility="Private"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="1afd1184-dba6-43f5-8d58-3958916d271c"
+            handle="viewcode://./CodeSchema_Struct?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="169668ed-44d0-4848-8680-b58785a4509c"
+            name="struct"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f15e1a22-6223-4199-a664-9fcb938b7223">
+                <propertyInstance
+                  Id="8ca2b3dd-de62-47dd-af4f-557652190ada"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="da8098ca-d6bc-4884-8cfe-ceaf21f8bec3">
+                <propertyInstance
+                  Id="d3c4c629-62ea-4360-a9a2-cee9b5e965a4"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="217dd52e-dfc6-4f6b-b47a-5878f51ac678">
+                <propertyInstance
+                  Id="ca70d0c4-c2bb-4719-adc1-17385b7ba74f"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3a5db695-e511-44d8-ac65-01ae3417eb7e">
+                <propertyInstance
+                  Id="1038d2c5-d355-4eec-bdce-187ed617cd05"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="219010e1-ab90-45f2-93b6-86c2f606dacf"
+            isDerived="false"
+            sourceEndRoleName="WeightedEdge"
+            targetEndRoleName="Utility"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="14920f22-61b7-42c3-8ead-69cdfece54f0"
+              LastKnownName="Utility"
+              LastKnownLocation="Package_1547.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1ad39274-5b33-420f-b011-c7f0728cb89d"
+                  name="WeightedEdge"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e3bd7931-ff03-43cd-8583-bb8b64b238fa"
+                  name="Utility"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedRedefinableTemplateSignatureInternal>
+          <redefinableTemplateSignature
+            Id="6d4825b9-8741-413b-b77e-e59b6483e71a"
+            parameters=""
+            name="RedefinableTemplateSignature1"
+            isLeaf="false">
+            <ownedParameters>
+              <classifierTemplateParameter
+                Id="2ddd4687-b844-4441-af69-13434be4614f">
+                <referencesInternal>
+                  <reference
+                    Id="4caf5010-1e07-4ed6-ab39-83c60be765b6"
+                    handle="viewcode://./CodeSchema_GenericParameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1) ParameterIdentifier%3D0"
+                    tag="ViewCode" />
+                </referencesInternal>
+                <ownedParameterableElement>
+                  <class
+                    Id="30d2c885-3344-4a51-9703-3de43c733e94"
+                    name="T"
+                    isAbstract="false"
+                    isLeaf="false"
+                    isActiveClass="false" />
+                </ownedParameterableElement>
+              </classifierTemplateParameter>
+            </ownedParameters>
+          </redefinableTemplateSignature>
+        </ownedRedefinableTemplateSignatureInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="e4fd47c6-db5c-4ea4-979e-49af607b7ee4"
+            name="end"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="34b83894-3139-4cd3-9b10-6fb2a253754d"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1) Member%3Dend"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="0ba222f7-8456-465d-8fb1-52f7a77d2cd0"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6f154bfd-e0f5-498d-ac1b-b52dc2957f4d">
+                    <propertyInstance
+                      Id="dd544889-68df-4ca8-b7f7-715367c0e935"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ef669b48-e21a-408e-b2d0-7ad03aa631ff">
+                    <propertyInstance
+                      Id="f06781d4-d863-498c-8dab-a222c835c57c"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4e7df902-3bf9-47ac-87ce-45f3b9ca2811">
+                    <propertyInstance
+                      Id="88a0114e-f202-43c6-8d9b-66f13e49943d"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c7a76e5a-9c61-42f8-b61c-3380ce88df05">
+                    <propertyInstance
+                      Id="47229b9a-f629-4a44-9858-0b39f0d8e650"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e43aa4e8-0ed1-4f45-8a6e-96c1e62de460">
+                    <propertyInstance
+                      Id="d68ea9bf-7f35-4dd8-90da-efefc26b30ce"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="30d2c885-3344-4a51-9703-3de43c733e94"
+                LastKnownName="T"
+                LastKnownLocation="Package_1547.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="0c18ae0c-a403-475d-b05d-51c9bb5f1a00"
+            name="start"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="5cccc316-8def-4942-b517-9e4a561f94d6"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1) Member%3Dstart"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="19e2ef43-fb62-48b5-8319-a40326a6894a"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b292f6f8-3df0-4115-995a-d391b4ae3fc3">
+                    <propertyInstance
+                      Id="9bd23997-bb7c-41b9-a76e-ee6ae42bb0c7"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f8cdfc93-31eb-4679-bae4-e76beda98814">
+                    <propertyInstance
+                      Id="f5488634-df56-4f74-9de2-be93f511a6e8"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="54f2e536-a265-46b7-8f7b-593c653a7e03">
+                    <propertyInstance
+                      Id="48888d9e-306b-4dbb-8098-71810f0b68e7"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c0be126b-cb59-4ba7-8bb1-2603640548a1">
+                    <propertyInstance
+                      Id="46615c9f-3589-4e5f-b9b7-4ff79f893d22"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ed088928-f66f-4ec4-aa63-4f7f5bc88940">
+                    <propertyInstance
+                      Id="987e555f-28cb-4f9b-bce2-a0a75f79a904"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="30d2c885-3344-4a51-9703-3de43c733e94"
+                LastKnownName="T"
+                LastKnownLocation="Package_1547.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="e93ee097-27ca-486e-84d8-a918daa229f2"
+            name="weight"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="986f43f9-21f4-47fe-a00c-da33877066ca"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1) Member%3Dweight"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="28842a66-a304-46bb-a952-a98c67852fbe"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8885843a-82bf-4ac8-aa5a-14848f8f1a3e">
+                    <propertyInstance
+                      Id="9be304d8-c59b-4464-97a7-3087417cd6be"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5c03a764-9f01-4b94-af34-5ff0a5eed7c7">
+                    <propertyInstance
+                      Id="88729cf6-8a75-4a08-bec9-065296b360cd"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8577c622-04dc-49a3-ae42-b3a97f755473">
+                    <propertyInstance
+                      Id="9fabcdec-7051-49ac-bfb9-d9697c24a413"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1e396655-d401-443e-b0e4-1bd3bfb8a8ad">
+                    <propertyInstance
+                      Id="57b561d1-9356-4b7c-90bb-6daa51f23137"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="aef6d703-90fc-4829-8291-45d38052b16f">
+                    <propertyInstance
+                      Id="19912e64-e212-4eca-817b-15bfd6b8161d"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="5fdfcbbb-fb78-45e4-93bc-957dd23980f0"
+                LastKnownName="Single"
+                LastKnownLocation="Package1_1547.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="b9d25784-5108-4636-b1cc-1c659f8b607c"
+            name="WeightedEdge"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="18dd33fd-576d-45d6-b91b-1bbded722435"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1) Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="c8a716ab-ba51-4451-9ffc-3fc8eb99098e"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4b8e3c1f-fa18-473b-bd14-67c892ed0d7e">
+                    <propertyInstance
+                      Id="de228f53-3b32-4c6a-bfae-cb4dc9879fb5"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="96a18664-4b5c-4bbb-bb4a-8e9e9070022b">
+                    <propertyInstance
+                      Id="75d9a950-07b8-47ee-9916-d81a735c9139"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="410f6d8f-64a4-4437-867d-62a29cfb6e6d">
+                    <propertyInstance
+                      Id="7c4577ff-cbef-4909-970b-094c4a2dd161"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cc4baabc-5c42-4380-b22e-ff3fe2f6a930">
+                    <propertyInstance
+                      Id="383e4bdc-4bf6-4ad3-abf2-87d1ad576c55"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6fe1dbf7-1d77-451d-9369-3b808fadc1ec">
+                    <propertyInstance
+                      Id="3d91e65f-b7af-43d9-86ff-e6c165c1d8fa"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="803d81c7-5480-4618-99ad-aed58e4e0cb7">
+                    <propertyInstance
+                      Id="156c902b-84da-40b1-84c8-ec598290d89b"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="29390db9-75af-4b1e-aa8b-6d55789b9b68"
+        name="BellmanFord"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="a0d48b01-69e5-49b5-a7bf-a998ea0537d6"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="11cf15a5-df0f-451c-b002-3d4439e54b6b"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="825fac27-72e3-448a-ac91-c8f72eac311c">
+                <propertyInstance
+                  Id="cbfeb026-0ec2-4698-8766-6857eafb8f49"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e9069fb3-8d0f-455f-ab46-cada24ed4601">
+                <propertyInstance
+                  Id="78db30a1-715e-464c-9fad-7efddffb13c1"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="901c108f-20e2-432c-8755-12bd97f014a2">
+                <propertyInstance
+                  Id="7caaad48-1bc6-44a7-8f39-9dcf34315529"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2e2851a0-115d-4e48-8d56-dbffc65894fb">
+                <propertyInstance
+                  Id="d1a8e99e-c931-4d34-9397-21acca3bed5c"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c9e8fbb5-6b33-414e-9895-9b449b550245">
+                <propertyInstance
+                  Id="d02af634-ec02-4943-bcd1-27b2d8a4cb71"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="affeee97-6183-498a-bf47-9a245e0b1aa8"
+            name="CompMatrix"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="5e74b9a3-7cd1-4caf-b59c-e199be0fc880"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DCompMatrix OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="f9be3762-59ea-4dc6-b383-72a0105bc51a"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8d4e2ffb-c349-40ce-bf2f-04c254aad8ec">
+                    <propertyInstance
+                      Id="c6174e9f-c573-4343-9ad3-233a4ff543bc"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0412aea4-9835-43eb-8dff-0717d116f2fe">
+                    <propertyInstance
+                      Id="bfcba13d-f8af-41b4-932b-6650944ab455"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="aa917f83-fc2d-4c3a-a741-528c507cad15">
+                    <propertyInstance
+                      Id="c970ee63-32d9-4132-96e7-bfdf34776746"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a9ec84e2-6f0f-4937-9af7-90c91c0c0f29">
+                    <propertyInstance
+                      Id="2f2cafa3-eb9f-4b07-8083-4ccd4f166b86"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="14d1c58c-acef-4c02-9660-c7fcdeb9bcc6">
+                    <propertyInstance
+                      Id="fa37de69-dac7-4ac4-b045-3bed4a1709a2"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ac5afd9e-6b36-443e-889a-5164e985adc6">
+                    <propertyInstance
+                      Id="bce7a9e7-1272-4b95-958e-dfaa0b15e1fb"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b3dbb7e4-ce9f-40de-9489-a4cab1bd1574"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fccb297b-aed7-427a-9171-98461d20f82b"
+                  name="a"
+                  direction="In"
+                  isOrdered="true">
+                  <referencesInternal>
+                    <reference
+                      Id="4f003d7b-2996-4505-9887-8d64df28c748"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DCompMatrix OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))]) ParameterIdentifier%3Da"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <lowerValueInternal>
+                    <literalString
+                      Id="b75850ce-94c3-4475-bd19-ebaa3c2b36bf"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="d605f2d4-0cbb-40b9-b990-2f5043c70efa"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="5fdfcbbb-fb78-45e4-93bc-957dd23980f0"
+                      LastKnownName="Single"
+                      LastKnownLocation="Package1_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7077a26c-c87b-45f4-8327-a9ae5a9e0f26"
+                  name="b"
+                  direction="In"
+                  isOrdered="true">
+                  <referencesInternal>
+                    <reference
+                      Id="96afd5de-f137-4d4e-96bb-35cccd8e99b9"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DCompMatrix OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))]) ParameterIdentifier%3Db"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <lowerValueInternal>
+                    <literalString
+                      Id="ba3c1d58-4a8e-47e0-9f80-b49060b9ad59"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="305e5b37-6ab2-49a0-b112-76101ef2ea43"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="5fdfcbbb-fb78-45e4-93bc-957dd23980f0"
+                      LastKnownName="Single"
+                      LastKnownLocation="Package1_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="4dadcc98-8044-4abd-be9c-44c8fec96bd8"
+            name="ComputeCostMatrix"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="659ab8ea-a628-4d7b-894f-69473284e412"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DComputeCostMatrix OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem.Collections.Generic Type%3D(Name%3DICollection GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Type%3DLaneQueue)]))]))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="6965a7e3-ba49-489f-8f9d-b8d2697fdb15"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2b6c005d-5fd8-46a2-ac23-b0c04380af72">
+                    <propertyInstance
+                      Id="dae81501-2e12-40c6-a7b9-5e4e1e3cc9d5"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8e18643c-234f-445a-a2ff-252448de18b4">
+                    <propertyInstance
+                      Id="a1b2d2ee-586c-44ee-9fd1-6baeea88a0f1"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="be0c0c57-6bad-49c6-8567-c24831c1a074">
+                    <propertyInstance
+                      Id="175aa0f1-61a8-4214-86cb-80ff8dff4a7b"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dfcc481d-5540-44c2-8276-e8bed903ece0">
+                    <propertyInstance
+                      Id="8002fbc3-d32f-4913-89a1-b29a488da698"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="93c9edbd-da24-45f1-a3bf-d7dfd72c1200">
+                    <propertyInstance
+                      Id="2a3be5a9-9a6b-4201-ba2f-0a9359cf6083"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f2b7842e-4383-4f68-88fb-5f6f2b6335ad">
+                    <propertyInstance
+                      Id="c4c80c9d-11a3-4cc2-94ee-d6c204f4ceb5"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="048b25a3-3ceb-465f-9415-d25e8831d940"
+                  direction="Return"
+                  isOrdered="true">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="707decb6-00c9-4bca-a385-93c77cdc365b"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="61a4eefc-5b24-45ba-9568-031e0a5ebb93"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="5fdfcbbb-fb78-45e4-93bc-957dd23980f0"
+                      LastKnownName="Single"
+                      LastKnownLocation="Package1_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="161b799d-450b-478b-9c94-3baca01f4cd3"
+                  name="edges"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="282471b8-5a3c-4115-8691-157d80fbe421"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DComputeCostMatrix OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem.Collections.Generic Type%3D(Name%3DICollection GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Type%3DLaneQueue)]))]))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dedges"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <interfaceMoniker
+                      Id="32f3abc5-5c17-411a-8a5b-f5530bd6a0d9"
+                      LastKnownName="ICollection&lt;WeightedEdge‎&lt;LaneQueue‎&gt;‎&gt;"
+                      LastKnownLocation="Package3_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7fca2243-f02f-4ce1-ab11-40cd67cfc397"
+                  name="size"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="ab32c7ca-ab50-4290-87ee-c3907cc71ff5"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DComputeCostMatrix OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem.Collections.Generic Type%3D(Name%3DICollection GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Type%3DLaneQueue)]))]))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dsize"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="6f15c2df-6f62-4c67-adfc-e97ebb9cb3e7"
+            name="CopyData‎&lt;T‎&gt;"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="c659fb1b-ded4-4e2d-a0de-a56ceaf803b4"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DCopyData GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(ArrayRank%3D1 ParentType%3D(ArrayRank%3D1 ParentType%3D(ParameterIdentifier%3D0))))%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(ArrayRank%3D1 ParentType%3D(ArrayRank%3D1 ParentType%3D(ParameterIdentifier%3D0))))])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="9c110821-6cbe-4f87-8d87-c09974c5a609"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ce491d07-8be8-4266-93c2-d142af86bb4c">
+                    <propertyInstance
+                      Id="ad48428a-826f-4cd7-be47-0443f9743e63"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4e92548a-d8f1-4fc5-a628-b8bdfb5f9abe">
+                    <propertyInstance
+                      Id="c3c17bcb-80a5-4263-b1ee-3f972061a19a"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="28fe614a-c4e4-45b2-9baa-dea1261a399d">
+                    <propertyInstance
+                      Id="bf162349-26b0-4392-b1c4-8220fb564f31"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ddaaa953-e807-4fcf-a4d9-cb158c5bc9dc">
+                    <propertyInstance
+                      Id="509ea366-eddd-46e7-84f5-7e7b8323b1f6"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3c025822-3e15-48a9-9f8a-f1bad1fe932e">
+                    <propertyInstance
+                      Id="e733a500-55d5-46dc-9ebd-3c00146d9dfc"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4f05f964-1128-4676-b91e-01bb6af73149">
+                    <propertyInstance
+                      Id="6c37bac1-d9d3-4c65-9514-bce36e3f2c84"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="dae61718-dce0-4fa8-bcbf-943d3496f1ad"
+                  name="src"
+                  direction="In"
+                  isOrdered="true">
+                  <referencesInternal>
+                    <reference
+                      Id="fccd717c-eb19-40e8-ba79-bd2d4eb6edb9"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DCopyData GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(ArrayRank%3D1 ParentType%3D(ArrayRank%3D1 ParentType%3D(ParameterIdentifier%3D0))))%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(ArrayRank%3D1 ParentType%3D(ArrayRank%3D1 ParentType%3D(ParameterIdentifier%3D0))))]) ParameterIdentifier%3Dsrc"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <lowerValueInternal>
+                    <literalString
+                      Id="d26250f0-cd00-4c79-91d6-46ed5f7a1a88"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="3f98bcda-0a70-4fe7-a913-f2694650a0c8"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="3eebd184-67f7-4a72-bb6d-42b369899033"
+                      LastKnownName="T‎[]‎[]"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2bf17355-16e0-45ab-9829-8b178efed710"
+                  name="dst"
+                  direction="In"
+                  isOrdered="true">
+                  <referencesInternal>
+                    <reference
+                      Id="075f7786-1261-4fb5-b52e-ee5b39f548ba"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DCopyData GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(ArrayRank%3D1 ParentType%3D(ArrayRank%3D1 ParentType%3D(ParameterIdentifier%3D0))))%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(ArrayRank%3D1 ParentType%3D(ArrayRank%3D1 ParentType%3D(ParameterIdentifier%3D0))))]) ParameterIdentifier%3Ddst"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <lowerValueInternal>
+                    <literalString
+                      Id="4adf9d4e-31e0-4a7c-95ea-9b7f6ce7defa"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="85724bf2-7b07-4a4b-bad3-49dcc64e7246"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="3eebd184-67f7-4a72-bb6d-42b369899033"
+                      LastKnownName="T‎[]‎[]"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="bc2282ce-bbc4-47bc-9d76-bf6123a808d8"
+            name="MinimumOfTheSum"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="5b84586e-fa16-490f-b05d-65f4ad2938ed"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DMinimumOfTheSum OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="ed6ce3e3-8169-4fd1-a3a8-8a444f337c56"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="aa605dad-7657-4f24-b5a3-131a5ed45af9">
+                    <propertyInstance
+                      Id="2147a369-8074-4f69-bdd4-9cd9f6047fc7"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="53e84a06-ad68-48ac-bec8-771d7738c2ec">
+                    <propertyInstance
+                      Id="f9487a73-4caa-408f-84c9-fbafca92baf6"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ccf42ca9-3e81-4125-a045-e1f50e615e6d">
+                    <propertyInstance
+                      Id="935be7df-ac76-496e-a784-6c8e7f701e12"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e1daec15-42e5-4200-a2b1-889c48b1f8c8">
+                    <propertyInstance
+                      Id="ce94d582-82f8-4b4b-8982-ba106b2f4db1"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ac2966aa-41a1-4bbd-8390-a9fb1898698f">
+                    <propertyInstance
+                      Id="59641022-a994-4dac-90f8-e149b17c9ffb"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3b36e8e5-b8ea-4bb6-a820-1952e30064f1">
+                    <propertyInstance
+                      Id="f4493002-d3f2-48cc-8431-d62c034bfb8d"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f21eeca5-8133-41ec-b940-602549a233b2"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="5fdfcbbb-fb78-45e4-93bc-957dd23980f0"
+                      LastKnownName="Single"
+                      LastKnownLocation="Package1_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ba5129a7-a12d-40fc-bc5f-d57c64146d7a"
+                  name="c"
+                  direction="In"
+                  isOrdered="true">
+                  <referencesInternal>
+                    <reference
+                      Id="fafa6805-b60e-4391-87ab-53a418128eae"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DMinimumOfTheSum OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dc"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <lowerValueInternal>
+                    <literalString
+                      Id="50b8266a-0dff-407a-ac79-68fc83b75472"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="33018a59-ae10-45ee-855e-2d9c8de6ac04"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="5fdfcbbb-fb78-45e4-93bc-957dd23980f0"
+                      LastKnownName="Single"
+                      LastKnownLocation="Package1_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ed460520-4430-457f-bded-6b171d05a98c"
+                  name="d"
+                  direction="In"
+                  isOrdered="true">
+                  <referencesInternal>
+                    <reference
+                      Id="77a65151-065d-4bbf-8acf-98eb09f9d436"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DMinimumOfTheSum OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dd"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <lowerValueInternal>
+                    <literalString
+                      Id="d441aec4-367e-4a4a-baac-696449b42f9c"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="7d4ef9d2-600d-47e5-bc74-7529839d8161"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="5fdfcbbb-fb78-45e4-93bc-957dd23980f0"
+                      LastKnownName="Single"
+                      LastKnownLocation="Package1_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="afa4f0fe-fc33-4dc5-819c-21bd6e3b948a"
+                  name="row"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="2181220c-53fa-465e-80ea-42a0e3b61a8b"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DMinimumOfTheSum OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Drow"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b7c696b7-e63a-49f4-af83-5acaa5e8ee9c"
+                  name="column"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="711f1001-67e6-433b-a89d-9be47ff5eb58"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DMinimumOfTheSum OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dcolumn"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="57df1609-0f67-4206-b304-64e917e488a0"
+            name="PrintMatrix"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="d21eff59-ab5c-468f-82ca-97366f3eae64"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DPrintMatrix OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="64b79ca2-08e1-4676-b5ae-9bb18217c152"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4c43a32b-5564-4e0f-b5ba-b73580cde296">
+                    <propertyInstance
+                      Id="7dcac792-c156-436d-bb90-092849d55c78"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="829fb537-7c2a-4cf1-9680-cc601b93fe69">
+                    <propertyInstance
+                      Id="1040b508-36d5-4b09-b3c5-8bdc3db95c22"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6208c457-7c85-4525-8a8f-42da0615ea13">
+                    <propertyInstance
+                      Id="f9098b0c-bd3d-4b84-bc82-4c27a9ffa7ce"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="83f66adf-22b7-4d4d-b105-73fa61d18834">
+                    <propertyInstance
+                      Id="50cd6ba5-425a-40c0-a801-4554679b407c"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a547e693-14c5-4c2f-b6d8-1c982d514e1d">
+                    <propertyInstance
+                      Id="32129384-4702-429f-be85-0dce0a2bce20"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="57c9a49d-355e-4f89-a4dd-254341d449d6">
+                    <propertyInstance
+                      Id="d3bf48b1-a3dd-49d3-9408-68ea775c615a"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="89c960f2-8365-484e-90b5-4f304db7622b"
+                  name="mat"
+                  direction="In"
+                  isOrdered="true">
+                  <referencesInternal>
+                    <reference
+                      Id="6345d4b3-21c1-4401-9a09-c642d02a0021"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DPrintMatrix OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3D(Name%3DSingle ArrayRank%3D1 ParentType%3D(Name%3DSingle ArrayRank%3D1 ParentType%3DSingle)))]) ParameterIdentifier%3Dmat"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <lowerValueInternal>
+                    <literalString
+                      Id="721bc533-7cfe-4c71-a67f-cbf72eb78c33"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="cd4522ab-5cb2-439c-ab2f-7a03b37e0777"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="5fdfcbbb-fb78-45e4-93bc-957dd23980f0"
+                      LastKnownName="Single"
+                      LastKnownLocation="Package1_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="10c471f4-ff7c-4032-bc03-d041741b9e62"
+            name="RunAlgorithm"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="e7fd9981-798e-4ade-8ca7-beb6be43bf94"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DRunAlgorithm OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem.Collections.Generic Type%3D(Name%3DICollection GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Type%3DLaneQueue)]))]))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="02cdd1a3-32b1-4ebe-89b1-220a72a709d6"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="72da3632-c42f-43f7-9ec3-067b38000105">
+                    <propertyInstance
+                      Id="c79c8127-8557-4fc5-b15f-c2b0806234ea"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2f2ee21e-b504-4d89-bded-fc001a13d847">
+                    <propertyInstance
+                      Id="cf107481-8514-49a6-bec0-b845b40d8fb4"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1748ef38-999e-4663-ab14-5fc787d59540">
+                    <propertyInstance
+                      Id="97fd977b-fdaf-456b-bfe5-916b2d7988f9"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="713f7522-3c70-446a-b923-487d9e268b85">
+                    <propertyInstance
+                      Id="f6f98f48-0525-4ab4-b9e3-65632e71c875"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f1ec2d12-d803-4cbd-93c2-ede825d65546">
+                    <propertyInstance
+                      Id="fb756734-e5c1-4ebc-adea-f982803fc545"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c87fd3d6-7189-484c-954b-f6f7f13a8be9">
+                    <propertyInstance
+                      Id="142c010e-81ff-480f-ad0f-58ae782b5ec6"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d5d15d91-afe7-4b59-b1a5-9295a815488e"
+                  direction="Return"
+                  isOrdered="true">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="deb5efed-0b98-485b-a292-a97419127198"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="4c67f9b1-ac94-4faf-84a0-5867ce809233"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="5fdfcbbb-fb78-45e4-93bc-957dd23980f0"
+                      LastKnownName="Single"
+                      LastKnownLocation="Package1_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9f91b454-c9b3-4d4f-8bed-1239d3c18379"
+                  name="edges"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="4aa7b13d-8015-4f6f-a209-5a2ed66ba921"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DRunAlgorithm OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem.Collections.Generic Type%3D(Name%3DICollection GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Type%3DLaneQueue)]))]))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dedges"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <interfaceMoniker
+                      Id="32f3abc5-5c17-411a-8a5b-f5530bd6a0d9"
+                      LastKnownName="ICollection&lt;WeightedEdge‎&lt;LaneQueue‎&gt;‎&gt;"
+                      LastKnownLocation="Package3_1547.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="aacb148b-8e3c-44da-9dbf-aa30e27e5860"
+                  name="size"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="c71e0f50-c725-4848-b706-9957d6a7cf96"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D(Name%3DRunAlgorithm OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem.Collections.Generic Type%3D(Name%3DICollection GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3D(Name%3DWeightedEdge GenericParameterCount%3D1 GenericArguments%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Type%3DLaneQueue)]))]))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dsize"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="ffcb4636-1f3c-4636-bfa2-7d7eecc5c42f"
+            name="BellmanFord"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="3a790a82-93ad-41e9-afa0-f66c0187865b"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DUtility Type%3DBellmanFord Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="26f59be3-2f46-4e96-a5de-e553c7a38afc"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="569c8dae-8b42-4c97-abf9-15bd929d1977">
+                    <propertyInstance
+                      Id="e131231a-2822-435b-aa71-27a6cf6a2b8c"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="33ba62c9-cceb-499b-9c6f-88b0b7c595f5">
+                    <propertyInstance
+                      Id="62c72c53-e1b9-40d8-aefa-664856004012"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="42760cd9-fd60-4668-8564-558bab0da188">
+                    <propertyInstance
+                      Id="fda19d39-4c49-458a-8f80-73e1cb25c15e"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e4a05615-ea95-437e-aded-5a2121589877">
+                    <propertyInstance
+                      Id="6462fdfc-1745-495e-a02b-4a98c5d404a7"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9047bad4-938f-499b-8475-01c14d3c6363">
+                    <propertyInstance
+                      Id="af2f2d00-48cf-4656-bf56-84a98404ed3b"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8d001125-fce1-4d16-b943-1995b81b8379">
+                    <propertyInstance
+                      Id="46ea9f79-e9bf-42d1-b48b-8bfb71b4a6a5"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="18bd5563-d7a2-4177-b713-3f937052dd15"
+        name="WeightedEdge&lt;LaneQueue‎&gt;"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="64d38030-5515-415d-b271-d4a3a6c5288f"
+            name="struct"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6ca42a54-c476-4d5b-a846-fa41379bd701">
+                <propertyInstance
+                  Id="3bb958b6-8d01-48c8-a853-44d13ed227e6"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7f2eb3ce-32b7-4853-b124-f9be446d3e29">
+                <propertyInstance
+                  Id="6d3eed87-0a9e-488c-9b89-13c4e0e97e6c"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="828c2fa2-b973-4bad-86ed-24501f37cd08">
+                <propertyInstance
+                  Id="aea9ed3e-a26a-4033-a0b7-87271939e3cf"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7d14141e-83c9-4cee-8d43-af3f3ee64861">
+                <propertyInstance
+                  Id="836cbfa0-154e-42d7-8cd3-1f3781b50a5e"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <signatures>
+          <templateBinding
+            Id="fce8143d-a0c8-4f6a-bebe-5732c42f1ac0">
+            <redefinableTemplateSignatureMoniker
+              Id="6d4825b9-8741-413b-b77e-e59b6483e71a"
+              LastKnownLocation="Package_1547.uml" />
+            <relationshipOwnedElementsInternal>
+              <templateBindingHasTemplateParameterSubstitution>
+                <templateParameterSubstitution
+                  Id="5b22a802-92a7-4e8c-819d-dfabb6ce26cd">
+                  <actuals>
+                    <classMoniker
+                      Id="ea86ef15-6093-454e-8974-52fe51be4fb8"
+                      LastKnownName="LaneQueue"
+                      LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+                  </actuals>
+                  <formal>
+                    <classifierTemplateParameterMoniker
+                      Id="2ddd4687-b844-4441-af69-13434be4614f"
+                      LastKnownLocation="Package_1547.uml" />
+                  </formal>
+                </templateParameterSubstitution>
+              </templateBindingHasTemplateParameterSubstitution>
+            </relationshipOwnedElementsInternal>
+          </templateBinding>
+        </signatures>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

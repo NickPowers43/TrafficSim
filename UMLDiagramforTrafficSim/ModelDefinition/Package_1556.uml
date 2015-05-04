@@ -1,0 +1,589 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="ac1f848a-6bfd-4ce5-85d6-4bd4f883b11a"
+  name="Select"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="7c431606-8b9b-4ed6-a57b-e825d516907d"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DTools.Select"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="888b914b-ac89-4c8d-bf39-6b6498acd613"
+        name="ToolBar"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="2602fa44-aa59-45dd-ad24-79b9a7bbd403"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DTools.Select Type%3DToolBar"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="51ee2e9d-8a48-43cb-a3ea-222de118c6a9"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a30f77bf-4a8a-48f2-bfa8-551a266e523b">
+                <propertyInstance
+                  Id="e941dbef-68d3-44f3-bae4-6817b8fd079f"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="238fcb11-70a7-42ff-9fc5-37f6fdc5c9f5">
+                <propertyInstance
+                  Id="e0426a83-3b32-4c32-898f-936c8d07c3ab"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="25ab529f-fc4e-4c28-86ab-5cc9b293c930">
+                <propertyInstance
+                  Id="c5e1e9a6-70cb-44e1-924d-15e1c07e98d3"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1704ece1-4b92-4613-b3ed-9be5029598a0">
+                <propertyInstance
+                  Id="36ed2249-1d84-4598-b671-a9814e52405a"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="82258d8e-af46-4b43-94a8-f1b65e54e9e5">
+                <propertyInstance
+                  Id="979e0400-72a6-4269-8856-8884b37cb187"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="49325c6d-b749-4204-81c2-68f3ad165f91"
+            isSubstitutable="false">
+            <classMoniker
+              Id="67beaffa-67a0-4ce3-ac69-aa03fc1c5fd7"
+              LastKnownName="ToolArray"
+              LastKnownLocation="Package_1552.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="45d75e70-6867-43f3-b01b-0b837d66a0b6"
+        name="SelectIntersection"
+        visibility="Package"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="6b591613-8c56-4807-affd-925b2faee26d"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DTools.Select Type%3DSelectIntersection"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="22024a9a-8ffa-464d-a14d-9fb99d8136e2"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ec9216f2-1499-49e5-8e9c-a5746945100e">
+                <propertyInstance
+                  Id="34f462e8-0a73-48df-b724-826d2d67476c"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4f64a077-67d5-4c05-8049-fa98230a6302">
+                <propertyInstance
+                  Id="4d376234-ef1d-4ebd-99b0-66fb59b97bfb"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b6d079ab-5a42-485b-8bec-5ae5fbadb94d">
+                <propertyInstance
+                  Id="a601e97f-928f-495e-a09a-cd1ec081edd8"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5270deab-19d8-42ab-a75b-d89ea8df5c99">
+                <propertyInstance
+                  Id="568affbf-56c7-4996-96ce-6f2c5d689686"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="63c4499b-25a7-455a-993a-6ff1a28d00ad">
+                <propertyInstance
+                  Id="5a9f8828-9a77-450b-825d-ca0a313b6962"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="5f595dd4-fac6-4e6c-a23b-2ec10a2b9598"
+            isSubstitutable="false">
+            <classMoniker
+              Id="d1158f51-9e73-4f10-bc56-71da9a7a8213"
+              LastKnownName="Tool"
+              LastKnownLocation="Package_1552.uml" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association
+            Id="ccb47515-fbf3-42c0-a38d-d237deb37f60"
+            isDerived="false"
+            sourceEndRoleName="SelectIntersection"
+            targetEndRoleName="Intersection"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="d33ab545-4816-4b9e-8e2f-d9fd39564e46"
+              LastKnownName="Intersection"
+              LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="aebe2923-7c59-45aa-9992-a52eeefd1f00"
+                  name="SelectIntersection"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="787a97ec-efa1-4141-ac7d-a284ccf124b8"
+                  name="Intersection"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="b9148388-f840-4188-aaf0-e10694155fe1"
+            name="currentHighlighted"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="04ba6503-1f56-44e5-bc46-f287761b6078"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DTools.Select Type%3DSelectIntersection Member%3DcurrentHighlighted"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="5a0cbe8a-410a-43cd-b4b1-3b22099cd902"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9257b213-e3e0-4fb6-a069-8926a18fa7d2">
+                    <propertyInstance
+                      Id="97633665-4a13-45ca-bf4b-cdfb37dcd272"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c9449053-4903-4c71-9982-72ec98606f93">
+                    <propertyInstance
+                      Id="3854e702-9e07-4450-b1d9-06bd6e8df878"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1f3d67fe-c652-4803-915e-9c346540feda">
+                    <propertyInstance
+                      Id="26634c70-23f9-4ad7-8971-146107909d6d"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6c27d8be-d936-4631-be78-dc91c41ba2f7">
+                    <propertyInstance
+                      Id="eb5e46a0-01a5-45b9-a8b3-18f2550406e7"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1f3efd21-81db-4b56-9196-76d41729490d">
+                    <propertyInstance
+                      Id="f49774eb-a551-4741-b508-4c494c4652f1"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="d33ab545-4816-4b9e-8e2f-d9fd39564e46"
+                LastKnownName="Intersection"
+                LastKnownLocation="UMLDiagramforTrafficSim.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="aa3d9ccb-8a28-46de-9919-3137f09ea671"
+            name="SelectIntersection"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="7f6e1b77-8d5e-4b59-9010-d8129af7cb51"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DTools.Select Type%3DSelectIntersection Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="0a187439-0da5-403f-8b5f-a1ce7f791ad9"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1323d3e2-4317-417a-ad73-a9e4729d5eaa">
+                    <propertyInstance
+                      Id="24709650-97fc-47f0-bd4f-ce7fc12494ad"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="54f3ee8f-4782-4c2a-8257-f99d101da22f">
+                    <propertyInstance
+                      Id="7e9cc3b8-0d99-42de-b40d-6ab9f2d042a0"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e61bbc3f-238f-480b-87eb-8ff78f8c30af">
+                    <propertyInstance
+                      Id="8369896e-f8c8-40af-9975-05ae4765c55a"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="553c89ce-fa41-4897-8163-2fa4d3c91043">
+                    <propertyInstance
+                      Id="3c48b5d3-0372-49c0-a78d-2378c154f0e4"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9dbabe47-3a56-480d-867e-8fdb3460cc8c">
+                    <propertyInstance
+                      Id="6e48434a-6126-4d99-941f-c9476bdc5e9e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2fd6335c-bd3a-4e97-9c20-ba78c2465180">
+                    <propertyInstance
+                      Id="7015179b-c74d-4e99-a39a-0408fb2dc63e"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="c0cc1012-ccfa-493d-9f4e-0fce73925969"
+            name="Activate"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="c260cd27-017a-4743-a483-fd361562b812"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DTools.Select Type%3DSelectIntersection Member%3DActivate"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="56197fde-d33c-4301-859e-d859d1ae76a3"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7a64367d-fd4e-4629-8fd2-d687d1c8a1b4">
+                    <propertyInstance
+                      Id="38ba07e0-7483-46ea-bb57-84e3510eb36b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f78f8474-c70d-4f42-a792-b31bdf475543">
+                    <propertyInstance
+                      Id="6a74ac93-6197-4e42-af81-2ec96c4360c1"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fe86c0c3-06e6-4e45-a6c9-513bd79c1957">
+                    <propertyInstance
+                      Id="efadb314-1894-4ec7-a617-1e6592996e9c"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2f327c33-c724-4ea1-b8c4-315f30b2b15d">
+                    <propertyInstance
+                      Id="bd852005-73d7-407b-9217-9749c72acc4a"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2e1e29e6-3721-4073-bfda-34c944bbc8d5">
+                    <propertyInstance
+                      Id="9ce81c8e-4eeb-4c57-8e21-9276a8e271d2"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7e36a670-1ed2-4c5b-af3f-3eb82560d11e">
+                    <propertyInstance
+                      Id="2dba95d9-411e-47b5-9f62-1db0c3661242"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="6f8b0b68-8a15-45f3-bfc1-e995dad81b46"
+            name="Deactivate"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="c69353ce-aaf6-43ec-8e27-589249d94503"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DTools.Select Type%3DSelectIntersection Member%3DDeactivate"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="04db5348-c910-4f95-848c-8d5e704a494c"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b7d9f10f-9132-4449-a7a0-b2435659d827">
+                    <propertyInstance
+                      Id="e3372984-ea17-4d28-84a6-be164889b155"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1def2d1e-8f79-403a-89c4-ce5eaaad48bc">
+                    <propertyInstance
+                      Id="42dbafa7-c882-4e3d-be6d-39739d9240eb"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b7e3989b-83f1-42cb-b6fc-51996cc7f822">
+                    <propertyInstance
+                      Id="4877cbbd-40c0-466e-8ef1-37bffb4c9db3"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="512c74e2-d212-4745-b4ce-586afc39faa4">
+                    <propertyInstance
+                      Id="3bdf4033-6887-426b-9ccf-d768d5ad5ea9"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fa1853fb-f755-49d4-b5fd-778b8c731cc5">
+                    <propertyInstance
+                      Id="d8889457-7404-4bfa-92dc-5f54c2627e49"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2e698036-05b4-4e1e-b40d-3facadbbbeff">
+                    <propertyInstance
+                      Id="a66cf65e-0e22-4b25-8cad-8a6a0e4b2651"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="fbdd524e-4664-42a3-840e-e395ef45909e"
+            name="Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="8170e3b1-d30a-485b-98e1-bcddc882ad7e"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DTools.Select Type%3DSelectIntersection Member%3DUpdate"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="b618d05d-ed85-4724-8489-d0cec7bd8955"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a7fa4933-b239-4b27-82b2-148e80bc82b4">
+                    <propertyInstance
+                      Id="1a13b9b6-59ee-48ba-9117-b42c8d013443"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0f354179-7649-46db-a51e-93b82efc56ec">
+                    <propertyInstance
+                      Id="4abba0fe-0c1c-465e-81c0-4c86e0096a19"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b0d45b4b-302a-4b80-ab6f-a356afbd0ccf">
+                    <propertyInstance
+                      Id="ede364ad-168a-4051-b8a8-51525ffe0225"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2504ac71-91b8-4347-bece-2a65af01b686">
+                    <propertyInstance
+                      Id="7216b3b8-6c3d-4045-ae39-f7781c32b036"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="802f143e-2dc3-4139-8815-97077c8491eb">
+                    <propertyInstance
+                      Id="9f9e1104-72b8-4013-835a-9b34f4fb1f2c"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b8f130cb-642d-4b91-9e78-b3f0b269077f">
+                    <propertyInstance
+                      Id="99e1bf1c-e019-4aee-a69a-ba5ffcef4e97"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="da0ebf02-5982-4ce0-ae89-8bf37243397b"
+            name="OnClick"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="8484e845-3c67-4654-bb99-51e2d60e7d93"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FJordanWhite%2FDocuments%2FObject Oriented Modeling CS4491 Spring 2015%2FTrafficSim%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll&quot; Namespace%3DTools.Select Type%3DSelectIntersection Member%3DOnClick"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="659934af-fa98-4be9-8c1e-54191ce22a19"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="21c889de-0ff9-499f-9f13-76d9c4009472">
+                    <propertyInstance
+                      Id="79b93729-9f17-49b8-b32c-715de3ea7d14"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="41f87614-cc1a-46ef-b0a5-e067f6bf7bca">
+                    <propertyInstance
+                      Id="a6d6208d-6d47-4fd5-87b9-d14654d05174"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4d8977dc-318b-4f4b-b0ed-2059d0d23c6d">
+                    <propertyInstance
+                      Id="3a5363c1-ac70-4944-8740-3edb2164eb32"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3faad8b6-2159-4f43-bd31-95a290816565">
+                    <propertyInstance
+                      Id="f8ac214d-837c-4979-924d-73af5744dee7"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e8f57d46-4b36-4431-8753-60d7bb27ae40">
+                    <propertyInstance
+                      Id="51b8c1e3-2ccd-4c55-b822-1c3f766cf72b"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="60604197-896e-4371-a9b4-c668e6daa8ba">
+                    <propertyInstance
+                      Id="53b80255-549a-4d60-ad3c-707798851c0c"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
