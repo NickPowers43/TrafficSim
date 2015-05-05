@@ -380,7 +380,24 @@ public class Intersection : MonoBehaviour {
         }
     }
 
-    public void ConnectInlets()
+    public void IndexLaneQueues(ref int nextIndex, List<int> destinationIndices)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (inlets[i] != null)
+            {
+                foreach (var lq in inlets[i].LaneQueues)
+                {
+                    if (lq.IsDestination)
+                    {
+                        destinationIndices.Add(nextIndex);
+                    }
+                    lq.Index = nextIndex++;
+                }
+            }
+        }
+    }
+    public void ConnectLaneQueues(List<Utility.WeightedEdge<LaneQueue>> edges)
     {
         if (poi != PointsOfInterest.None)
         {
@@ -389,13 +406,13 @@ public class Intersection : MonoBehaviour {
 
         //TODO: void Intersection.ConnectInlets()
         if (inlets[0] != null)
-            inlets[0].ConnectLaneQueues(inlets[3], inlets[1], inlets[2]);
+            inlets[0].ConnectLaneQueues(inlets[3], inlets[1], inlets[2], edges);
         if (inlets[1] != null)
-            inlets[1].ConnectLaneQueues(inlets[2], inlets[0], inlets[3]);
+            inlets[1].ConnectLaneQueues(inlets[2], inlets[0], inlets[3], edges);
         if (inlets[2] != null)
-            inlets[2].ConnectLaneQueues(inlets[0], inlets[3], inlets[1]);
+            inlets[2].ConnectLaneQueues(inlets[0], inlets[3], inlets[1], edges);
         if (inlets[3] != null)
-            inlets[3].ConnectLaneQueues(inlets[1], inlets[2], inlets[0]);
+            inlets[3].ConnectLaneQueues(inlets[1], inlets[2], inlets[0], edges);
     }
     public void GetDestinations()
     {

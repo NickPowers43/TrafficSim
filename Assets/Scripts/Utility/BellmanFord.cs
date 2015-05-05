@@ -3,26 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using System.Globalization;
 
 namespace Utility
 {
     public class BellmanFord
     {
-        private static void PrintMatrix(float[][] mat)
-        {
-            string temp = "";
-            for (int i = 0; i < mat.Length; i++)
-            {
-                temp += "[" + mat[i][0].ToString("F", CultureInfo.InvariantCulture);
-                for (int j = 1; j < mat[i].Length; j++)
-                {
-                    temp += ", " + mat[i][j].ToString("F", CultureInfo.InvariantCulture);
-                }
-                temp += "]\n";
-            }
-            Debug.Log(temp);
-        }
         private static void CopyData<T>(T[][] src, T[][] dst)
         {
             for (int i = 0; i < src.Length; i++)
@@ -106,8 +91,8 @@ namespace Utility
 
             int iterations = 0;
 
-            Debug.Log("Printing C");
-            PrintMatrix(c);
+            //Debug.Log("Printing C");
+            //Utility.PrintMatrix(c);
 
             bool diff = true;
             while (diff && iterations < size)
@@ -136,8 +121,8 @@ namespace Utility
                     }
                 }
 
-                Debug.Log("Printing D");
-                PrintMatrix(d);
+                //Debug.Log("Printing D");
+                //Utility.PrintMatrix(d);
             }
 
             return d;

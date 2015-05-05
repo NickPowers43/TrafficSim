@@ -63,8 +63,6 @@ public class MainCamera : MonoBehaviour {
     //On the start of this Unity component
 	void Start(){
 
-        LaneQueue.NextIndex = 0;
-
         //Initialize UI objects
         this.prevMousePos = Input.mousePosition;
         Tools.Build.BuildTool.Cursor = GameObject.Instantiate(buildToolCursorPrefab);
@@ -176,6 +174,18 @@ public class MainCamera : MonoBehaviour {
         {
             OnStopClick();
         }
+
+        //clear intersections
+        foreach (var intersection in Intersection.Intersections)
+        {
+            intersection.Clear();
+        }
+        //clear destination indices lists
+        foreach (var list in Intersection.POIDestinations)
+        {
+            list.Clear();
+        }
+
         //create a new single instance of the Navigator
         Navigator.Instance = new Navigator();
 

@@ -11,37 +11,6 @@ public class LaneQueue : Queue<Vehicle>
 {
     public static double DEFAULT_SPEED_LIMIT = 0.1f;
 
-    private static List<LaneQueue> laneQueues = new List<LaneQueue>();
-    public static List<LaneQueue> LaneQueues
-    {
-        get
-        {
-            return laneQueues;
-        }
-    }
-
-    private static List<WeightedEdge<LaneQueue>> laneQueueEdges = new List<WeightedEdge<LaneQueue>>();
-    public static List<WeightedEdge<LaneQueue>> LaneQueueEdges
-    {
-        get
-        {
-            return laneQueueEdges;
-        }
-    }
-
-    private static int nextIndex;
-    public static int NextIndex
-    {
-        get
-        {
-            return nextIndex;
-        }
-        set
-        {
-            nextIndex = value;
-        }
-    }
-
     private int index;
     public int Index
     {

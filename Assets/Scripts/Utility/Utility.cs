@@ -2,11 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
+using System.Globalization;
 
 namespace Utility
 {
     class Utility
     {
+        public static void PrintMatrix(float[][] mat)
+        {
+            string temp = "";
+            for (int i = 0; i < mat.Length; i++)
+            {
+                temp += "[" + mat[i][0].ToString("F", CultureInfo.InvariantCulture);
+                for (int j = 1; j < mat[i].Length; j++)
+                {
+                    temp += ", " + mat[i][j].ToString("F", CultureInfo.InvariantCulture);
+                }
+                temp += "]\n";
+            }
+            Debug.Log(temp);
+        }
         public static T[][] DuplicateSquareMat<T>(T[][] src)
         {
             T[][] output = new T[src.Length][];

@@ -35,105 +35,88 @@ public class Navigator
 
     public Navigator()
     {
-        //clear everything
-        LaneQueue.LaneQueues.Clear();
-        LaneQueue.LaneQueueEdges.Clear();
-        LaneQueue.NextIndex = 0;
-        //clear intersections
-        foreach (var intersection in Intersection.Intersections)
-        {
-            intersection.Clear();
-        }
-        //clear destination indices lists
-        foreach (var list in Intersection.POIDestinations)
-        {
-            list.Clear();
-        }
+        //get LaneQueue graph
+        List<LaneQueue> laneQueues = new List<LaneQueue>();
+        List<Utility.WeightedEdge<LaneQueue>> lqEdges = new List<Utility.WeightedEdge<LaneQueue>>();
+        List<int> destinationIndices = new List<int>();
+        int nextIndex = 0;
 
-
-        //build new LaneQueue edges
+        //get nodes
         foreach (Intersection intersection in Intersection.Intersections)
         {
-            intersection.ConnectInlets();
+            intersection.IndexLaneQueues(ref nextIndex, destinationIndices);
+        }
+        //get edges
+        foreach (Intersection intersection in Intersection.Intersections)
+        {
+            intersection.ConnectLaneQueues(lqEdges);
         }
 
         //Run Bellman Ford algorithm to compute the lowest cost to get from
         //node i to node j.
-        float[][] leastCostMat = Utility.BellmanFord.RunAlgorithm(LaneQueue.LaneQueueEdges, LaneQueue.NextIndex);
+        float[][] leastCostMat = Utility.BellmanFord.RunAlgorithm(lqEdges, nextIndex);
 
         //generate next hop matrices
         //the vehicles are assumed to never query most of the columns of this matrix. 
         //The matrices therefore will have nullable entries for the column
-        List<int> destinationIndices = GetListOfDestinationIndices();
-        nextHopMats = GetNextHopMatrices(2, destinationIndices);
+        nextHopMats = GetNextHopMatrices(2, destinationIndices, nextIndex);
 
         //Fill the non-null columns of the nextHop matrices
-        PopulateNextHopMatrices(leastCostMat, destinationIndices, nextHopMats);
+        PopulateNextHopMatrices(leastCostMat, destinationIndices, nextHopMats, lqEdges, nextIndex);
 
-        LaneQueue.LaneQueueEdges.Clear();
+        Debug.Log("Navigator initialized");
+
     }
 
-    private LaneQueue[][][] GetNextHopMatrices(int priorities, List<int> destinations)
+    private LaneQueue[][][] GetNextHopMatrices(int priorities, List<int> destinations, int size)
     {
         LaneQueue[][][] output = new LaneQueue[priorities][][];
 
         for (int i = 0; i < priorities; i++)
         {
-            output[i] = new LaneQueue[LaneQueue.NextIndex][];
+            output[i] = new LaneQueue[size][];
             for (int j = 0; j < destinations.Count; j++)
             {
-                output[i][destinations[j]] = new LaneQueue[LaneQueue.NextIndex];
+                output[i][destinations[j]] = new LaneQueue[size];
             }
         }
 
         return output;
     }
-    private List<int> GetListOfDestinationIndices()
-    {
-        List<int> output = new List<int>(LaneQueue.NextIndex / 4);
-
-        foreach (LaneQueue laneQueue in LaneQueue.LaneQueues)
-        {
-            if (laneQueue.IsDestination)
-            {
-                output.Add(laneQueue.Index);
-            }
-        }
-
-        return output;
-    }
-    private void PopulateNextHopMatrices(float[][] leastCostMat, List<int> dstIndices, LaneQueue[][][] nextHopMats)
+    private void PopulateNextHopMatrices(float[][] leastCostMat, List<int> dstIndices, LaneQueue[][][] nextHopMats, List<Utility.WeightedEdge<LaneQueue>> lqEdges, int size)
     {
         int start = 0;
-        while (start < LaneQueue.NextIndex)
+        while (start < size)
         {
             for (int i = 0; i < dstIndices.Count; i++)
                 FindNextHop(
                     ref start,
                     leastCostMat,
                     dstIndices[i],
-                    out nextHopMats[0][dstIndices[i]][LaneQueue.LaneQueueEdges[start].start.Index],
-                    out nextHopMats[1][dstIndices[i]][LaneQueue.LaneQueueEdges[start].start.Index]);
+                    out nextHopMats[0][dstIndices[i]][lqEdges[start].start.Index],
+                    out nextHopMats[1][dstIndices[i]][lqEdges[start].start.Index],
+                    lqEdges,
+                    size);
         }
     }
-    private void FindNextHop(ref int start, float[][] leastCostMat, int dest, out LaneQueue first, out LaneQueue second)
+    private void FindNextHop(ref int start, float[][] leastCostMat, int dest, out LaneQueue first, out LaneQueue second, List<Utility.WeightedEdge<LaneQueue>> lqEdges, int size)
     {
-        float lowestCost = leastCostMat[LaneQueue.LaneQueueEdges[start].end.Index][dest];
-        first = LaneQueue.LaneQueueEdges[start].end;
+        float lowestCost = leastCostMat[lqEdges[start].end.Index][dest];
+        first = lqEdges[start].end;
         second = first;
-        LaneQueue startNode = LaneQueue.LaneQueueEdges[start].start;
+        LaneQueue startNode = lqEdges[start].start;
 
         //continue until we meet an edge that does not start from startNode
-        while (++start < LaneQueue.NextIndex)
+        while (++start < size)
         {
-            if (startNode == LaneQueue.LaneQueueEdges[start].start)
+            if (startNode == lqEdges[start].start)
             {
-                float cost = leastCostMat[LaneQueue.LaneQueueEdges[start].end.Index][dest];
+                float cost = leastCostMat[lqEdges[start].end.Index][dest];
                 if (lowestCost > cost)
                 {
                     lowestCost = cost;
                     second = first;
-                    first = LaneQueue.LaneQueueEdges[start].end;
+                    first = lqEdges[start].end;
                 }
             }
             else
