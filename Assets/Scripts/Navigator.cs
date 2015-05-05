@@ -30,11 +30,10 @@ public class Navigator
     {
         //get LaneQueue graph
         List<LaneQueue> laneQueues = new List<LaneQueue>();
-        List<int> destinationIndices = new List<int>();
         int nextIndex = 0;
 
         //get nodes
-        foreach (Intersection intersection in Intersection.Intersections) { intersection.IndexLaneQueues(ref nextIndex, destinationIndices); }
+        foreach (Intersection intersection in Intersection.Intersections) { intersection.IndexLaneQueues(ref nextIndex); }
         //get edges
         List<Utility.WeightedEdge<LaneQueue>>[] lqEdges = new List<Utility.WeightedEdge<LaneQueue>>[nextIndex];
         foreach (Intersection intersection in Intersection.Intersections) { intersection.ConnectLaneQueues(lqEdges); }

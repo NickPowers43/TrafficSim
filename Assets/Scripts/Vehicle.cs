@@ -42,8 +42,8 @@ public class Vehicle
         }
     }
     //index of destination LaneQueue
-    private int destination;
-    public int Destination
+    private Intersection destination;
+    public Intersection Destination
     {
         get
         {
@@ -104,7 +104,7 @@ public class Vehicle
         }
     }
 
-    public Vehicle(double instantiateTime, double length, int destination)
+    public Vehicle(double instantiateTime, double length, Intersection destination)
 	{
         this.instantiateTime = instantiateTime;
         this.length = length;

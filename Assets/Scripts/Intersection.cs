@@ -38,7 +38,7 @@ public class Intersection : MonoBehaviour {
 
     private object dLock = new object();
 
-    private const double TIME_PER_INLET = 5.0;
+    private const double TIME_PER_INLET = 2.5;
     private const double CHECK_DESTINATION_INTERVAL = 0.05;
     private const double VEHICLE_INSTANTIATION_INTERVAL = 0.5;
     private const double POLLING_SLEEP_INTERVAL = 0.2;
@@ -317,6 +317,7 @@ public class Intersection : MonoBehaviour {
 
     private List<Vehicle> vehicles = new List<Vehicle>();
 
+    //calls the thread functions
     public void Run()
     {
         thread = new Thread(new ThreadStart(RunMethod), MAX_THREAD_STACK_SIZE);
@@ -330,6 +331,7 @@ public class Intersection : MonoBehaviour {
             vehicleInstantiationThread.Start();
         }
     }
+    //thread function that simulates an intersection for this instance
     private void RunMethod()
     {
         while (Simulation.Running)
@@ -390,7 +392,7 @@ public class Intersection : MonoBehaviour {
                         if (turningVehicle != null)
                         {
                             //determine what to do with the vehicle
-                            if (turningVehicle.Destination == source.Index)
+                            if (turningVehicle.Destination == this)
                             {
                                 //take vehicle out of simulation
                                 turningVehicle.DestroyTime = Simulation.GetTime();
@@ -414,7 +416,7 @@ public class Intersection : MonoBehaviour {
                                 //route vehicle to its destination
 
                                 //get the destination LaneQueue to enqueue the vehicle
-                                LaneQueue destination = Navigator.Instance.GetTransition(source.Index, turningVehicle.Destination);
+                                LaneQueue destination = Navigator.Instance.GetTransition(source.Index, turningVehicle.Destination.DestinationIndex);
 
                                 while (true)
                                 {
@@ -443,6 +445,7 @@ public class Intersection : MonoBehaviour {
             }
         }
     }
+    //thread function that continually instantiates vehicles
     private void InstantiateVehicles()
     {
         IntersectionInlet inlet = TryGetInlet();
@@ -456,7 +459,7 @@ public class Intersection : MonoBehaviour {
                 Vehicle v = new Vehicle(
                     Simulation.GetTime(),
                     0.05,
-                    pathData[r].destinationIntersection.DestinationIndex);
+                    pathData[r].destinationIntersection);
 
                 v.StartIntersection = this;
 
@@ -479,7 +482,7 @@ public class Intersection : MonoBehaviour {
         }
         
     }
-
+    //registers this intersection as a point of interest
     public void AddPointOfInterest()
     {
         if (poi != PointsOfInterest.None)
@@ -487,7 +490,8 @@ public class Intersection : MonoBehaviour {
             poiDestinations[(int)poi].Add(this);
         }
     }
-    public void IndexLaneQueues(ref int nextIndex, List<int> destinationIndices)
+    //generate indices for the LaneQueues
+    public void IndexLaneQueues(ref int nextIndex)
     {
         for (int i = 0; i < 4; i++)
         {
@@ -495,15 +499,12 @@ public class Intersection : MonoBehaviour {
             {
                 foreach (var lq in inlets[i].LaneQueues)
                 {
-                    if (lq.IsDestination)
-                    {
-                        destinationIndices.Add(nextIndex);
-                    }
                     lq.Index = nextIndex++;
                 }
             }
         }
     }
+    //create edges between LaneQueues
     public void ConnectLaneQueues(List<Utility.WeightedEdge<LaneQueue>>[] edges)
     {
         //TODO: void Intersection.ConnectInlets()

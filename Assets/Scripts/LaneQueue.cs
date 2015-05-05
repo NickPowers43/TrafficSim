@@ -126,7 +126,7 @@ public class LaneQueue : Queue<Vehicle>
     //the distance a vehicle travels within the given time
     public double TimeToDistance(double time)
     {
-        return time / speedLimit;
+        return time * speedLimit;
     }
 }
 
