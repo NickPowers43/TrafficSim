@@ -114,26 +114,8 @@ public class IntersectionInlet
         }
     }
 
-    //methods to check if different turning options are available at the given lane
-    public bool CanLaneTurnLeft(int laneIndex)
-    {
-        throw new NotImplementedException();
-    }
-    public bool CanLaneTurnRight(int laneIndex)
-    {
-        throw new NotImplementedException();
-    }
-    public bool CanLaneGoStraight(int laneIndex)
-    {
-        throw new NotImplementedException();
-    }
-    public bool CanLaneUTurn(int laneIndex)
-    {
-        throw new NotImplementedException();
-    }
-
     //create edges originating at lq and terminating at each LaneQueue in lqs
-    public static void ConnectToAll(LaneQueue lq, LaneQueue[] lqs, List<Utility.WeightedEdge<LaneQueue>> edges)
+    public static void ConnectToAll(LaneQueue lq, LaneQueue[] lqs, List<Utility.WeightedEdge<LaneQueue>>[] edges)
     {
         for (int i = 0; i < lqs.Length; i++)
         {
@@ -141,17 +123,17 @@ public class IntersectionInlet
             edge.start = lq;
             edge.end = lqs[i];
             edge.weight = (float)lqs[i].MaxLength;
-            edges.Add(edge);
+            edges[lq.Index].Add(edge);
         }
     }
     //Connect all of the incoming LaneQueues to all the outgoing LaneQueues of every other inlet
-    public void ConnectLaneQueues(IntersectionInlet left, IntersectionInlet straight, IntersectionInlet right, List<Utility.WeightedEdge<LaneQueue>> edges)
+    public void ConnectLaneQueues(IntersectionInlet left, IntersectionInlet straight, IntersectionInlet right, List<Utility.WeightedEdge<LaneQueue>>[] edges)
     {
         for (int i = 0; i < laneQueues.Length; i++)
         {
             //connect laneQueues[i] to all appropriate other lane queues. Connect them in such a way that
             //all edges originating from laneQueues[i] are consecutive in the edges List.
-
+            edges[laneQueues[i].Index] = new List<Utility.WeightedEdge<LaneQueue>>();
 
             //TODO: do this differently for cases where it is turn only
             if (left != null)

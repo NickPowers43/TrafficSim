@@ -23,6 +23,21 @@ namespace Utility
             }
             Debug.Log(temp);
         }
+        public static void PrintLQMatrix(LaneQueue[][] mat)
+        {
+            string temp = "";
+            for (int i = 0; i < mat.Length; i++)
+            {
+                temp += "[" + mat[i][0].Index.ToString("D", CultureInfo.InvariantCulture);
+                for (int j = 1; j < mat[i].Length; j++)
+                {
+                    temp += ", " + mat[i][j].Index.ToString("D", CultureInfo.InvariantCulture);
+                }
+                temp += "]\n";
+            }
+            Debug.Log(temp);
+        }
+
         public static T[][] DuplicateSquareMat<T>(T[][] src)
         {
             T[][] output = new T[src.Length][];

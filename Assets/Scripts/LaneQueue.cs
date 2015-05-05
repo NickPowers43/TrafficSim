@@ -63,58 +63,6 @@ public class LaneQueue : Queue<Vehicle>
         }
     }
 
-    private bool straight;
-    public bool Straight
-    {
-        get
-        {
-            return straight;
-        }
-        set
-        {
-            straight = value;
-        }
-    }
-
-    private bool left;
-    public bool Left
-    {
-        get
-        {
-            return left;
-        }
-        set
-        {
-            left = value;
-        }
-    }
-
-    private bool right;
-    public bool Right
-    {
-        get
-        {
-            return right;
-        }
-        set
-        {
-            right = value;
-        }
-    }
-
-    private bool uturn;
-    public bool Uturn
-    {
-        get
-        {
-            return uturn;
-        }
-        set
-        {
-            uturn = value;
-        }
-    }
-
     private bool isDestination;
     public bool IsDestination
     {
@@ -147,10 +95,6 @@ public class LaneQueue : Queue<Vehicle>
         this.maxLength = maxLength;
         this.isDestination = isDestination;
 
-        left = true;
-        right = true;
-        straight = true;
-        uturn = true;
     }
 
     public void Enqueue(Vehicle vehicle)

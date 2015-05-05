@@ -43,6 +43,7 @@ public class MainCamera : MonoBehaviour {
     public GameObject pathLinePrefab;
     //
     public InputField intersectionName;
+    public InputField speedInputField;
     //UI object references and variables
     public float intersectionSelectRange = 0.01f;
     public float uiTopBoundary;
@@ -188,7 +189,7 @@ public class MainCamera : MonoBehaviour {
         }
 
         //clear intersections
-        foreach (var intersection in Intersection.Intersections) { intersection.Clear(); }
+        //foreach (var intersection in Intersection.Intersections) { intersection.Clear(); }
         //clear point of interest lists
         foreach (var list in Intersection.POIDestinations) { list.Clear(); }
         //add intersections to point of interest lists
@@ -199,12 +200,13 @@ public class MainCamera : MonoBehaviour {
         //create a new single instance of the Navigator
         Navigator.Instance = new Navigator();
 
-        //TODO: start simulation
-        stopSimulationButton.SetActive(true);
         Simulation.Running = true;
 
         //spin up active objects
         foreach (Intersection i in Intersection.Intersections) { i.Run(); }
+
+        //show stop simulation button
+        stopSimulationButton.SetActive(true);
     }
     public void OnStopClick()
     {
@@ -218,7 +220,16 @@ public class MainCamera : MonoBehaviour {
                 intersection.Thread.Abort();
                 intersection.Thread = null;
             }
+            if (intersection.VehicleInstantiationThread != null)
+            {
+                intersection.VehicleInstantiationThread.Abort();
+                intersection.VehicleInstantiationThread = null;
+            }
         }
+    }
+    public void OnSpeedChanged()
+    {
+        Simulation.SpeedMultiplier = float.Parse(speedInputField.text);
     }
     //Save street network information into "temp.save"
     public void OnSaveClick()

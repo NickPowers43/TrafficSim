@@ -85,7 +85,7 @@ public class Vehicle
     //statistical data
     private double instantiateTime;
     private double destroyTime;
-    private double DestroyTime
+    public double DestroyTime
     {
         set
         {

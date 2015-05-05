@@ -50,7 +50,7 @@ namespace Utility
 
             return smallest;
         }
-        private static float[][] ComputeCostMatrix(ICollection<WeightedEdge<LaneQueue>> edges, int size)
+        private static float[][] ComputeCostMatrix(ICollection<WeightedEdge<LaneQueue>>[] edges, int size)
         {
             float[][] output = new float[size][];
             for (int i = 0; i < size; i++)
@@ -69,14 +69,17 @@ namespace Utility
                 }
             }
 
-            foreach (WeightedEdge<LaneQueue> edge in edges)
+            foreach (var list in edges)
             {
-                //TODO: Verify this is correct
-                output[edge.start.Index][edge.end.Index] = edge.weight;
+                foreach (var edge in list)
+                {
+                    //TODO: Verify this is correct
+                    output[edge.start.Index][edge.end.Index] = edge.weight;
+                }
             }
             return output;
         }
-        public static float[][] RunAlgorithm(ICollection<WeightedEdge<LaneQueue>> edges, int size)
+        public static float[][] RunAlgorithm(ICollection<WeightedEdge<LaneQueue>>[] edges, int size)
         {
             if(size < 1)
             {

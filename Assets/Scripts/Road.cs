@@ -147,6 +147,7 @@ public class Road : MonoBehaviour {
 
 
         Intersection output = Intersection.CreateIntersection(new Vector3(0.0f, 0.0f, 0.0f), PointsOfInterest.None);
+        intersection_pos.z = Intersection.Z_POSITION;
         output.transform.position = intersection_pos;
 
         Road newRoad = GameObject.Instantiate(Road.Prefab).GetComponent<Road>();
