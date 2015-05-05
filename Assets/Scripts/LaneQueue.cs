@@ -9,7 +9,7 @@ using Utility;
 
 public class LaneQueue : Queue<Vehicle>
 {
-    public static double DEFAULT_SPEED_LIMIT = 0.1f;
+    public static double DEFAULT_SPEED_LIMIT = 0.20;
 
     private int index;
     public int Index
@@ -21,19 +21,6 @@ public class LaneQueue : Queue<Vehicle>
         set
         {
             index = value;
-        }
-    }
-    //thead that is waiting for first vehicle to stop
-    private Thread waitingThread;
-    public Thread WaitingThread
-    {
-        get
-        {
-            return waitingThread;
-        }
-        set
-        {
-            waitingThread = value;
         }
     }
     //maximum physical length of this section of road

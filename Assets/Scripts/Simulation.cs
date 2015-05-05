@@ -38,7 +38,7 @@ class Simulation
 
     public static double GetTime()
     {
-        return DateTime.Now.Ticks / (double)TimeSpan.TicksPerSecond;
+        return SimulationTime(DateTime.Now.Ticks / (double)TimeSpan.TicksPerSecond);
     }
 
     public static double SimulationTime(double realTime)

@@ -150,6 +150,7 @@ public class Road : MonoBehaviour {
         output.transform.position = intersection_pos;
 
         Road newRoad = GameObject.Instantiate(Road.Prefab).GetComponent<Road>();
+        Road.Roads.Add(newRoad);
 
         Intersection a = source.Parent;
         Intersection b = destination.Parent;

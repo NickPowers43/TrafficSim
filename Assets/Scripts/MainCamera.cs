@@ -7,6 +7,7 @@ using SimpleJson;
 using System.IO;
 using System.Text;
 using UnityEngine.UI;
+using System.Threading;
 
 public class MainCamera : MonoBehaviour {
 
@@ -82,6 +83,8 @@ public class MainCamera : MonoBehaviour {
         Instance = this;
         self = GetComponent<Camera>();
 
+        Simulation.SpeedMultiplier = 3.0;
+
         LoadSaveFile();
 	}
     //On the update of this Unity component
@@ -106,6 +109,8 @@ public class MainCamera : MonoBehaviour {
         {
             activeTools.Update();
         }
+
+        Thread.Sleep(30);
 
         //store current mouse position
         prevMousePos = Input.mousePosition;

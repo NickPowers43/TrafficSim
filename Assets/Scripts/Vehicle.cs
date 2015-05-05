@@ -15,6 +15,19 @@ public enum Intention
 public class Vehicle
 {
     //Fields
+    //startIntersection
+    private Intersection startIntersection;
+    public Intersection StartIntersection
+    {
+        get
+        {
+            return startIntersection;
+        }
+        set
+        {
+            startIntersection = value;
+        }
+    }
     //time vehicle was last queued
     private double timeQueued;
     public double TimeQueued

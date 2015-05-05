@@ -36,10 +36,14 @@ public struct PathData
 
 public class Intersection : MonoBehaviour {
 
-    private const double TIME_PER_INLET = 15.0;
-    private const double CHECK_DESTINATION_RATE = 1.0;
+    private object dLock = new object();
+
+    private const double TIME_PER_INLET = 5.0;
+    private const double CHECK_DESTINATION_INTERVAL = 0.01;
     private const double CHECK_NEXT_VEHICLE_RATE = 5.0;
-    private const double VEHICLE_INSTANTIATION_INTERVAL = 2.0;
+    private const double VEHICLE_INSTANTIATION_INTERVAL = 1.0;
+    private const double POLLING_SLEEP_INTERVAL = 0.5;
+    private const double TURNING_TIME = 0.1;
 
     public const float PATHLINE_Z_POSITION = 0.25f;
     public const float Z_POSITION = 0.5f;
@@ -87,7 +91,7 @@ public class Intersection : MonoBehaviour {
         temp.Name = MainCamera.Instance.intersectionName.text;
         MainCamera.Instance.intersectionName.text = "";
 
-        Debug.Log("Intersection with name \"" + temp.Name + "\" created.");
+        //Debug.Log("Intersection with name \"" + temp.Name + "\" created.");
 
         return temp;
     }
@@ -304,7 +308,7 @@ public class Intersection : MonoBehaviour {
     public void Run()
     {
         thread = new Thread(new ThreadStart(RunMethod), MAX_THREAD_STACK_SIZE);
-        thread.Priority = System.Threading.ThreadPriority.Lowest;
+        thread.Priority = System.Threading.ThreadPriority.Normal;
         thread.Start();
     }
     private void RunMethod()
@@ -313,6 +317,8 @@ public class Intersection : MonoBehaviour {
         if (poi != PointsOfInterest.None)
         {
             vehicleInstantiationThread = new Thread(new ThreadStart(InstantiateVehicles), MAX_THREAD_STACK_SIZE);
+            vehicleInstantiationThread.Priority = System.Threading.ThreadPriority.Normal;
+            vehicleInstantiationThread.Start();
         }
 
         while (Simulation.Running)
@@ -328,36 +334,51 @@ public class Intersection : MonoBehaviour {
                     while (remainingLightTime != 0.0)
                     {
                         Vehicle turningVehicle = null;
+                        double sleepTime = 0.0;
 
                         //peek at vehicle coming into intersection
                         lock (source)
                         {
                             if (source.Count > 0)
                             {
+                                lock (dLock)
+                                {
+                                    Debug.Log(source.Count);
+                                }
+
                                 //if the car has been in the queue long enough to drive to the end
                                 double currentTime = Simulation.GetTime();
-                                double timeToDrive = currentTime - source.Peek().TimeQueued;
-                                double timeToDriveLeft = source.DistanceToTime(source.MaxLength) - timeToDrive;
-                                if (timeToDrive > source.DistanceToTime(source.MaxLength))
+                                double timeDriving = currentTime - source.Peek().TimeQueued;
+                                double timeToDriveLeft = source.DistanceToTime(source.MaxLength) - timeDriving;
+                                if (timeDriving > source.DistanceToTime(source.MaxLength))
                                 {
                                     //take waiting vehicle
                                     turningVehicle = source.Dequeue();
+                                    sleepTime = TURNING_TIME;
                                 }
                                 else if (timeToDriveLeft < remainingLightTime)
                                 {
                                     //take waiting vehicle
                                     turningVehicle = source.Dequeue();
                                     //sleep until vehicle arrives at the light
-                                    Simulation.SleepSimSeconds(timeToDriveLeft);
-                                    remainingLightTime -= timeToDriveLeft;
+                                    sleepTime = timeToDriveLeft + TURNING_TIME;
                                 }
                                 else
                                 {
                                     //sleep for the rest of the light time
-                                    Simulation.SleepSimSeconds(remainingLightTime);
-                                    remainingLightTime = 0.0;
+                                    sleepTime = remainingLightTime;
                                 }
                             }
+                            else
+                            {
+                                sleepTime = POLLING_SLEEP_INTERVAL;
+                            }
+                        }
+
+                        if (sleepTime != 0.0)
+                        {
+                            Simulation.SleepSimSeconds(sleepTime);
+                            remainingLightTime -= sleepTime;
                         }
 
                         if (turningVehicle != null)
@@ -365,16 +386,26 @@ public class Intersection : MonoBehaviour {
                             //determine what to do with the vehicle
                             if (turningVehicle.Destination == source.Index)
                             {
-                                Debug.Log("Vehicle arrived");
-                                //TODO: take vehicle out of simulation
+                                
+
+                                //take vehicle out of simulation
+                                for (int j = 0; j < turningVehicle.StartIntersection.PathData.Count; j++)
+                                {
+                                    if (turningVehicle.StartIntersection.PathData[j].destinationIntersection == this)
+                                    {
+                                        lock (turningVehicle.StartIntersection.PathData)
+                                        {
+                                            PathData temp = turningVehicle.StartIntersection.PathData[j];
+                                            temp.travels++;
+                                            temp.travelTime += turningVehicle.Age;
+                                            turningVehicle.StartIntersection.PathData[j] = temp; 
+                                        }
+                                    }
+                                }
                             }
                             else
                             {
                                 //route vehicle to its destination
-
-                                //sleep until vehicle passes light
-                                Simulation.SleepSimSeconds(source.DistanceToTime(turningVehicle.Length));
-                                remainingLightTime -= source.DistanceToTime(turningVehicle.Length);
 
                                 //get the destination LaneQueue to enqueue the vehicle
                                 LaneQueue destination = Navigator.Instance.GetTransition(0, source.Index, turningVehicle.Destination);
@@ -385,12 +416,9 @@ public class Intersection : MonoBehaviour {
                                         break;
 
                                     //wait for chance and hold up traffic
-                                    Simulation.SleepSimSeconds(source.DistanceToTime(CHECK_DESTINATION_RATE));
-                                    remainingLightTime -= CHECK_DESTINATION_RATE;
+                                    Simulation.SleepSimSeconds(CHECK_DESTINATION_INTERVAL);
+                                    remainingLightTime -= CHECK_DESTINATION_INTERVAL;
                                 }
-
-
-                                Debug.Log("Vehicle turning");
 
                                 //transfer the vehicle to the next intersection
                                 lock (destination)
@@ -402,7 +430,7 @@ public class Intersection : MonoBehaviour {
                         }
                         else
                         {
-                            Simulation.SleepSimSeconds(source.DistanceToTime(CHECK_NEXT_VEHICLE_RATE));
+                            Simulation.SleepSimSeconds(1.0 / CHECK_NEXT_VEHICLE_RATE);
                             remainingLightTime -= CHECK_NEXT_VEHICLE_RATE;
                         }
 
@@ -422,13 +450,12 @@ public class Intersection : MonoBehaviour {
     }
     private void InstantiateVehicles()
     {
-        while (Simulation.Running)
+        IntersectionInlet inlet = TryGetInlet();
+
+        if (inlet != null)
         {
-            IntersectionInlet inlet = TryGetInlet();
-
-            if (inlet != null)
+            while (Simulation.Running)
             {
-
                 int r = (int)(SimpleRNG.GetUint() >> 1) % pathData.Count;
 
                 Vehicle v = new Vehicle(
@@ -436,16 +463,26 @@ public class Intersection : MonoBehaviour {
                     0.05,
                     pathData[r].destinationIntersection.DestinationIndex);
 
-                Debug.Log("Spawning Vehicle with destination (" + pathData[r].destinationIntersection.DestinationIndex.ToString() + ").");
-                
-                lock (inlet.OutgoingInlet.LaneQueues[0])
-                {
-                    inlet.OutgoingInlet.LaneQueues[0].Enqueue(v);
-                }
-            }
+                v.StartIntersection = this;
 
-            Simulation.SleepSimSeconds(VEHICLE_INSTANTIATION_INTERVAL);
+                while (true)
+                {
+                    lock (inlet.OutgoingInlet.LaneQueues[0])
+                    {
+                        if (inlet.OutgoingInlet.LaneQueues[0].Available(v.Length))
+                        {
+                            inlet.OutgoingInlet.LaneQueues[0].Enqueue(v);
+                            break;
+                        }
+                    }
+
+                    Simulation.SleepSimSeconds(CHECK_DESTINATION_INTERVAL);
+                }
+
+                Simulation.SleepSimSeconds(VEHICLE_INSTANTIATION_INTERVAL);
+            }
         }
+        
     }
 
     public void AddPointOfInterest()

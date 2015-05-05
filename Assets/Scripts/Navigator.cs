@@ -19,13 +19,13 @@ public class Navigator
         }
     }
 
-    private readonly LaneQueue[][][] transitionMats;
+    private readonly LaneQueue[][] transitionMat;
 
-    public LaneQueue GetTransition(int priority, int src, int dst)
+    public LaneQueue GetTransition(int src, int dst)
     {
-        if (transitionMats[priority][dst] != null)
+        if (transitionMat[dst] != null)
         {
-            return transitionMats[priority][dst][src];
+            return transitionMat[dst][src];
         }
         else
         {
@@ -53,15 +53,15 @@ public class Navigator
         //generate next hop matrices
         //the vehicles are assumed to never query most of the columns of this matrix. 
         //The matrices therefore will have nullable entries for the column
-        transitionMats = GetTransitionMatrices(2, destinationIndices, nextIndex);
+        transitionMat = GetTransitionMatrix(destinationIndices, nextIndex);
 
         //Fill the non-null columns of the transition matrices
-        PopulateTransitionMatrices(leastCostMat, destinationIndices, transitionMats, lqEdges, nextIndex);
+        PopulateTransitionMatrices(leastCostMat, destinationIndices, transitionMat, lqEdges, nextIndex);
 
         return;
     }
 
-    private LaneQueue[][][] GetTransitionMatrices(int priorities, List<int> destinations, int size)
+    private LaneQueue[][] GetTransitionMatrix(List<int> destinations, int size)
     {
         LaneQueue[][][] output = new LaneQueue[priorities][][];
 
@@ -76,7 +76,7 @@ public class Navigator
 
         return output;
     }
-    private void PopulateTransitionMatrices(float[][] leastCostMat, List<int> dstIndices, LaneQueue[][][] transitionMats, List<Utility.WeightedEdge<LaneQueue>> lqEdges, int size)
+    private void PopulateTransitionMatrices(float[][] leastCostMat, List<int> dstIndices, LaneQueue[][] transitionMat, List<Utility.WeightedEdge<LaneQueue>> lqEdges, int size)
     {
         int start = 0;
         while (start < size)
@@ -89,18 +89,16 @@ public class Navigator
                     sortStart,
                     leastCostMat,
                     dstIndices[i],
-                    out transitionMats[0][dstIndices[i]][lqEdges[start].start.Index],
-                    out transitionMats[1][dstIndices[i]][lqEdges[start].start.Index],
+                    out transitionMat[dstIndices[i]][lqEdges[start].start.Index],
                     lqEdges,
                     size);
 
         }
     }
-    private void FindTransition(int sortStart, float[][] leastCostMat, int dest, out LaneQueue first, out LaneQueue second, List<Utility.WeightedEdge<LaneQueue>> lqEdges, int size)
+    private void FindTransition(int sortStart, float[][] leastCostMat, int dest, out LaneQueue first, List<Utility.WeightedEdge<LaneQueue>> lqEdges, int size)
     {
         float lowestCost = leastCostMat[lqEdges[sortStart].end.Index][dest];
         first = lqEdges[sortStart].end;
-        second = first;
         LaneQueue startNode = lqEdges[sortStart].start;
 
         //continue until we meet an edge that does not start from startNode
@@ -110,7 +108,6 @@ public class Navigator
             if (lowestCost > cost)
             {
                 lowestCost = cost;
-                second = first;
                 first = lqEdges[sortStart].end;
             }
 
