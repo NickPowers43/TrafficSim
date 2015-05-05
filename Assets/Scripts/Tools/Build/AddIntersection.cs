@@ -42,10 +42,7 @@ namespace Tools.Build
 
             if (!Intersection.CheckOverlap(CursorPos(Intersection.Z_POSITION), Intersection.INITIAL_RADIUS))
             {
-                GameObject nodeGO = (GameObject)GameObject.Instantiate(Intersection.Prefab);
-                nodeGO.transform.position = CursorPos(Intersection.Z_POSITION);
-
-                Intersection.Intersections.Add(nodeGO.GetComponent<Intersection>());
+                Intersection.CreateIntersection(CursorPos(Intersection.Z_POSITION), PointsOfInterest.None);
             }
         }
     }

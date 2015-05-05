@@ -150,7 +150,7 @@ public class IntersectionInlet
         for (int i = 0; i < laneQueues.Length; i++)
         {
             //connect laneQueues[i] to all appropriate other lane queues. Connect them in such a way that
-            //all edges originating from laneQueues[i] are consecutive in the LaneQueue.LaneQueueEdges List.
+            //all edges originating from laneQueues[i] are consecutive in the edges List.
 
 
             //TODO: do this differently for cases where it is turn only

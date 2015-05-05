@@ -14,12 +14,11 @@ namespace Tools.Select
             Intersection
         }
 
-        private Tool activeTool;
         SelectIntersection selectIntersection;
 
         public ToolBar()
         {
-
+            selectIntersection = new SelectIntersection();
         }
 
         public void Activate(Tools toolToActivate)

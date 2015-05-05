@@ -6,6 +6,7 @@ using Tools;
 using SimpleJson;
 using System.IO;
 using System.Text;
+using UnityEngine.UI;
 
 public class MainCamera : MonoBehaviour {
 
@@ -39,6 +40,8 @@ public class MainCamera : MonoBehaviour {
     public GameObject roadPrefab;
     public GameObject stopSimulationButton;
     public GameObject pathLinePrefab;
+    //
+    public InputField intersectionName;
     //UI object references and variables
     public float intersectionSelectRange = 0.01f;
     public float uiTopBoundary;
@@ -63,12 +66,14 @@ public class MainCamera : MonoBehaviour {
     //On the start of this Unity component
 	void Start(){
 
-        //Initialize UI objects
         this.prevMousePos = Input.mousePosition;
+
+        //Initialize UI objects
         Tools.Build.BuildTool.Cursor = GameObject.Instantiate(buildToolCursorPrefab);
         Intersection.Prefab = intersectionPrefab;
         Intersection.PathLineprefab = pathLinePrefab;
         Road.Prefab = roadPrefab;
+        //initialize tools
         activeTools = null;
         buildTools = new Tools.Build.ToolBar();
         selectTools = new Tools.Select.ToolBar();
@@ -108,24 +113,26 @@ public class MainCamera : MonoBehaviour {
     //Load street network information from "temp.save"
     private void LoadSaveFile()
     {
-        string json = File.ReadAllText("temp.save");
+        string json = File.ReadAllText("save.json");
 
         JsonObject mainObj = (JsonObject)SimpleJson.SimpleJson.DeserializeObject(json);
 
-        JsonArray intersections = (JsonArray)mainObj["intersections"];
+        JsonObject intersections = (JsonObject)mainObj["intersections"];
 
         JsonArray roads = (JsonArray)mainObj["roads"];
 
         //add intersections
-        foreach (JsonObject intersection in intersections)
+        foreach (string intersectionObjName in intersections.Keys)
         {
+            JsonObject intersection = (JsonObject)intersections[intersectionObjName];
+
             Vector2 pos = new Vector2();
             pos.x = float.Parse((string)intersection["posX"]);
             pos.y = float.Parse((string)intersection["posY"]);
+            PointsOfInterest poi = (PointsOfInterest)int.Parse((string)intersection["poi"]);
 
-            Intersection intersectionGO = ((GameObject)GameObject.Instantiate(Intersection.Prefab, new Vector3(pos.x, pos.y, Intersection.Z_POSITION), Quaternion.identity)).GetComponent<Intersection>();
-
-            Intersection.Intersections.Add(intersectionGO);
+            intersectionName.text = (string)intersection["name"];
+            Intersection intersectionGO = Intersection.CreateIntersection(new Vector3(pos.x, pos.y, Intersection.Z_POSITION), poi);
         }
 
         //add roads
@@ -135,8 +142,8 @@ public class MainCamera : MonoBehaviour {
             int destinationIndex = int.Parse((string)road["destination"]);
 
             Road roadGO = GameObject.Instantiate(Road.Prefab).GetComponent<Road>();
-
             roadGO.SetEndPoints(Intersection.Intersections[sourceIndex].GenerateInlet(), Intersection.Intersections[destinationIndex].GenerateInlet());
+            Road.Roads.Add(roadGO.GetComponent<Road>());
         }
     }
     //when the user presses the giant button covering the background of the UI
@@ -176,15 +183,13 @@ public class MainCamera : MonoBehaviour {
         }
 
         //clear intersections
-        foreach (var intersection in Intersection.Intersections)
-        {
-            intersection.Clear();
-        }
-        //clear destination indices lists
-        foreach (var list in Intersection.POIDestinations)
-        {
-            list.Clear();
-        }
+        foreach (var intersection in Intersection.Intersections) { intersection.Clear(); }
+        //clear point of interest lists
+        foreach (var list in Intersection.POIDestinations) { list.Clear(); }
+        //add intersections to point of interest lists
+        foreach (var intersection in Intersection.Intersections) { intersection.AddPointOfInterest(); }
+        //get destinations
+        foreach (var intersection in Intersection.Intersections) { intersection.GetDestinations(); }
 
         //create a new single instance of the Navigator
         Navigator.Instance = new Navigator();
@@ -194,21 +199,27 @@ public class MainCamera : MonoBehaviour {
         Simulation.Running = true;
 
         //spin up active objects
-        foreach (Intersection i in Intersection.Intersections)
-        {
-            i.Run();
-        }
+        foreach (Intersection i in Intersection.Intersections) { i.Run(); }
     }
     public void OnStopClick()
     {
         stopSimulationButton.SetActive(false);
         Simulation.Running = false;
+
+        foreach (var intersection in Intersection.Intersections)
+        {
+            if (intersection.Thread != null)
+            {
+                intersection.Thread.Abort();
+                intersection.Thread = null;
+            }
+        }
     }
     //Save street network information into "temp.save"
     public void OnSaveClick()
     {
         //add intersections
-        JsonArray intersections = new JsonArray(Intersection.Intersections.Count);
+        JsonObject intersections = new JsonObject();
         int i = 0;
         foreach (var intersection in Intersection.Intersections)
         {
@@ -218,10 +229,35 @@ public class MainCamera : MonoBehaviour {
 
             temp["posX"] = intersection.transform.position.x.ToString();
             temp["posY"] = intersection.transform.position.y.ToString();
-            temp["poi"] = intersection.POI.ToString();
+            temp["poi"] = ((int)intersection.POI).ToString();
             temp["index"] = intersection.Index.ToString();
+            temp["name"] = intersection.Name;
 
-            intersections.Add(temp);
+            if (intersection.POI != PointsOfInterest.None)
+            {
+                JsonObject pathTimes = new JsonObject();
+
+                foreach (var pathData in intersection.PathData)
+                {
+                    if (pathData.destinationIntersection.Name != "")
+                    {
+                        string val;
+                        if (pathData.travels > 0)
+                        {
+                            val = (pathData.travelTime / (float)pathData.travels).ToString();
+                        }
+                        else
+                        {
+                            val = "no travels";
+                        }
+                        pathTimes[pathData.destinationIntersection.Name + "_AvgTime"] = val;
+                    }
+                }
+
+                temp["pathTimes"] = pathTimes;
+            }
+
+            intersections[i.ToString() + "_" + intersection.Name] = temp;
         }
 
         //add roads
@@ -245,6 +281,6 @@ public class MainCamera : MonoBehaviour {
         string output = SimpleJson.SimpleJson.SerializeObject(mainObj);
         //Debug.Log(temp);
 
-        File.WriteAllText("temp.save", output);
+        File.WriteAllText("save.json", output);
     }
 }

@@ -128,16 +128,6 @@ public class Road : MonoBehaviour {
         tarmacGO.transform.localScale = new Vector3(length, Intersection.INITIAL_RADIUS * 2.0f, 1.0f);
     }
 
-	void Start ()
-    {
-
-	}
-	
-	void Update () 
-    {
-
-	}
-
     public void Disconnect()
     {
         source.Parent.RemoveInlet(source.InletIndex);
@@ -155,8 +145,8 @@ public class Road : MonoBehaviour {
 
         Vector3 intersection_pos = source.Parent.transform.position + (diff * dot);
 
-        Intersection output = GameObject.Instantiate(Intersection.Prefab).GetComponent<Intersection>();
 
+        Intersection output = Intersection.CreateIntersection(new Vector3(0.0f, 0.0f, 0.0f), PointsOfInterest.None);
         output.transform.position = intersection_pos;
 
         Road newRoad = GameObject.Instantiate(Road.Prefab).GetComponent<Road>();

@@ -43,7 +43,7 @@ namespace Tools.Build
             if (road != null)
             {
                 Intersection i = road.SplitWithDegenerate(CursorPos(Intersection.Z_POSITION));
-                i.MakePOI(poi);
+                i.POI = poi;
             }
         }
     }

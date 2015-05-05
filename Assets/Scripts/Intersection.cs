@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Threading;
 using System.Collections.Generic;
+using NumberGenerator;
+using UnityEngine.UI;
 
 public enum PointsOfInterest
 {
@@ -25,11 +27,36 @@ public class IntersectionData
     }
 }
 
+public struct PathData
+{
+    public Intersection destinationIntersection;
+    public double travelTime;
+    public int travels;
+}
+
 public class Intersection : MonoBehaviour {
 
     private const double TIME_PER_INLET = 15.0;
     private const double CHECK_DESTINATION_RATE = 1.0;
     private const double CHECK_NEXT_VEHICLE_RATE = 5.0;
+    private const double VEHICLE_INSTANTIATION_INTERVAL = 2.0;
+
+    public const float PATHLINE_Z_POSITION = 0.25f;
+    public const float Z_POSITION = 0.5f;
+    private const int MAX_THREAD_STACK_SIZE = 1 << 17; // 128KB
+    public const float INITIAL_RADIUS = 0.09f;
+
+    //random number generator
+    SimpleRNG rng;
+
+    private static List<Intersection> intersections = new List<Intersection>();
+    public static List<Intersection> Intersections
+    {
+        get
+        {
+            return intersections;
+        }
+    }
 
     //lists of every type of point of interest
     private static List<Intersection>[] poiDestinations = new List<Intersection>[5] {
@@ -45,6 +72,24 @@ public class Intersection : MonoBehaviour {
         {
             return poiDestinations;
         }
+    }
+
+    public static Intersection CreateIntersection(Vector3 position, PointsOfInterest poi)
+    {
+        GameObject nodeGO = (GameObject)GameObject.Instantiate(Intersection.Prefab);
+        nodeGO.transform.position = position;
+
+        Intersection temp = nodeGO.GetComponent<Intersection>();
+
+        Intersection.Intersections.Add(temp);
+
+        temp.POI = poi;
+        temp.Name = MainCamera.Instance.intersectionName.text;
+        MainCamera.Instance.intersectionName.text = "";
+
+        Debug.Log("Intersection with name \"" + temp.Name + "\" created.");
+
+        return temp;
     }
 
     //stores the unity prefab for intersection GameObjects
@@ -113,13 +158,30 @@ public class Intersection : MonoBehaviour {
             return TryGetInlet().LaneQueues[0].Index;
         }
     }
+    //name of this intersection
+    private string name;
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
+        set
+        {
+            name = value;
+        }
+    }
     //the thread simulating this object
-    private Thread thread;
+    private Thread thread = null;
     public Thread Thread
     {
         get
         {
             return thread;
+        }
+        set
+        {
+            thread = value;
         }
     }
     //the radius of the intersection body
@@ -131,7 +193,7 @@ public class Intersection : MonoBehaviour {
         }
     }
     //the type of intersection
-    private PointsOfInterest poi;
+    private PointsOfInterest poi = PointsOfInterest.None;
     public PointsOfInterest POI
     {
         get
@@ -141,30 +203,35 @@ public class Intersection : MonoBehaviour {
         set
         {
             poi = value;
+
+            //set aesthetic properties
+            if (poi == PointsOfInterest.None)
+            {
+                iconGO.SetActive(false);
+            }
+
+            else
+            {
+                iconGO.SetActive(true);
+                iconGO.GetComponent<SpriteRenderer>().sprite = POISprites[(int)poi];
+            }
         }
     }
     //destination intersections
-    private Dictionary<Intersection, float> destinationTravelTimeAvg = new Dictionary<Intersection,float>();
-    //path lines
-    private List<GameObject> pathLines = new List<GameObject>();
-
-    private double mean;
-    private double stddev;
-
-
-    public const float Z_POSITION = 0.0f;
-    private const int MAX_THREAD_STACK_SIZE = 2 << 10; // 2KB
-    public const float INITIAL_RADIUS = 0.09f;
-    //private TrafficLight tlight = new TrafficLight();
-
-    private static List<Intersection> intersections = new List<Intersection>();
-    public static List<Intersection> Intersections
+    private List<PathData> pathData = new List<PathData>();
+    public List<PathData> PathData
     {
         get
         {
-            return intersections;
+            return pathData;
+        }
+        set
+        {
+            pathData = value;
         }
     }
+    //path lines
+    private List<GameObject> pathLines = new List<GameObject>();
 
     public static Intersection ClosestToCursor(ref float dist)
     {
@@ -234,23 +301,20 @@ public class Intersection : MonoBehaviour {
 
     private List<Vehicle> vehicles = new List<Vehicle>();
 
-    //overriden MonoBehaviour functions
-	void Start()
-    {
-        
-	}
-	void Update()
-    {
-	    
-	}
-
     public void Run()
     {
         thread = new Thread(new ThreadStart(RunMethod), MAX_THREAD_STACK_SIZE);
+        thread.Priority = System.Threading.ThreadPriority.Lowest;
         thread.Start();
     }
     private void RunMethod()
     {
+        Thread vehicleInstantiationThread = null;
+        if (poi != PointsOfInterest.None)
+        {
+            vehicleInstantiationThread = new Thread(new ThreadStart(InstantiateVehicles), MAX_THREAD_STACK_SIZE);
+        }
+
         while (Simulation.Running)
         {
             for (int i = 0; i < 4; i++)
@@ -259,12 +323,10 @@ public class Intersection : MonoBehaviour {
                 {
                     double remainingLightTime = TIME_PER_INLET;
 
+                    LaneQueue source = inlets[i].LaneQueues[0];
+
                     while (remainingLightTime != 0.0)
                     {
-                        //handle any point of interest duties
-                        HandlePOI();
-
-                        LaneQueue source = inlets[i].LaneQueues[0];
                         Vehicle turningVehicle = null;
 
                         //peek at vehicle coming into intersection
@@ -303,6 +365,7 @@ public class Intersection : MonoBehaviour {
                             //determine what to do with the vehicle
                             if (turningVehicle.Destination == source.Index)
                             {
+                                Debug.Log("Vehicle arrived");
                                 //TODO: take vehicle out of simulation
                             }
                             else
@@ -314,7 +377,7 @@ public class Intersection : MonoBehaviour {
                                 remainingLightTime -= source.DistanceToTime(turningVehicle.Length);
 
                                 //get the destination LaneQueue to enqueue the vehicle
-                                LaneQueue destination = Navigator.Instance.GetNextHop(0, source.Index, turningVehicle.Destination);
+                                LaneQueue destination = Navigator.Instance.GetTransition(0, source.Index, turningVehicle.Destination);
 
                                 while (true)
                                 {
@@ -325,6 +388,9 @@ public class Intersection : MonoBehaviour {
                                     Simulation.SleepSimSeconds(source.DistanceToTime(CHECK_DESTINATION_RATE));
                                     remainingLightTime -= CHECK_DESTINATION_RATE;
                                 }
+
+
+                                Debug.Log("Vehicle turning");
 
                                 //transfer the vehicle to the next intersection
                                 lock (destination)
@@ -348,38 +414,47 @@ public class Intersection : MonoBehaviour {
                 }
             }
         }
-    }
 
-    private void HandlePOI()
+        if (vehicleInstantiationThread != null)
+        {
+            vehicleInstantiationThread.Join();
+        }
+    }
+    private void InstantiateVehicles()
     {
-        //spawn vehicles that have an appropriate destination
-
-        Vehicle v = null;
-
-        v = new Vehicle(Simulation.GetTime(), 0.05f, poiDestinations[(int)PointsOfInterest.Work][0].DestinationIndex);
-
-        if (v != null)
+        while (Simulation.Running)
         {
-            inlets[0].LaneQueues[0].Enqueue(v);
+            IntersectionInlet inlet = TryGetInlet();
+
+            if (inlet != null)
+            {
+
+                int r = (int)(SimpleRNG.GetUint() >> 1) % pathData.Count;
+
+                Vehicle v = new Vehicle(
+                    Simulation.GetTime(),
+                    0.05,
+                    pathData[r].destinationIntersection.DestinationIndex);
+
+                Debug.Log("Spawning Vehicle with destination (" + pathData[r].destinationIntersection.DestinationIndex.ToString() + ").");
+                
+                lock (inlet.OutgoingInlet.LaneQueues[0])
+                {
+                    inlet.OutgoingInlet.LaneQueues[0].Enqueue(v);
+                }
+            }
+
+            Simulation.SleepSimSeconds(VEHICLE_INSTANTIATION_INTERVAL);
         }
     }
 
-    public void MakePOI(PointsOfInterest poi)
+    public void AddPointOfInterest()
     {
-        this.poi = poi;
-
-        if (poi == PointsOfInterest.None)
+        if (poi != PointsOfInterest.None)
         {
-            iconGO.SetActive(false);
-        }
-
-        else
-        {
-            iconGO.SetActive(true);
-            iconGO.GetComponent<SpriteRenderer>().sprite = POISprites[(int)poi];
+            poiDestinations[(int)poi].Add(this);
         }
     }
-
     public void IndexLaneQueues(ref int nextIndex, List<int> destinationIndices)
     {
         for (int i = 0; i < 4; i++)
@@ -399,11 +474,6 @@ public class Intersection : MonoBehaviour {
     }
     public void ConnectLaneQueues(List<Utility.WeightedEdge<LaneQueue>> edges)
     {
-        if (poi != PointsOfInterest.None)
-        {
-            poiDestinations[(int)poi].Add(this);
-        }
-
         //TODO: void Intersection.ConnectInlets()
         if (inlets[0] != null)
             inlets[0].ConnectLaneQueues(inlets[3], inlets[1], inlets[2], edges);
@@ -416,39 +486,27 @@ public class Intersection : MonoBehaviour {
     }
     public void GetDestinations()
     {
-        //add everything
+        pathData.Clear();
+
         foreach (var destinationList in poiDestinations)
         {
             AddDestinations(destinationList);
         }
-
-        //switch (poi)
-        //{
-        //    case PointsOfInterest.House:
-        //        AddDestinations(poiDestinations[(int)PointsOfInterest.Work]);
-        //        AddDestinations(poiDestinations[(int)PointsOfInterest.Food]);
-        //        AddDestinations(poiDestinations[(int)PointsOfInterest.Fuel]);
-        //        break;
-        //    case PointsOfInterest.Food:
-        //        break;
-        //    case PointsOfInterest.Fuel:
-        //        break;
-        //    case PointsOfInterest.Work:
-        //        break;
-        //    default:
-        //        break;
-        //}
     }
     private void AddDestinations(List<Intersection> destinations)
     {
         foreach (var destination in destinations)
         {
-            destinationTravelTimeAvg[destination] = float.PositiveInfinity;
+            PathData tempPathData;
+            tempPathData.destinationIntersection = destination;
+            tempPathData.travels = 0;
+            tempPathData.travelTime = 0.0;
+            pathData.Add(tempPathData);
         }
     }
     public void Clear()
     {
-        destinationTravelTimeAvg.Clear();
+        
     }
 
     public void RemoveInlet(int index)
@@ -494,15 +552,19 @@ public class Intersection : MonoBehaviour {
 
     public void ShowPathLines()
     {
-        foreach (var key in destinationTravelTimeAvg.Keys)
+        foreach (var record in pathData)
         {
-            Vector3 labelPosition = (key.transform.position + transform.position) * 0.5f;
+
+            Vector3 labelPosition = (record.destinationIntersection.transform.position + transform.position) * 0.5f;
+            labelPosition.z = PATHLINE_Z_POSITION;
 
             GameObject pathLine = (GameObject)GameObject.Instantiate(pathLineprefab, labelPosition, Quaternion.identity);
 
-            pathLine.transform.localScale = new Vector3(Vector3.Magnitude(key.transform.position - transform.position), Intersection.INITIAL_RADIUS * 0.2f, 1.0f);
-            float rotation = Mathf.Atan2((key.transform.position - transform.position).y, (key.transform.position - transform.position).x) * Mathf.Rad2Deg;
+            pathLine.transform.localScale = new Vector3(Vector3.Magnitude(record.destinationIntersection.transform.position - transform.position), Intersection.INITIAL_RADIUS * 0.2f, 1.0f);
+            float rotation = Mathf.Atan2((record.destinationIntersection.transform.position - transform.position).y, (record.destinationIntersection.transform.position - transform.position).x) * Mathf.Rad2Deg;
             pathLine.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), rotation);
+
+            pathLines.Add(pathLine);
         }
     }
     public void HidePathLines()

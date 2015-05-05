@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Tools.Select
 {
@@ -16,7 +17,7 @@ namespace Tools.Select
 
         public override void Activate()
         {
-
+            currentHighlighted = null;
         }
         public override void Deactivate()
         {
@@ -32,7 +33,6 @@ namespace Tools.Select
             if (currentHighlighted != null)
             {
                 currentHighlighted.selectionSprite.SetActive(false);
-
                 currentHighlighted.HidePathLines();
 
                 currentHighlighted = null;
@@ -42,14 +42,15 @@ namespace Tools.Select
 
         public override void OnClick()
         {
-            DeselectCurrentIntersection();
-
             Intersection hovered = GetHoveredIntersection();
 
             if (hovered != null)
             {
-                currentHighlighted = hovered;
+                Debug.Log("hovered");
 
+                DeselectCurrentIntersection();
+
+                currentHighlighted = hovered;
                 currentHighlighted.ShowPathLines();
             }
         }

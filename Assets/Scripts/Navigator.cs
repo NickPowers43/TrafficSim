@@ -19,13 +19,13 @@ public class Navigator
         }
     }
 
-    private readonly LaneQueue[][][] nextHopMats;
+    private readonly LaneQueue[][][] transitionMats;
 
-    public LaneQueue GetNextHop(int priority, int src, int dst)
+    public LaneQueue GetTransition(int priority, int src, int dst)
     {
-        if (nextHopMats[priority][dst] != null)
+        if (transitionMats[priority][dst] != null)
         {
-            return nextHopMats[priority][dst][src];
+            return transitionMats[priority][dst][src];
         }
         else
         {
@@ -42,15 +42,9 @@ public class Navigator
         int nextIndex = 0;
 
         //get nodes
-        foreach (Intersection intersection in Intersection.Intersections)
-        {
-            intersection.IndexLaneQueues(ref nextIndex, destinationIndices);
-        }
+        foreach (Intersection intersection in Intersection.Intersections) { intersection.IndexLaneQueues(ref nextIndex, destinationIndices); }
         //get edges
-        foreach (Intersection intersection in Intersection.Intersections)
-        {
-            intersection.ConnectLaneQueues(lqEdges);
-        }
+        foreach (Intersection intersection in Intersection.Intersections) { intersection.ConnectLaneQueues(lqEdges); }
 
         //Run Bellman Ford algorithm to compute the lowest cost to get from
         //node i to node j.
@@ -59,16 +53,15 @@ public class Navigator
         //generate next hop matrices
         //the vehicles are assumed to never query most of the columns of this matrix. 
         //The matrices therefore will have nullable entries for the column
-        nextHopMats = GetNextHopMatrices(2, destinationIndices, nextIndex);
+        transitionMats = GetTransitionMatrices(2, destinationIndices, nextIndex);
 
-        //Fill the non-null columns of the nextHop matrices
-        PopulateNextHopMatrices(leastCostMat, destinationIndices, nextHopMats, lqEdges, nextIndex);
+        //Fill the non-null columns of the transition matrices
+        PopulateTransitionMatrices(leastCostMat, destinationIndices, transitionMats, lqEdges, nextIndex);
 
-        Debug.Log("Navigator initialized");
-
+        return;
     }
 
-    private LaneQueue[][][] GetNextHopMatrices(int priorities, List<int> destinations, int size)
+    private LaneQueue[][][] GetTransitionMatrices(int priorities, List<int> destinations, int size)
     {
         LaneQueue[][][] output = new LaneQueue[priorities][][];
 
@@ -83,44 +76,46 @@ public class Navigator
 
         return output;
     }
-    private void PopulateNextHopMatrices(float[][] leastCostMat, List<int> dstIndices, LaneQueue[][][] nextHopMats, List<Utility.WeightedEdge<LaneQueue>> lqEdges, int size)
+    private void PopulateTransitionMatrices(float[][] leastCostMat, List<int> dstIndices, LaneQueue[][][] transitionMats, List<Utility.WeightedEdge<LaneQueue>> lqEdges, int size)
     {
         int start = 0;
         while (start < size)
         {
+            int sortStart = start;
+            while (lqEdges[++start].start == lqEdges[sortStart].start && start < size) { }
+
             for (int i = 0; i < dstIndices.Count; i++)
-                FindNextHop(
-                    ref start,
+                FindTransition(
+                    sortStart,
                     leastCostMat,
                     dstIndices[i],
-                    out nextHopMats[0][dstIndices[i]][lqEdges[start].start.Index],
-                    out nextHopMats[1][dstIndices[i]][lqEdges[start].start.Index],
+                    out transitionMats[0][dstIndices[i]][lqEdges[start].start.Index],
+                    out transitionMats[1][dstIndices[i]][lqEdges[start].start.Index],
                     lqEdges,
                     size);
+
         }
     }
-    private void FindNextHop(ref int start, float[][] leastCostMat, int dest, out LaneQueue first, out LaneQueue second, List<Utility.WeightedEdge<LaneQueue>> lqEdges, int size)
+    private void FindTransition(int sortStart, float[][] leastCostMat, int dest, out LaneQueue first, out LaneQueue second, List<Utility.WeightedEdge<LaneQueue>> lqEdges, int size)
     {
-        float lowestCost = leastCostMat[lqEdges[start].end.Index][dest];
-        first = lqEdges[start].end;
+        float lowestCost = leastCostMat[lqEdges[sortStart].end.Index][dest];
+        first = lqEdges[sortStart].end;
         second = first;
-        LaneQueue startNode = lqEdges[start].start;
+        LaneQueue startNode = lqEdges[sortStart].start;
 
         //continue until we meet an edge that does not start from startNode
-        while (++start < size)
+        while (sortStart < size && startNode == lqEdges[sortStart].start)
         {
-            if (startNode == lqEdges[start].start)
+            float cost = leastCostMat[lqEdges[sortStart].end.Index][dest];
+            if (lowestCost > cost)
             {
-                float cost = leastCostMat[lqEdges[start].end.Index][dest];
-                if (lowestCost > cost)
-                {
-                    lowestCost = cost;
-                    second = first;
-                    first = lqEdges[start].end;
-                }
+                lowestCost = cost;
+                second = first;
+                first = lqEdges[sortStart].end;
             }
-            else
-                break;
+
+            sortStart++;
         }
+
     }
 }
