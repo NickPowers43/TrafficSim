@@ -15,18 +15,6 @@ public enum PointsOfInterest
     None = 5
 }
 
-[Serializable]
-public class IntersectionData
-{
-    public PointsOfInterest poi;
-    public Vector2 position;
-
-    public string ToString()
-    {
-        return "{position: " + position.ToString() + ", poi: " + poi.ToString() + "}";
-    }
-}
-
 public struct PathData
 {
     public Intersection destinationIntersection;
@@ -36,8 +24,8 @@ public struct PathData
 
 public class Intersection : MonoBehaviour {
 
-    private object dLock = new object();
-
+    //Constants:
+    
     private const double TIME_PER_INLET = 2.5;
     private const double CHECK_DESTINATION_INTERVAL = 0.05;
     private const double VEHICLE_INSTANTIATION_INTERVAL = 0.5;
@@ -95,6 +83,8 @@ public class Intersection : MonoBehaviour {
         return temp;
     }
 
+    //Fields:
+
     //stores the unity prefab for intersection GameObjects
     private static GameObject prefab;
     public static GameObject Prefab
@@ -122,7 +112,9 @@ public class Intersection : MonoBehaviour {
         }
     }
 
+    //unity gameobject references
     public Sprite[] POISprites;
+    public GameObject selectionSprite = null;
     public GameObject iconGO;
     //index to identify this intersection with
     private int index;
@@ -137,6 +129,8 @@ public class Intersection : MonoBehaviour {
             index = value;
         }
     }
+    //inlet objects
+    private IntersectionInlet[] inlets = new IntersectionInlet[4];
     //number of road edges connecting to this intersection
     public int Degree
     {
@@ -311,11 +305,8 @@ public class Intersection : MonoBehaviour {
         return false;
     }
 
-    public GameObject selectionSprite = null;
 
-    private IntersectionInlet[] inlets = new IntersectionInlet[4];
-
-    private List<Vehicle> vehicles = new List<Vehicle>();
+    //Functions:
 
     //calls the thread functions
     public void Run()
@@ -541,12 +532,12 @@ public class Intersection : MonoBehaviour {
         }
     }
 
+    //remove/generate inlets
     public void RemoveInlet(int index)
     {
         //TODO: void Intersection.RemoveInlet(int index)
         inlets[index] = null;
     }
-
     public IntersectionInlet GenerateInlet()
     {
         for (int i = 0; i < 4; i++)
@@ -561,15 +552,7 @@ public class Intersection : MonoBehaviour {
         throw new NotImplementedException();
     }
 
-    public IntersectionData GetData()
-    {
-        IntersectionData temp = new IntersectionData();
-        temp.poi = this.poi;
-        temp.position = new Vector2(this.transform.position.x, this.transform.position.y);
-
-        return temp;
-    }
-
+    //get non-null inlet
     public IntersectionInlet TryGetInlet()
     {
         for (int i = 0; i < 4; i++)
@@ -582,6 +565,7 @@ public class Intersection : MonoBehaviour {
         return null;
     }
 
+    //show/hide path lines between points of interest
     public void ShowPathLines()
     {
         foreach (var record in pathData)

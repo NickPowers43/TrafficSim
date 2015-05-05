@@ -9,6 +9,8 @@ using UnityEngine;
 
 public class IntersectionInlet
 {
+    //Fields:
+
     //intersection that owns this inlet
     private Intersection parent;
     public Intersection Parent
@@ -102,6 +104,8 @@ public class IntersectionInlet
         }
     }
 
+    //Functions:
+
     public IntersectionInlet(Intersection parent, int inletIndex)
     {
         this.inletIndex = inletIndex;
@@ -113,7 +117,6 @@ public class IntersectionInlet
             laneQueues[i] = new LaneQueue(LaneQueue.DEFAULT_SPEED_LIMIT, 0.0, false);
         }
     }
-
     //create edges originating at lq and terminating at each LaneQueue in lqs
     public static void ConnectToAll(LaneQueue lq, LaneQueue[] lqs, List<Utility.WeightedEdge<LaneQueue>>[] edges)
     {

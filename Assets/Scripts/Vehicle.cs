@@ -96,7 +96,7 @@ public class Vehicle
             return destroyTime;
         }
     }
-    public double Age //Age in real-time
+    public double Age //Age in simulation-time
     {
         get
         {
